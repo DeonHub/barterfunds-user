@@ -1,0 +1,416 @@
+Get transactions
+request
+----------------------------------------------------------
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'http://localhost:8000/transactions',
+  headers: { 
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE1MjQ0NzQzLCJleHAiOjE3MTc4MzY3NDN9.NgoyrlONK-6mLk2ZDSmyjn0faESV8hfbgsa_twBqFEg'
+  }
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+
+response
+-----------------------------------------
+{
+    "count": 1,
+    "success": true,
+    "transactions": [
+        {
+            "_id": "663c95b09782e10c573544f6",
+            "userId": {
+                "referralCode": "xyz12345",
+                "_id": "65d21f36cb177741bbfa7e96",
+                "firstname": "Hedeb",
+                "surname": "Seosnaps",
+                "username": "Hedeb951475",
+                "email": "hedeb97411@seosnaps.com",
+                "password": "$2b$10$4xNUbCuSqUCa4tWLxNoaWOwkzJgnLlNR5hgRHl0.j0dkwOBQOM5/.",
+                "contact": "1234567890",
+                "status": "active",
+                "verified": true,
+                "verificationCode": null,
+                "isAdmin": false,
+                "createdAt": "2024-02-18T15:16:06.497Z",
+                "__v": 0,
+                "activationToken": "",
+                "kycApproved": true,
+                "profilePicture": "/uploads/profile.jpeg",
+                "resetToken": "",
+                "twoFactorAuth": true,
+                "twoFactorAuthSecretKey": "H44WWQTDINFGIMTYFJZSUTTHFFWVGZC6",
+                "twoFactorAuthQrcode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMQAAADECAYAAADApo5rAAAAAklEQVR4AewaftIAAAjzSURBVO3BQY4kSXAgQdVA/f/Lug0eHLYXBwKZ1TNDmoj9wVrrfzystY6HtdbxsNY6HtZax8Na63hYax0Pa63jYa11PKy1joe11vGw1joe1lrHw1rreFhrHQ9rreOHD6n8TRWTylTxTSo3FZ9Quam4UZkqblTeqPiEyt9U8YmHtdbxsNY6HtZaxw9fVvFNKjcVk8obFTcVk8qNyhsVb6hMFZPKJyreUJkqbiq+SeWbHtZax8Na63hYax0//DKVNyreULmpmFQmlanipmJSmSomlRuVm4qpYlKZKiaVN1Smit+k8kbFb3pYax0Pa63jYa11/PAfVzGpTCo3FZPKGxVvVEwqU8WNym+quFH53+xhrXU8rLWOh7XW8cP6/1TcqHxC5UZlqnhD5abiExX/mz2stY6HtdbxsNY6fvhlFb9JZaqYVG5UvknlpuINlaliUpkq3lB5o2JSmSreqPg3eVhrHQ9rreNhrXX88GUq/2YVk8pUMalMFZPKVDGp3KhMFd+kMlXcVEwq36Tyb/aw1joe1lrHw1rr+OFDFf+kiknlN6lMFTcVn6i4qbip+CaVNyr+Sx7WWsfDWut4WGsdP3xIZaqYVKaKN1RuKqaKSWVSmSomlTdUpooblU+oTBU3KjcVb1RMKm+oTBU3KlPFpDJVfOJhrXU8rLWOh7XW8cOXqdyo3FRMFW+o3FT8m6lMFTcqU8VUMalMKlPFVDGpTBVvVEwq/yYPa63jYa11PKy1jh9+WcWNyo3K31Rxo3KjMlXcVNyovKEyVXxC5UbljYqbihuV3/Sw1joe1lrHw1rr+OHLKiaVm4pJZaq4UfmEyk3FVDGpTBWTylQxqdxUTCpTxRsVk8onKm5UJpWpYlKZKm4qvulhrXU8rLWOh7XW8cM/TGWqmFRuKt5QeUNlqnijYlKZKiaVSeVGZaqYVG4qbipuVN6ouKn4Jz2stY6HtdbxsNY6fvhQxRsVNypTxaQyqUwVNxWTyk3FTcWkMlVMFTcVk8pUMam8UXGjMlV8k8pU8W/ysNY6HtZax8Na6/jhy1SmijcqJpWbiknlpmKquFH5hMpNxd+kMlVMFZ+omFSmijdUporf9LDWOh7WWsfDWuv44csqJpWp4o2KG5Wp4g2VqeKm4g2VqeJGZaqYVD5RcaMyVUwqNypTxaTyRsWkMlV808Na63hYax0Pa63jhy9TmSomlZuKSeUNlaliUrlRmSpuVKaKG5WpYqqYVKaKT6jcVEwqU8WkMlVMKlPFjco/6WGtdTystY6HtdZhf/BFKlPFjcpUcaNyU/GGyhsVb6jcVEwqb1TcqEwVNypvVEwqb1TcqEwVv+lhrXU8rLWOh7XWYX/wRSo3FZPKGxU3Kp+omFRuKiaVNyq+SeUTFTcqU8WNylQxqdxU3KhMFZ94WGsdD2ut42GtddgffEDlN1XcqHyi4jepTBU3KlPFJ1RuKiaVqWJSmSomlaniEypTxW96WGsdD2ut42GtddgffJHKTcUbKp+omFSmihuVqeJG5Y2KSWWquFH5TRWfUJkqPqFyU/GJh7XW8bDWOh7WWscPH1KZKm5UbiqmikllqphUbiomlaliqnijYlJ5o+KNiknlN6lMFX9TxaTyTQ9rreNhrXU8rLWOHz5U8YmKSeWm4hMqU8UbKm9UTCo3KlPFpDJVTBU3KjcVb6hMFVPFf8nDWut4WGsdD2ut44cvU7mpmFSmik9U3FTcqEwVU8WkMlV8omJS+YTKTcWNylQxqdyo3FT8mzystY6HtdbxsNY6fviQyk3FTcWk8k0V36TyN1VMKjcqU8Wk8kbFpDJVTCpTxTepTBXf9LDWOh7WWsfDWuv44UMVNypvVNyoTBWTyqRyUzFVTCpTxaRyo3KjMlVMKjcqn1CZKiaVb1KZKiaVqeJGZar4xMNa63hYax0Pa63jhy9TmSpuVG5UpopJ5abiRmWqmComlTcqJpU3KiaVqWJSeaNiUpkqJpVJ5RMqNyo3Fd/0sNY6HtZax8Na67A/+CKVqWJSeaPiRuWNihuVb6qYVN6o+ITKGxWTylRxozJV3KjcVNyoTBWfeFhrHQ9rreNhrXX88CGVG5Wp4kZlUpkqpooblRuVNypuVD5RcaMyVbxRMancVNyovKEyVbyh8pse1lrHw1rreFhrHfYHv0jlpuINlZuKN1Smik+o3FRMKjcVv0nlpuKbVKaKT6hMFZ94WGsdD2ut42GtdfzwIZWbikllUpkqJpU3VKaKm4pJ5RMVk8onVG4qJpWp4ptUbiomlaniEyq/6WGtdTystY6HtdZhf/CLVD5RcaMyVbyhMlVMKlPFJ1RuKiaVqeJGZaqYVN6o+JtUpoq/6WGtdTystY6Htdbxw4dUbiomlZuKSWWqmComld+kclMxqUwVk8qkcqMyVUwVk8pUcaNyo/JPUrmp+MTDWut4WGsdD2utw/7gP0zlpuJGZap4Q+UTFTcqNxWTyk3FGypTxaQyVbyhclNxozJVfOJhrXU8rLWOh7XW8cOHVP6mijdUpoo3VG4qPqHyRsVNxY3KVDGpfJPKVPEJld/0sNY6HtZax8Na6/jhyyq+SeWm4hMVk8pU8YbKVDGp3FRMKm+oTBVTxU3FpPKJik+o/E0Pa63jYa11PKy1jh9+mcobFZ9QeaNiqphUpopPVNyovKHyhspUMancqNyo/Jc9rLWOh7XW8bDWOn74P07lEypTxScqJpWbik+oTBWTyk3FpDJV3KhMFZPKVDGpfNPDWut4WGsdD2ut44f/OJWbikllqphUpopJZaqYVG4qJpWp4kZlqrhRuamYVKaKG5VvUpkqJpXf9LDWOh7WWsfDWuv44ZdV/KaKSeWmYlL5pooblanipuITFZPKTcWNyhsqU8VUcaMyVfymh7XW8bDWOh7WWscPX6byN6lMFd+kMlW8oTJVTCo3FZPKTcUbKlPFTcWkclMxqdxUTBU3KlPFJx7WWsfDWut4WGsd9gdrrf/xsNY6HtZax8Na63hYax0Pa63jYa11PKy1joe11vGw1joe1lrHw1rreFhrHQ9rreNhrXU8rLWO/wctc8HPSRouaAAAAABJRU5ErkJggg=="
+            },
+            "currencyId": {
+                "_id": "662b72d88c6ba2742e41459d",
+                "currencyName": "Bitcoin",
+                "currencyLogo": "https://res.cloudinary.com/bloody123/image/upload/v1714125488/barterFunds/currencyLogos/currencyLogo-1714125488157.png",
+                "currencyCode": "BTC",
+                "currencySymbol": "$",
+                "paymentGateway": "Manual",
+                "status": "active",
+                "reserveAmount": 5000,
+                "exchangeRate": 10,
+                "isBaseCurrency": false,
+                "rateShow": true,
+                "instructions": "These are instructions for transactions.",
+                "buyAt": 100,
+                "availableForBuy": false,
+                "minimumBuyAmount": 100,
+                "maximumBuyAmount": 100,
+                "buyFixedCharge": 100,
+                "buyPercentCharge": 10,
+                "sellAt": 120,
+                "availableForSell": true,
+                "minimumSellAmount": 100,
+                "maximumSellAmount": 100,
+                "sellFixedCharge": 100,
+                "sellPercentCharge": 10,
+                "sendAt": 140,
+                "availableForSend": true,
+                "minimumSendAmount": 100,
+                "maximumSendAmount": 100,
+                "sendFixedCharge": 100,
+                "sendPercentCharge": 10,
+                "receiveAt": 160,
+                "availableForReceive": false,
+                "minimumReceiveAmount": 100,
+                "maximumReceiveAmount": 100,
+                "receiveFixedCharge": 100,
+                "receivePercentCharge": 10,
+                "createdAt": "2024-04-26T09:24:40.905Z",
+                "updatedAt": "2024-04-26T09:24:40.905Z",
+                "__v": 0
+            },
+            "transactionId": "202405090856",
+            "transactionType": "buy",
+            "amountGhs": 100,
+            "amountUsd": 8.2,
+            "sender": "",
+            "receiver": "",
+            "paymentMethod": "momo",
+            "receipientMethod": "momo",
+            "status": "active",
+            "action": "Pending payment",
+            "createdAt": "2024-05-09T09:21:52.208Z",
+            "updatedAt": "2024-05-09T09:21:52.209Z",
+            "__v": 0
+        }
+    ]
+}
+
+Get by userId
+request
+---------------------------------------
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'http://localhost:8000/transactions/user/65d21f36cb177741bbfa7e96',
+  headers: { 
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE1MjQ0NzQzLCJleHAiOjE3MTc4MzY3NDN9.NgoyrlONK-6mLk2ZDSmyjn0faESV8hfbgsa_twBqFEg'
+  }
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+response
+-------------------------------------------
+{
+    "success": true,
+    "count": 1,
+    "transactions": [
+        {
+            "_id": "663c95b09782e10c573544f6",
+            "userId": {
+                "referralCode": "xyz12345",
+                "_id": "65d21f36cb177741bbfa7e96",
+                "firstname": "Hedeb",
+                "surname": "Seosnaps",
+                "username": "Hedeb951475",
+                "email": "hedeb97411@seosnaps.com",
+                "password": "$2b$10$4xNUbCuSqUCa4tWLxNoaWOwkzJgnLlNR5hgRHl0.j0dkwOBQOM5/.",
+                "contact": "1234567890",
+                "status": "active",
+                "verified": true,
+                "verificationCode": null,
+                "isAdmin": false,
+                "createdAt": "2024-02-18T15:16:06.497Z",
+                "__v": 0,
+                "activationToken": "",
+                "kycApproved": true,
+                "profilePicture": "/uploads/profile.jpeg",
+                "resetToken": "",
+                "twoFactorAuth": true,
+                "twoFactorAuthSecretKey": "H44WWQTDINFGIMTYFJZSUTTHFFWVGZC6",
+                "twoFactorAuthQrcode": "data:image/png;base64,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"
+            },
+            "currencyId": {
+                "_id": "662b72d88c6ba2742e41459d",
+                "currencyName": "Bitcoin",
+                "currencyLogo": "https://res.cloudinary.com/bloody123/image/upload/v1714125488/barterFunds/currencyLogos/currencyLogo-1714125488157.png",
+                "currencyCode": "BTC",
+                "currencySymbol": "$",
+                "paymentGateway": "Manual",
+                "status": "active",
+                "reserveAmount": 5000,
+                "exchangeRate": 10,
+                "isBaseCurrency": false,
+                "rateShow": true,
+                "instructions": "These are instructions for transactions.",
+                "buyAt": 100,
+                "availableForBuy": false,
+                "minimumBuyAmount": 100,
+                "maximumBuyAmount": 100,
+                "buyFixedCharge": 100,
+                "buyPercentCharge": 10,
+                "sellAt": 120,
+                "availableForSell": true,
+                "minimumSellAmount": 100,
+                "maximumSellAmount": 100,
+                "sellFixedCharge": 100,
+                "sellPercentCharge": 10,
+                "sendAt": 140,
+                "availableForSend": true,
+                "minimumSendAmount": 100,
+                "maximumSendAmount": 100,
+                "sendFixedCharge": 100,
+                "sendPercentCharge": 10,
+                "receiveAt": 160,
+                "availableForReceive": false,
+                "minimumReceiveAmount": 100,
+                "maximumReceiveAmount": 100,
+                "receiveFixedCharge": 100,
+                "receivePercentCharge": 10,
+                "createdAt": "2024-04-26T09:24:40.905Z",
+                "updatedAt": "2024-04-26T09:24:40.905Z",
+                "__v": 0
+            },
+            "transactionId": "202405090856",
+            "transactionType": "buy",
+            "amountGhs": 100,
+            "amountUsd": 8.2,
+            "sender": "",
+            "receiver": "",
+            "paymentMethod": "momo",
+            "receipientMethod": "momo",
+            "status": "pending",
+            "action": "Waiting Payment",
+            "createdAt": "2024-05-09T09:21:52.208Z",
+            "updatedAt": "2024-05-09T09:21:52.209Z",
+            "__v": 0,
+            "paymentProof": "https://res.cloudinary.com/bloody123/image/upload/v1715247018/barterFunds/currencyLogos/paymentProof-1715247015423.jpg"
+        }
+    ]
+}
+
+
+
+Get by _id
+request
+-------------------------------------------------
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'http://localhost:8000/transactions/663c95b09782e10c573544f6',
+  headers: { 
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE1MjQ0NzQzLCJleHAiOjE3MTc4MzY3NDN9.NgoyrlONK-6mLk2ZDSmyjn0faESV8hfbgsa_twBqFEg'
+  }
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+response
+--------------------------------------------------
+{
+    "success": true,
+    "message": "Transaction found",
+    "transaction": {
+        "_id": "663c95b09782e10c573544f6",
+        "userId": "65d21f36cb177741bbfa7e96",
+        "currencyId": "662b72d88c6ba2742e41459d",
+        "transactionId": "202405090856",
+        "transactionType": "buy",
+        "amountGhs": 100,
+        "amountUsd": 8.2,
+        "sender": "",
+        "receiver": "",
+        "paymentMethod": "momo",
+        "receipientMethod": "momo",
+        "status": "pending",
+        "action": "Waiting Payment",
+        "createdAt": "2024-05-09T09:21:52.208Z",
+        "updatedAt": "2024-05-09T09:21:52.209Z",
+        "__v": 0,
+        "paymentProof": "https://res.cloudinary.com/bloody123/image/upload/v1715247018/barterFunds/currencyLogos/paymentProof-1715247015423.jpg"
+    }
+}
+
+
+
+
+
+
+
+
+Creat transaction
+request
+------------------------
+const axios = require('axios');
+let data = JSON.stringify({
+  "currencyId": "662b72d88c6ba2742e41459d",
+  "transactionId": "202405090856",
+  "transactionType": "buy",
+  "amountGhs": "100",
+  "amountUsd": "8.2",
+  "paymentMethod": "momo",
+  "action": "Pending payment"
+});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'http://localhost:8000/transactions',
+  headers: { 
+    'Content-Type': 'application/json', 
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE1MjQ0NzQzLCJleHAiOjE3MTc4MzY3NDN9.NgoyrlONK-6mLk2ZDSmyjn0faESV8hfbgsa_twBqFEg'
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+response
+------------------------------------------
+{
+    "success": true,
+    "message": "Transaction created successfully",
+    "createdTransaction": {
+        "_id": "663c95b09782e10c573544f6",
+        "userId": "65d21f36cb177741bbfa7e96",
+        "currencyId": "662b72d88c6ba2742e41459d",
+        "transactionId": "202405090856",
+        "transactionType": "buy",
+        "amountGhs": 100,
+        "amountUsd": 8.2,
+        "sender": "",
+        "receiver": "",
+        "paymentMethod": "momo",
+        "receipientMethod": "momo",
+        "status": "active",
+        "action": "Pending payment",
+        "createdAt": "2024-05-09T09:21:52.208Z",
+        "updatedAt": "2024-05-09T09:21:52.209Z",
+        "__v": 0
+    }
+}
+
+
+
+
+
+
+
+
+update transaction
+request
+----------------------------------------------------
+const axios = require('axios');
+const FormData = require('form-data');
+const fs = require('fs');
+let data = new FormData();
+data.append('paymentProof', fs.createReadStream('/home/deon/Downloads/WhatsApp Image 2024-04-16 at 9.36.26 PM.jpeg'));
+data.append('status', 'pending');
+data.append('action', 'Waiting Payment');
+
+let config = {
+  method: 'patch',
+  maxBodyLength: Infinity,
+  url: 'http://localhost:8000/transactions/663c95b09782e10c573544f6',
+  headers: { 
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE1MjQ0NzQzLCJleHAiOjE3MTc4MzY3NDN9.NgoyrlONK-6mLk2ZDSmyjn0faESV8hfbgsa_twBqFEg', 
+    ...data.getHeaders()
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+response
+--------------------------------------------
+{
+    "success": true,
+    "message": "Transaction updated",
+    "transaction": {
+        "_id": "663c95b09782e10c573544f6",
+        "userId": "65d21f36cb177741bbfa7e96",
+        "currencyId": "662b72d88c6ba2742e41459d",
+        "transactionId": "202405090856",
+        "transactionType": "buy",
+        "amountGhs": 100,
+        "amountUsd": 8.2,
+        "sender": "",
+        "receiver": "",
+        "paymentMethod": "momo",
+        "receipientMethod": "momo",
+        "status": "pending",
+        "action": "Waiting Payment",
+        "createdAt": "2024-05-09T09:21:52.208Z",
+        "updatedAt": "2024-05-09T09:21:52.209Z",
+        "__v": 0,
+        "paymentProof": "https://res.cloudinary.com/bloody123/image/upload/v1715247018/barterFunds/currencyLogos/paymentProof-1715247015423.jpg"
+    },
+    "request": {
+        "type": "GET",
+        "url": "http://localhost:3000/transactions/663c95b09782e10c573544f6"
+    }
+}
+
+
+
+
+
+
