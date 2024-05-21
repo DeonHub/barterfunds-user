@@ -19,6 +19,7 @@ import TransactionsPanel from './User/TransactionsPanel';
 import UserKycs from './User/UserKycs';
 import KycForm from './User/KycForm';
 import OrderSuccess from './User/OrderSuccess';
+import TransactionSuccess from './User/TransactionSuccess';
 import Transactions from './User/Transactions';
 import UserWallet from './User/Wallet';
 import UserSupport from './User/UserSupport';
@@ -52,7 +53,8 @@ const App = () => {
         <Route path={`${process.env.PUBLIC_URL}/user/profile`} element={<UserProfile />} />
         <Route path={`${process.env.PUBLIC_URL}/user/transactions-panel`} element={<TransactionsPanel />} />
         <Route path={`${process.env.PUBLIC_URL}/user/transactions`} element={<Transactions />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/transactions/success`} element={<OrderSuccess />} />
+        <Route path={`${process.env.PUBLIC_URL}/user/transactions/success`} element={<TransactionSuccess />} />
+        <Route path={`${process.env.PUBLIC_URL}/user/orders/success`} element={<OrderSuccess />} />
         <Route path={`${process.env.PUBLIC_URL}/user/kycs`} element={<UserKycs />} />
         <Route path={`${process.env.PUBLIC_URL}/user/wallet`} element={<UserWallet />} />
         <Route path={`${process.env.PUBLIC_URL}/user/support`} element={<UserSupport />} />

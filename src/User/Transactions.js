@@ -38,7 +38,8 @@ const Transactions = ({ globalState, ...props }) => {
       })
       .then((response) => {
         if (response.data.success) {
-          setTransactions(response.data.transactions);
+          const sortedTransactions = response.data.transactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setTransactions(sortedTransactions);
           setCount(response.data.count);
           setIsLoading(false);
         } else {
@@ -60,7 +61,7 @@ const Transactions = ({ globalState, ...props }) => {
     (transaction) =>
       transaction.transactionType
         .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+        .includes(searchTerm.toLowerCase()) 
   );
 
   // Calculate pagination
@@ -201,7 +202,7 @@ const Transactions = ({ globalState, ...props }) => {
                           <div className="card-inner">
                             <div className="card-title-group">
                               <div className="card-title">
-                                <h5 className="title">All Orders</h5>
+                                <h5 className="title">All Transactions</h5>
                               </div>
                               <div className="card-tools me-n1">
                                 <ul className="btn-toolbar gx-1">

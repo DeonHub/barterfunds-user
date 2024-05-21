@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
 
-const OrderSuccess = ({ globalState, ...props }) => {
+const TransactionSuccess = ({ globalState, ...props }) => {
   const [searchParams] = useSearchParams();
 
   const [action, setAction] = useState("buy");
@@ -38,7 +38,9 @@ const OrderSuccess = ({ globalState, ...props }) => {
     };
 
     const transaction_body = {
-      paymentSuccess: true
+      status: 'pending',
+      payment_success: true,
+      action: 'Pending confirmation from Admin'
     }
 
     axios
@@ -50,18 +52,18 @@ const OrderSuccess = ({ globalState, ...props }) => {
         // console.log(response.data.data)
   
       axios
-      .patch(`${process.env.REACT_APP_API_URL}/orders/x/${reference}`, transaction_body, { headers: transaction_headers})
+      .patch(`${process.env.REACT_APP_API_URL}/transactions/x/${reference}`, transaction_body, { headers: transaction_headers})
         .then((response) => {
           if (response.data.success) {
            
-            setGhsAmount(response.data.order.amountGhs)
-            setUsdAmount(response.data.order.amountUsd)
+            setGhsAmount(response.data.transaction.amountGhs)
+            setUsdAmount(response.data.transaction.amountUsd)
 
             openNotification(
               "topRight",
               "success",
-              "Payment successful",
-              "Payment is successful. Your wallet will soon be credited."
+              "Success",
+              "Payment successful. Pending confirmation from Admin."
             );
             
             setSuccess(true);
@@ -151,26 +153,25 @@ const OrderSuccess = ({ globalState, ...props }) => {
                               </h4>
                               <div className="nk-modal-text">
                                 <p className="caption-text">
-                                  You’ve successfully made deposit of
-                                  <b> {formatCurrency(ghsAmount)} GHS / {formatCurrency(usdAmount)} USD </b>  to your wallet.
+                                  You’ve successfully bought
+                                  <strong> {formatCurrency(usdAmount)} </strong>
+                                  USD of {currency} for <strong>{formatCurrency(ghsAmount)} </strong> GHS.
                                 </p>
                                 <p className="sub-text-sm">
-                                  Your wallet will soon be credited. If you have any questions or issues, please 
-                                  <a href="#"> Contact Us</a>
+                                  You can check your order status here.
+                                  <a href="#"> Click here</a>
                                 </p>
                               </div>
                               <div className="nk-modal-action-lg">
                                 <ul className="btn-group gx-4">
                                   <li>
-                                    <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/wallet`}>
                                     <button
                                       type="button"
                                       className="btn btn-lg btn-mw btn-primary"
+                                      onClick={nextFormStage}
                                     >
-                                      Check Order Status
+                                      Upload Payment Screenshot
                                     </button>
-                                    </a>
-                                    
                                   </li>
                                 </ul>
                               </div>
@@ -210,7 +211,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                           <br />
                           <div className="text-center w-100">
                             <p>
-                              Earn up to GHS 100 for each friend your refer!
+                              Earn upto GHS 100 for each friend your refer!
                               <a href="#"> Invite friends</a>
                             </p>
                           </div>
@@ -254,7 +255,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                           </div>
 
                           <div className="text-center my-3">
-                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/wallet`}>
+                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/orders`}>
                               I will upload later
                             </a>
                           </div>
@@ -274,4 +275,4 @@ const OrderSuccess = ({ globalState, ...props }) => {
   );
 };
 
-export default OrderSuccess;
+export default TransactionSuccess;

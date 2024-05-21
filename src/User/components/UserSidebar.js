@@ -1,12 +1,4 @@
 import React from "react";
-import { RxDashboard } from "react-icons/rx";
-import { GrTransaction } from "react-icons/gr";
-import { LuWallet2 } from "react-icons/lu";
-import { TbTransform } from "react-icons/tb";
-import { TbTransfer } from "react-icons/tb";
-import { RiExchangeDollarLine } from "react-icons/ri";
-import { FaRegUser } from "react-icons/fa";
-import { user } from "./data";
 import './userjs';
 class UserSidebar extends React.Component {
   constructor(props) {
@@ -69,7 +61,7 @@ class UserSidebar extends React.Component {
             </li>
             
 
-            <li className="nk-menu-item">
+            {/* <li className="nk-menu-item">
               <a
                 href="/frontend/user/transactions.html"
                 className="nk-menu-link"
@@ -79,7 +71,7 @@ class UserSidebar extends React.Component {
                 </span>
                 <span className="nk-menu-text">Payment Methods</span>
               </a>
-            </li>
+            </li> */}
             <li className={`nk-menu-item ${this.props.active === 'transactions' ? 'active' : ''}`}>
             <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/transactions-panel`} className="nk-menu-link">
                 <span className="nk-menu-icon">
@@ -111,7 +103,7 @@ class UserSidebar extends React.Component {
             </li>
             {/* .nk-menu-item */}
             <li className="nk-menu-heading">
-              <h6 className="overline-title text-primary-alt">MENU</h6>
+              <h6 className="overline-title text-primary-alt">USER</h6>
             </li>
 
             <li className={`nk-menu-item ${this.props.active === 'kycs' ? 'active' : ''}`}>
@@ -131,34 +123,7 @@ class UserSidebar extends React.Component {
                 </span>
                 <span className="nk-menu-text">Support Center</span>
               </a>
-              <ul className="nk-menu-sub">
-                <li className="nk-menu-item">
-                  <a
-                    href="/frontend/user/support.html"
-                    className="nk-menu-link"
-                  >
-                    <span className="nk-menu-text">Create Ticket</span>
-                  </a>
-                </li>
-                <li className="nk-menu-item">
-                  <a href="/frontend/user/faqs.html" className="nk-menu-link">
-                    <span className="nk-menu-text">Faqs / Help</span>
-                  </a>
-                </li>
-                <li className="nk-menu-item">
-                  <a
-                    href="https://wa.me/message/ON5PHWAZTGKWI1"
-                    className="nk-menu-link"
-                  >
-                    <span className="nk-menu-text">Whatsapp Chat</span>
-                  </a>
-                </li>
-                <li className="nk-menu-item">
-                  <a href="tel:+233598870911" className="nk-menu-link">
-                    <span className="nk-menu-text">Phone Call</span>
-                  </a>
-                </li>
-              </ul>
+             
             </li>
           </ul>
         </div>
