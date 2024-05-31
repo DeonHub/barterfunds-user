@@ -1,7 +1,7 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import FileUpload from './components/FileUpload';
-import { Modal, Button, Image } from "antd";
+
+import { Modal } from "antd";
 import openNotification from "../components/OpenNotification";
 
 
@@ -11,12 +11,12 @@ const OrderDetails = ({
     formatTime,
     formatCurrency,
     setIsLoading,
-    id,
-    walletAddress 
+    id
 }) => {
   const [open, setOpen] = useState(false);
-  const [selectedProof, setSelectedProof] = useState('');
-  const [submitButton, setSubmitButton] = useState(false);
+  // const [selectedProof, setSelectedProof] = useState('');
+  const selectedProof = '';
+
 
   const showModal = () => {
     setOpen(true);
@@ -77,25 +77,12 @@ const OrderDetails = ({
     setOpen(false);
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'info'; 
-      case 'success':
-        return 'success'; 
-      case 'cancelled':
-        return 'warning'; 
-      case 'failed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
+
 
   return (
     <>
-      <a
-        href="javascript:void(0);"
+      <span
+
         className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
         title="View Details"
         onClick={showModal}
@@ -103,7 +90,7 @@ const OrderDetails = ({
         <span className="icon material-symbols-outlined">
             visibility
         </span>
-        </a>
+        </span>
 
       <Modal
         open={open}

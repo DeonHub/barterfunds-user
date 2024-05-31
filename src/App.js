@@ -23,6 +23,7 @@ import TransactionSuccess from './User/TransactionSuccess';
 import Transactions from './User/Transactions';
 import UserWallet from './User/Wallet';
 import UserSupport from './User/UserSupport';
+import Faqs from './User/Faqs';
 
 const App = () => {
 
@@ -58,6 +59,7 @@ const App = () => {
         <Route path={`${process.env.PUBLIC_URL}/user/kycs`} element={<UserKycs />} />
         <Route path={`${process.env.PUBLIC_URL}/user/wallet`} element={<UserWallet />} />
         <Route path={`${process.env.PUBLIC_URL}/user/support`} element={<UserSupport />} />
+        <Route path={`${process.env.PUBLIC_URL}/user/faqs`} element={<Faqs />} />
         <Route path={`${process.env.PUBLIC_URL}/user/kycs/application`} element={<KycForm />} />
         
         

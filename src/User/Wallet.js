@@ -15,7 +15,8 @@ const UserWallet = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [walletId, setWalletId] = useState(0);
   
@@ -55,7 +56,7 @@ const UserWallet = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -205,14 +206,14 @@ const UserWallet = () => {
                                       >
                                         <div className="nk-wgw">
                                           <div className="nk-wgw-inner">
-                                            <a className="nk-wgw-name" href="">
+                                            <span className="nk-wgw-name" >
                                               <div className="nk-wgw-icon is-default">
                                                 <i class="icon las la-coins"></i>
                                               </div>
                                               <h5 className="nk-wgw-title title">
                                                 {wallet.walletName}
                                               </h5>
-                                            </a>
+                                            </span>
                                             <div className="nk-wgw-balance">
                                               <div className="amount">
                                               {formatCurrency(wallet.balanceGhs)}
@@ -283,23 +284,23 @@ const UserWallet = () => {
                                             </ul>
                                           </div>
                                           <div className="nk-wgw-more dropdown">
-                                            <a
-                                              href="#"
+                                            <span
+                                              
                                               className="btn btn-icon btn-trigger"
                                               data-bs-toggle="dropdown"
                                             >
                                               <i class="icon las la-ellipsis-h"></i>
-                                            </a>
+                                            </span>
                                             <div className="dropdown-menu dropdown-menu-xs dropdown-menu-end">
                                               <ul className="link-list-plain sm">
                                                 <li>
-                                                  <a href="#">Details</a>
+                                                  <span>Details</span>
                                                 </li>
                                                 <li>
-                                                  <a href="#">Edit</a>
+                                                  <span>Edit</span>
                                                 </li>
                                                 <li>
-                                                  <a href="#">Delete</a>
+                                                  <span>Delete</span>
                                                 </li>
                                               </ul>
                                             </div>
@@ -311,18 +312,14 @@ const UserWallet = () => {
                                       <div className="card card-bordered">
                                         <div className="nk-wgw">
                                           <div className="nk-wgw-inner">
-                                            <a
+                                            <span
                                               className="nk-wgw-name"
-                                              href="#"
                                             >
-                                              {/* <div className="nk-wgw-icon">
-                                                
-                                                <i class="icon las la-hand-holding-usd"></i>
-                                              </div> */}
+                                              
                                               <h5 className="nk-wgw-title title">
                                                 Referral Commission Earned
                                               </h5>
-                                            </a>
+                                            </span>
                                             <div className="nk-wgw-balance">
                                               <div className="amount">
                                                 0.00
@@ -341,36 +338,36 @@ const UserWallet = () => {
                                           <div className="nk-wgw-actions">
                                             <ul>
                                               <li>
-                                                <a href="#">
+                                                <span>
                                                   <span class="icon material-symbols-outlined">
                                                     north_east
                                                   </span>
                                                   <span>Send</span>
-                                                </a>
+                                                </span>
                                               </li>
                                               <li>
-                                                <a href="#">
+                                                <span>
                                                   <span class="icon material-symbols-outlined">
                                                     south_west
                                                   </span>
                                                   <span>Receive</span>
-                                                </a>
+                                                </span>
                                               </li>
                                               <li>
-                                                <a href="#">
+                                                <span >
                                                   <span class="icon material-symbols-outlined">
                                                     keyboard_tab
                                                   </span>
                                                   <span>Deposit</span>
-                                                </a>
+                                                </span>
                                               </li>
                                               <li>
-                                                <a href="#">
+                                                <span>
                                                   <span class="icon material-symbols-outlined">
                                                     keyboard_tab_rtl
                                                   </span>
                                                   <span>Withdraw</span>
-                                                </a>
+                                                </span>
                                               </li>
                                             </ul>
                                           </div>
@@ -432,13 +429,13 @@ const UserWallet = () => {
                                             data-search="search"
                                           >
                                             <div class="search-content">
-                                              <a
-                                                href="#"
+                                              <span
+                                               
                                                 class="search-back btn btn-icon toggle-search"
                                                 data-target="search"
                                               >
                                                 <em class="icon ni ni-arrow-left"></em>
-                                              </a>
+                                              </span>
                                               <input
                                                 type="text"
                                                 class="form-control border-transparent form-focus-none"

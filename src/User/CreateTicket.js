@@ -143,8 +143,7 @@ const CreateTicket = ({ setIsLoading }) => {
 
   return (
     <>
-      <a
-        href="javascript:void(0);"
+      <span
         title="Create Ticket"
         onClick={showModal}
         className="btn btn-primary btn-tooltip"
@@ -153,7 +152,7 @@ const CreateTicket = ({ setIsLoading }) => {
           confirmation_number
         </span>
         <span>Create Ticket</span>
-      </a>
+      </span>
 
      {/* {isLoading ? <Loader /> : ( */}
             <Modal
@@ -269,8 +268,8 @@ const CreateTicket = ({ setIsLoading }) => {
                                           className='ml-1 form-control-sm'
                                           onChange={(e) => handleFileInputChange(index, e)}
                                         />
-                                        <a
-                                          href="javascript:void(0);"
+                                        <span
+                                          
                                           title="Add file"
                                           className="btn btn-success btn-sm mx-1"
                                           onClick={addFileInput}
@@ -278,10 +277,10 @@ const CreateTicket = ({ setIsLoading }) => {
                                           <span className="icon material-symbols-outlined">
                                             add
                                           </span>
-                                        </a>
+                                        </span>
                                         {index > 0 && (
-                                          <a
-                                            href="javascript:void(0);"
+                                          <span
+                                           
                                             title="Remove file"
                                             className="btn btn-danger btn-sm"
                                             onClick={() => removeFileInput(index)}
@@ -289,7 +288,7 @@ const CreateTicket = ({ setIsLoading }) => {
                                             <span className="icon material-symbols-outlined">
                                               cancel
                                             </span>
-                                          </a>
+                                          </span>
                                         )}
                                       </div>
                                     </div>

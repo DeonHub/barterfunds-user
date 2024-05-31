@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 import openNotification from "../../components/OpenNotification";
 import axios from "axios";
 
@@ -36,7 +36,7 @@ const OrdersModal = ({
   const [ghsAmount, setGhsAmount] = useState("");
   const [usdInputChangedByUser, setUsdInputChangedByUser] = useState(true);
   const [ghsInputChangedByUser, setGhsInputChangedByUser] = useState(true);
-  const [conversionRate, setConversionRate] = useState(12.1);
+  const conversionRate = 12.1;
   const [method, setMethod] = useState("");
   const [receipientNumber, setReceipientNumber] = useState('')
 
@@ -251,19 +251,18 @@ const OrdersModal = ({
   return (
     <>
       {isButton ? (
-        <a
-          href="javascript:void(0);"
+        <span
           onClick={showModal}
           className="btn btn-dim btn-outline-light"
         >
           <span>{text}</span>
           <span class="icon material-symbols-outlined">{icon}</span>
-        </a>
+        </span>
       ) : (
-        <a href="javascript:void(0);" onClick={showModal}>
+        <span onClick={showModal}>
           <span class="icon material-symbols-outlined">{icon}</span>
           <span>{text}</span>
-        </a>
+        </span>
       )}
 
       <Modal

@@ -6,7 +6,6 @@ import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
 import TicketDetails from "./TicketDetails";
 import CreateTicket from "./CreateTicket";
-import { withGlobalState } from "../withGlobalState";
 import Loader from "../components/Loader";
 import axios from "axios";
 
@@ -15,7 +14,8 @@ const UserSupport = () => {
   const [tickets, setTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
 
@@ -50,7 +50,7 @@ const UserSupport = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
 
   const handleSearchChange = (e) => {
@@ -136,13 +136,13 @@ const UserSupport = () => {
                         </div>
                         <div className="nk-block-head-content">
                           <div className="toggle-wrap nk-block-tools-toggle">
-                            <a
-                              href="#"
+                            <span
+                              
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
                               <em className="icon ni ni-menu-alt-r" />
-                            </a>
+                            </span>
                             <div
                               className="toggle-expand-content"
                               data-content="pageMenu"

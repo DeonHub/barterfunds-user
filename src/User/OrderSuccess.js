@@ -3,7 +3,6 @@ import "./User.css";
 import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
-import { withGlobalState } from "../withGlobalState";
 import FileUpload from "./components/FileUpload";
 import Loader from "../components/Loader";
 import { useSearchParams } from "react-router-dom";
@@ -13,16 +12,13 @@ import openNotification from "../components/OpenNotification";
 const OrderSuccess = ({ globalState, ...props }) => {
   const [searchParams] = useSearchParams();
 
-  const [action, setAction] = useState("buy");
   const [formStage, setFormStage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [success, setSuccess] = useState(false);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
-  const [currency, setCurrency] = useState("Bitcoin (BTC)");
 
   useEffect(() => {
-    const trxref = searchParams.get("trxref");
     const reference = searchParams.get("reference");
     // const reference = 1234567890;
 
@@ -98,7 +94,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
       });
 
       
-  }, []);
+  }, [searchParams]);
 
   const nextFormStage = () => {
     setFormStage(formStage + 1);
@@ -156,7 +152,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                                 </p>
                                 <p className="sub-text-sm">
                                   Your wallet will soon be credited. If you have any questions or issues, please 
-                                  <a href="#"> Contact Us</a>
+                                  <a href={"/"}> Contact Us</a>
                                 </p>
                               </div>
                               <div className="nk-modal-action-lg">
@@ -211,7 +207,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                           <div className="text-center w-100">
                             <p>
                               Earn up to GHS 100 for each friend your refer!
-                              <a href="#"> Invite friends</a>
+                              <a href={"/"}> Invite friends</a>
                             </p>
                           </div>
                         </div>

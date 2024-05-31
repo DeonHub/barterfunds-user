@@ -143,8 +143,8 @@ const SellPanel = ({
                   </div>
 
                   <div className="dropdown buysell-cc-dropdown">
-                    <a
-                      href="#"
+                    <span
+                      
                       className="buysell-cc-choosen dropdown-indicator"
                       data-bs-toggle="dropdown"
                     >
@@ -166,7 +166,7 @@ const SellPanel = ({
                           </span>
                         </div>
                       </div>
-                    </a>
+                    </span>
                     <div className="dropdown-menu dropdown-menu-auto dropdown-menu-mxh">
                       <ul className="buysell-cc-list">
                         {currencies.map((currency) => (
@@ -461,7 +461,7 @@ const SellPanel = ({
               </ul>
               <div className="sub-text-sm">
                 * Our transaction fee are included.
-                <a href="#"> See transaction fee</a>
+                <a href={"/"}> See transaction fee</a>
               </div>
             </div>
             {/* <div className="form-navigation">
@@ -527,7 +527,7 @@ const SellPanel = ({
           <div className="text-center w-100">
             <p>
               Earn up to GHS 100 for each friend your refer!
-              <a href="#">Invite friends</a>
+              <a href={"/"}>Invite friends</a>
             </p>
           </div>
         </div>

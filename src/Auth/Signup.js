@@ -2,7 +2,6 @@ import React from "react";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
-import { withGlobalState } from "../withGlobalState";
 import Success from "./Success";
 
 // {
@@ -78,10 +77,6 @@ class Signup extends React.Component {
     window.sessionStorage.clear();
     window.localStorage.clear();
 
-    const { globalState } = this.props;
-    const API_URL = globalState.api_url;
-    const REACT_APP_PUBLIC_URL = globalState.REACT_APP_PUBLIC_URL;
-
     const { firstname, surname, contact, email, password } = this.state;
 
     this.setState({
@@ -119,7 +114,7 @@ class Signup extends React.Component {
 
 
       axios
-        .post(`${API_URL}/auth/signup`, body)
+        .post(`${process.env.REACT_APP_API_URL}/auth/signup`, body)
         .then((response) => {
           if (response.data.success) {
             // setMessage('Login Successfully')
@@ -135,21 +130,7 @@ class Signup extends React.Component {
                 contact: "",
               });
             }, 2000);
-      
-           
-            // let token = response.data.token;
-            // window.sessionStorage.setItem("token", token);
 
-            // this.props.setGlobalState((prevState) => ({
-            //   ...prevState,
-            //   user: response.data.user,
-            //   isAuthenticated: true,
-            //   token: token,
-            // }));
-
-            // setTimeout(() => {
-            //   this.props.navigate(`${process.env.REACT_APP_PUBLIC_URL}/login/mfa`);
-            // }, 3000);
           }
         })
         .catch((error) => {
@@ -171,7 +152,6 @@ class Signup extends React.Component {
   }
 
   render() {
-    const { globalState } = this.props;
 
     return (
       <div class="nk-app-root">
@@ -271,8 +251,8 @@ class Signup extends React.Component {
                         <div class="form-note-s2 text-center my-4">
                           <p class="" for="">
                             By creating an account, you agree to Barter Funds
-                            <a href="#"> Privacy Policy</a> &amp;{" "}
-                            <a href="#"> Terms of Use.</a>
+                            <a href={"/"}> Privacy Policy</a> &amp;{" "}
+                            <a href={"/"}> Terms of Use.</a>
                           </p>
                         </div>
 
@@ -323,4 +303,4 @@ class Signup extends React.Component {
   }
 }
 
-export default withGlobalState(Signup);
+export default Signup;

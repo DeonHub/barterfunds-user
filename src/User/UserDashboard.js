@@ -1,18 +1,57 @@
-import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import "./User.css";
 import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
-import { withGlobalState } from "../withGlobalState";
-import { user } from "./components/data";
+
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
+import axios from "axios";
 
 import UserWelcome from "./UserWelcome";
 
-const UserDashboard = ({ globalState, ...props }) => {
+const UserDashboard = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+
   useEffect(() => {
-    document.title = "User Dashboard | BarterFunds";
-  });
+    document.title = "User Dashboard  | BarterFunds";
+    const token = window.sessionStorage.getItem("token");
+    // const userId = window.sessionStorage.getItem("userId");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const body = {
+      token,
+    };
+
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/auth/get-user-from-token`, body, {
+        headers: headers,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setUser(response.data.user);
+          setIsLoading(false);
+
+        } else {
+          setUser([]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [navigate]);
 
   return (
     <div className="nk-body npc-crypto bg-white has-sidebar">
@@ -22,6 +61,9 @@ const UserDashboard = ({ globalState, ...props }) => {
           <div className="nk-wrap ">
             <UserHeader user={user} />
 
+            {isLoading ? (
+              <Loader />
+            ) : (<> 
             {!user.verified ||
             !user.twoFactorAuth ||
             !user.kycApproved ||
@@ -57,30 +99,30 @@ const UserDashboard = ({ globalState, ...props }) => {
                                     <div className="user-account-actions">
                                       <ul className="g-1">
                                         <li>
-                                          <a
-                                            href="#"
+                                          <span
+                                           
                                             className="btn btn-lg btn-primary"
                                           >
                                             <span>Deposit</span>
-                                          </a>
+                                          </span>
                                         </li>
                                         <li>
-                                          <a
-                                            href="#"
+                                          <span
+                                           
                                             className="btn btn-lg btn-primary"
                                           >
                                             <span>Withdraw</span>
-                                          </a>
+                                          </span>
                                         </li>
                                       </ul>
                                       <br></br>
                                       <div>
-                                        <a
-                                          href="#"
+                                        <span
+                                          
                                           className="btn btn-lg btn-primary"
                                         >
                                           <span>Exchange</span>
-                                        </a>
+                                        </span>
                                       </div>
                                     </div>
                                   </div>
@@ -399,7 +441,7 @@ const UserDashboard = ({ globalState, ...props }) => {
                                     </div>
                                   </div>
                                   <div className="nk-refwg-action">
-                                    <a href="#" className="btn btn-primary">
+                                    <a href="/" className="btn btn-primary">
                                       Invite
                                     </a>
                                   </div>
@@ -457,6 +499,10 @@ const UserDashboard = ({ globalState, ...props }) => {
                 </div>
               </div>
             )}
+            </>)}
+
+            {/* this content */}
+            
 
             <UserFooter />
           </div>
@@ -466,4 +512,4 @@ const UserDashboard = ({ globalState, ...props }) => {
   );
 };
 
-export default withGlobalState(UserDashboard);
+export default UserDashboard;

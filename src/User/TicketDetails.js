@@ -1,7 +1,7 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState } from 'react';
 import axios from 'axios';
-import FileUpload from './components/FileUpload';
-import { Modal, Button, Image, Rate } from "antd";
+
+import { Modal, Image, Rate } from "antd";
 import openNotification from "../components/OpenNotification";
 
 
@@ -13,7 +13,6 @@ const TicketDetails = ({
     id 
 }) => {
   const [open, setOpen] = useState(false);
-  const [selectedProof, setSelectedProof] = useState('');
   const [feedback, setFeedback] = useState('');
   const [rating, setRating] = useState(0);
   const [submitButton, setSubmitButton] = useState(!feedback || !rating ? false : true);
@@ -87,24 +86,10 @@ const TicketDetails = ({
     setOpen(false);
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'open':
-        return 'info'; 
-      case 'resolved':
-        return 'success'; 
-      case 'pending':
-        return 'warning'; 
-      case 'closed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
+
   return (
     <>
-      <a
-        href="javascript:void(0);"
+      <span
         className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
         title="View Details"
         onClick={showModal}
@@ -112,7 +97,7 @@ const TicketDetails = ({
         <span className="icon material-symbols-outlined">
             visibility
         </span>
-        </a>
+        </span>
 
       <Modal
         open={open}

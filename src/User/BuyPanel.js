@@ -134,8 +134,7 @@ const BuyPanel = ({
                   </div>
 
                   <div className="dropdown buysell-cc-dropdown">
-                    <a
-                      href="#"
+                    <span
                       className="buysell-cc-choosen dropdown-indicator"
                       data-bs-toggle="dropdown"
                     >
@@ -157,7 +156,7 @@ const BuyPanel = ({
                           </span>
                         </div>
                       </div>
-                    </a>
+                    </span>
                     <div className="dropdown-menu dropdown-menu-auto dropdown-menu-mxh">
                       <ul className="buysell-cc-list">
                         {currencies.map((currency) => (
@@ -463,7 +462,7 @@ const BuyPanel = ({
               </ul>
               <div className="sub-text-sm">
                 * Our transaction fee are included.
-                <a href="#"> See transaction fee</a>
+                <a href={"/user/dashboard"}> See transaction fee</a>
               </div>
             </div>
 
@@ -500,8 +499,8 @@ const BuyPanel = ({
                 USD for <strong>1,200.00</strong> GHS.
               </p>
               <p className="sub-text-sm">
-                Learn when you reciveve bitcoin in your wallet.
-                <a href="#"> Click here</a>
+                Learn when you receive bitcoin in your wallet.
+                <a href={"/user/dashboard"}> Click here</a>
               </p>
             </div>
             <div className="nk-modal-action-lg">
@@ -521,7 +520,7 @@ const BuyPanel = ({
           <div className="text-center w-100">
             <p>
               Earn upto GHS 100 for each friend your refer!
-              <a href="#">Invite friends</a>
+              <a href={"/user/dashboard"}>Invite friends</a>
             </p>
           </div>
         </div>

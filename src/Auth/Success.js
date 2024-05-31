@@ -1,12 +1,8 @@
 import React from "react";
 
-class Success extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Success = () => {
 
-  render() {
-    return (
+  return (
     <div className="nk-block-head">
         <div className="nk-block-head-content  text-success">
           {/* <h4 className="nk-block-title">🎉 Congratulations! 🎉</h4> */}
@@ -20,7 +16,7 @@ class Success extends React.Component {
         </div>
       </div>
     );
-  }
+
 }
 
 export default Success;

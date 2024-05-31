@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { withGlobalState } from "../withGlobalState";
 
-const AccountActivation = ({ globalState }) => {
+const AccountActivation = () => {
   const { activationToken } = useParams();
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const API_URL = globalState.api_url;
-    const decodedActivationToken = decodeURIComponent(activationToken)
 
       let body = {
         activationToken
       }
-
       
-      axios.post(`${API_URL}/auth/account-activation`, body)
+      axios.post(`${process.env.REACT_APP_API_URL}/auth/account-activation`, body)
       .then((response) => {
         if (response.data.success) {
           setSuccess(true);
@@ -27,7 +23,7 @@ const AccountActivation = ({ globalState }) => {
 
         console.log("error :>> ", error.response.data.message);
       });
-  }, []);
+  }, [activationToken]);
 
   return (
     <div className="nk-app-root">
@@ -37,7 +33,7 @@ const AccountActivation = ({ globalState }) => {
             <div className="nk-content ">
               <div className="nk-block nk-block-middle nk-auth-body">
                 <div className="brand-logo pb-4 text-center">
-                  <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className="logo-link">
+                  <a href={`/`} className="logo-link">
                     <img
                       className="logo-dark logo-img logo-img-lg"
                       src="/assets/images/barterfunds-logo.png"
@@ -55,7 +51,7 @@ const AccountActivation = ({ globalState }) => {
                     <div className="nk-block-des">
                       <p>
                         You can now{" "}
-                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}>Login</a>{" "}
+                        <a href={`/login`}>Login</a>{" "}
                         and start using our services.
                       </p>
                       <p>Thank you for choosing BarterFunds.</p>
@@ -73,4 +69,4 @@ const AccountActivation = ({ globalState }) => {
   );
 };
 
-export default withGlobalState(AccountActivation);
+export default AccountActivation;

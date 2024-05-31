@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { withGlobalState } from "../withGlobalState";
 import TextInput from "../components/TextInput";
 import openNotification from "../components/OpenNotification";
 import axios from "axios";
 
-const ResetPassword = ({ globalState }) => {
-  const currentYear = new Date().getFullYear();
+const ResetPassword = () => {
   const { resetToken } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -28,7 +26,6 @@ const ResetPassword = ({ globalState }) => {
   };
 
   const handleSubmit = (event) => {
-    const API_URL = globalState.api_url;
 
     event.preventDefault();
     let body = {
@@ -37,7 +34,7 @@ const ResetPassword = ({ globalState }) => {
     };
 
     axios
-      .post(`${API_URL}/auth/reset-password`, body)
+      .post(`${process.env.REACT_APP_API_URL}/auth/reset-password`, body)
       .then((response) => {
         if (response.data.success) {
           // setMessage('Login Successfully')
@@ -52,7 +49,7 @@ const ResetPassword = ({ globalState }) => {
           setConfirmPassword("");
 
           setTimeout(() => {
-            navigate(`${process.env.REACT_APP_PUBLIC_URL}/login`);
+            navigate(`/login`);
           }, 2000);
         }
       })
@@ -64,7 +61,7 @@ const ResetPassword = ({ globalState }) => {
           error.response.data.message
         );
 
-        navigate(`${process.env.REACT_APP_PUBLIC_URL}/forgot-password`);
+        navigate(`/forgot-password`);
 
         console.log("error :>> ", error.response.data.message);
       });
@@ -81,7 +78,7 @@ const ResetPassword = ({ globalState }) => {
             <div className="nk-content ">
               <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                 <div className="brand-logo pb-4 text-center">
-                  <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className="logo-link">
+                  <a href={`/`} className="logo-link">
                     <img
                       className="logo-dark logo-img logo-img-lg"
                       src="/assets/images/barterfunds-logo.png"
@@ -137,45 +134,11 @@ const ResetPassword = ({ globalState }) => {
                     </form>
                     <div className="form-note-s2 text-center pt-4">
                       Remember your password?
-                      <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}> Login</a>
+                      <a href={`/login`}> Login</a>
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* <div className="nk-footer nk-auth-footer-full">
-                <div className="container wide-lg">
-                  <div className="row g-3">
-                    <div className="col-lg-6 order-lg-last">
-                      <ul className="nav nav-sm justify-content-center justify-content-lg-end">
-                        <li className="nav-item">
-                          <a className="nav-link" href="#">
-                            Terms & Condition
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="#">
-                            Privacy Policy
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="#">
-                            Help
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="nk-block-content text-center text-lg-left">
-                        <p className="text-soft">
-                          &copy; {currentYear} Barter Funds. All Rights
-                          Reserved.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -184,4 +147,4 @@ const ResetPassword = ({ globalState }) => {
   );
 };
 
-export default withGlobalState(ResetPassword);
+export default ResetPassword;

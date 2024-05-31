@@ -3,7 +3,6 @@ import "./Auth.css";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
-import { withGlobalState } from "../withGlobalState";
 import FailedLogin from "./FailedLogin";
 
 class Login extends React.Component {
@@ -121,15 +120,9 @@ class Login extends React.Component {
             window.sessionStorage.setItem("email", email);
             // window.sessionStorage.setItem("userId", response.data.user._id);
 
-            this.props.setGlobalState((prevState) => ({
-              ...prevState,
-              user: response.data.user,
-              isAuthenticated: true,
-              token: token,
-            }));
 
             setTimeout(() => {
-              this.props.navigate(`${process.env.REACT_APP_PUBLIC_URL}/login/mfa`);
+              this.props.navigate(`/login/mfa`);
             }, 1000);
           }
         })
@@ -170,8 +163,6 @@ class Login extends React.Component {
   }
 
   render() {
-    const { globalState } = this.props;
-
     return (
       <div class="nk-app-root">
         {this.state.showFailedLogin ? (
@@ -184,7 +175,7 @@ class Login extends React.Component {
                   <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                     <div className="brand-logo pb-4 text-center">
                       <a
-                        href={`${process.env.REACT_APP_PUBLIC_URL}/`}
+                        href={`/`}
                         className="logo-link"
                       >
                         <img
@@ -247,7 +238,7 @@ class Login extends React.Component {
                         </form>
                         <div className="form-note-s2 text-center pt-4">
                           New on our platform?
-                          <a href={`${process.env.REACT_APP_PUBLIC_URL}/signup`}>
+                          <a href={`/signup`}>
                             {" "}
                             Create an account
                           </a>
@@ -265,4 +256,4 @@ class Login extends React.Component {
   }
 }
 
-export default withGlobalState(Login);
+export default Login;

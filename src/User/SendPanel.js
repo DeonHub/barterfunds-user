@@ -3,7 +3,6 @@ import "./User.css";
 import OpenModal from "./components/OpenModal";
 import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import FileUpload from "./components/FileUpload";
 
 const SendPanel = ({   
   currencies,
@@ -143,8 +142,8 @@ const SendPanel = ({
                   </div>
 
                   <div className="dropdown buysell-cc-dropdown">
-                    <a
-                      href="#"
+                    <span
+
                       className="buysell-cc-choosen dropdown-indicator"
                       data-bs-toggle="dropdown"
                     >
@@ -166,7 +165,7 @@ const SendPanel = ({
                           </span>
                         </div>
                       </div>
-                    </a>
+                    </span>
                     <div className="dropdown-menu dropdown-menu-auto dropdown-menu-mxh">
                       <ul className="buysell-cc-list">
                         {currencies.map((currency) => (
@@ -566,7 +565,7 @@ const SendPanel = ({
               </ul>
               <div className="sub-text-sm">
                 * Our transaction fee are included.
-                <a href="#"> See transaction fee</a>
+                <a href={"/user/dashboard"}> See transaction fee</a>
               </div>
             </div>
             <OpenModal
@@ -604,7 +603,7 @@ const SendPanel = ({
               </p>
               <p className="sub-text-sm">
                 Learn when you reciveve bitcoin in your wallet.
-                <a href="#"> Click here</a>
+                <a href={"/"}> Click here</a>
               </p>
             </div>
             <div className="nk-modal-action-lg">
@@ -624,7 +623,7 @@ const SendPanel = ({
           <div className="text-center w-100">
             <p>
               Earn upto GHS 100 for each friend your refer!{" "}
-              <a href="#">Invite friends</a>
+              <a href={"/"}>Invite friends</a>
             </p>
           </div>
         </div>

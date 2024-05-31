@@ -83,7 +83,7 @@ class MainHeader extends React.Component {
                         </a>
                       </li>
                       <li className="menu-item menu-item-type-post_type menu-item-object-page">
-                        <a href="/careers/" target="_blank" data-link-name="Careers">
+                        <a href="/careers/" target="_blank" rel="noopener" data-link-name="Careers">
                           <span>
                             {" "}
                             Careers <i className="level1-0160-arrow-right small" />
@@ -102,18 +102,7 @@ class MainHeader extends React.Component {
                           </span>
                         </a>
                       </li>
-                      <li className="menu-item menu-item-type-post_type menu-item-object-page">
-                        <a
-                          href="https://investor.payoneer.com/"
-                          target="_blank"
-                          data-link-name="Investors"
-                        >
-                          <span>
-                            {" "}
-                            Investors <i className="level1-0160-arrow-right small" />
-                          </span>
-                        </a>
-                      </li>
+                      
                     </ul>
                   </li>
                   <li
@@ -1434,16 +1423,14 @@ class MainHeader extends React.Component {
                 <div className="flex-fill d-flex align-items-center ms-auto">
                   <div className="d-none d-lg-inline-block">
                     <a
-                      href="https://myaccount.payoneer.com/"
+                      href="/login"
                       className="btn btn-link rounded-pill"
-                      rel="noopener"
-                      target="_blank"
                     >
                       Sign In
                     </a>
                   </div>
                   <a
-                    href="/go/"
+                    href="/signup"
                     className="d-none btn btn-primary rounded-pill d-lg-flex align-items-center btn-arrow"
                   >
                     Register

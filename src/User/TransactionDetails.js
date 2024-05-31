@@ -1,7 +1,7 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState } from 'react';
 import axios from 'axios';
 import FileUpload from './components/FileUpload';
-import { Modal, Button, Image } from "antd";
+import { Modal, Image } from "antd";
 import openNotification from "../components/OpenNotification";
 
 
@@ -76,25 +76,11 @@ const TransactionDetails = ({
     setOpen(false);
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'info'; 
-      case 'success':
-        return 'success'; 
-      case 'cancelled':
-        return 'warning'; 
-      case 'failed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
+
 
   return (
     <>
-      <a
-        href="javascript:void(0);"
+      <span
         className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
         title="View Details"
         onClick={showModal}
@@ -102,7 +88,7 @@ const TransactionDetails = ({
         <span className="icon material-symbols-outlined">
             visibility
         </span>
-        </a>
+        </span>
 
       <Modal
         open={open}

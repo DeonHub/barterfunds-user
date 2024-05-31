@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
 
@@ -12,9 +12,8 @@ const PhoneNumberInput = ({
     const inputElement = inputRef.current;
 
     const iti = intlTelInput(inputElement, {
-      initialCountry: "auto",
-      separateDialCode: true,
       initialCountry: "us",
+      separateDialCode: true,
     });
 
     const initialCountryData = iti.getSelectedCountryData();

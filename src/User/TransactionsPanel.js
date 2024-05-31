@@ -3,10 +3,9 @@ import "./User.css";
 import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
-import { withGlobalState } from "../withGlobalState";
 import BuyPanel from "./BuyPanel";
 import SellPanel from "./SellPanel";
-import { currencies } from "./components/data";
+
 import SendPanel from "./SendPanel";
 import ReceivePanel from "./ReceivePanel";
 import { user } from "./components/data";
@@ -14,11 +13,11 @@ import { Button, Result } from "antd";
 import Loader from "../components/Loader";
 import axios from "axios";
 
-const TransactionsPanel = ({ globalState, ...props }) => {
+const TransactionsPanel = () => {
   const [action, setAction] = useState("buy");
   const [formStage, setFormStage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  // const [currencies, setCurrencies] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
 
   useEffect(() => {
     document.title = "Transactions Panel | BarterFunds";
@@ -27,19 +26,19 @@ const TransactionsPanel = ({ globalState, ...props }) => {
           Authorization: `Bearer ${token}`,
         };
 
-    // axios
-    //   .get(`${process.env.REACT_APP_API_URL}/currencies`, { headers: headers })
-    //   .then((response) => {
-    //     if (response.data.success) {
-    //       setCurrencies(response.data.currencies);
-    //       setIsLoading(false);
-    //     } else {
-    //       setCurrencies([]);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/currencies`, { headers: headers })
+      .then((response) => {
+        if (response.data.success) {
+          setCurrencies(response.data.currencies);
+          setIsLoading(false);
+        } else {
+          setCurrencies([]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     setTimeout(() => {
       setIsLoading(false)
@@ -83,34 +82,34 @@ const TransactionsPanel = ({ globalState, ...props }) => {
                     <div className="buysell wide-xs m-auto">
                       {formStage === 1 && (
                         <div className="navigation">
-                          <a
-                            href="javascript:void(0);"
+                          <span
+                            
                             className={action === "buy" ? "active" : ""}
                             onClick={() => handleNavigationClick("buy")}
                           >
                             BUY
-                          </a>
-                          <a
-                            href="javascript:void(0);"
+                          </span>
+                          <span
+                            
                             className={action === "sell" ? "active" : ""}
                             onClick={() => handleNavigationClick("sell")}
                           >
                             SELL
-                          </a>
-                          <a
-                            href="javascript:void(0);"
+                          </span>
+                          <span
+                            
                             className={action === "send" ? "active" : ""}
                             onClick={() => handleNavigationClick("send")}
                           >
                             SEND
-                          </a>
-                          <a
-                            href="javascript:void(0);"
+                          </span>
+                          <span
+                            
                             className={action === "receive" ? "active" : ""}
                             onClick={() => handleNavigationClick("receive")}
                           >
                             RECEIVE
-                          </a>
+                          </span>
                         </div>
                       )}
 

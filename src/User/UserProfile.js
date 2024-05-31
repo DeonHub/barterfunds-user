@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./User.css";
 import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
-import { withGlobalState } from "../withGlobalState";
 import { user } from "./components/data";
-import { Image, Avatar } from "antd";
+import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-const UserProfile = ({ globalState, ...props }) => {
+const UserProfile = () => {
   useEffect(() => {
     document.title = "User Profile | BarterFunds";
   }, []);
@@ -212,9 +210,9 @@ const UserProfile = ({ globalState, ...props }) => {
                 role="document"
               >
                 <div class="modal-content">
-                  <a href="#" class="close" data-bs-dismiss="modal">
+                  <span class="close" data-bs-dismiss="modal">
                     <em class="icon ni ni-cross-sm"></em>
-                  </a>
+                  </span>
                   <div class="modal-body modal-body-lg">
                     <h5 class="title">Update Profile</h5>
                     <ul class="nk-nav nav nav-tabs">
@@ -308,121 +306,27 @@ const UserProfile = ({ globalState, ...props }) => {
                           </div>
 
                           </div>
-                          {/* <div class="col-12">
-                            <div class="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                id="latest-sale"
-                              />
-                              <label
-                                class="custom-control-label"
-                                for="latest-sale"
-                              >
-                                Use full name to display
-                              </label>
-                            </div>
-                          </div> */}
+                        
+                         
                           <div class="col-12">
                             <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                               <li>
-                                <a href="#" class="btn btn-lg btn-primary">
+                                <span class="btn btn-lg btn-primary">
                                   Update Profile
-                                </a>
+                                </span>
                               </li>
                               <li>
-                                <a
-                                  href="#"
+                                <span 
                                   data-bs-dismiss="modal"
-                                  class="link link-light"
+                                  class="btn btn-lg btn-danger"
                                 >
                                   Cancel
-                                </a>
+                                </span>
                               </li>
                             </ul>
-                          </div>
-                        </div>
+                          </div>                        </div>
                       </div>
-                      {/* <div class="tab-pane" id="address">
-                        <div class="row gy-4">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="form-label" for="address-l1">
-                                Address Line 1
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control form-control-lg"
-                                id="address-l1"
-                                value="2337 Kildeer Drive"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="form-label" for="address-l2">
-                                Address Line 2
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control form-control-lg"
-                                id="address-l2"
-                                value=""
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="form-label" for="address-st">
-                                State
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control form-control-lg"
-                                id="address-st"
-                                value="Kentucky"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="form-label" for="address-county">
-                                Country
-                              </label>
-                              <select
-                                class="form-select js-select2"
-                                id="address-county"
-                                data-ui="lg"
-                              >
-                                <option>Canada</option>
-                                <option>United State</option>
-                                <option>United Kindom</option>
-                                <option>Australia</option>
-                                <option>India</option>
-                                <option>Bangladesh</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                              <li>
-                                <a href="#" class="btn btn-lg btn-primary">
-                                  Update Address
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  data-bs-dismiss="modal"
-                                  class="link link-light"
-                                >
-                                  Cancel
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div> */}
+                      
                     </div>
                   </div>
                 </div>
@@ -436,4 +340,4 @@ const UserProfile = ({ globalState, ...props }) => {
   );
 };
 
-export default withGlobalState(UserProfile);
+export default UserProfile;

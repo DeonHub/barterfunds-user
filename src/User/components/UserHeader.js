@@ -1,12 +1,11 @@
 import React from "react";
-import { withGlobalState } from "../../withGlobalState";
 import { user } from "./data";
 import './userjs';
-import { Image, Avatar } from "antd";
+import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 
-const UserHeader = ({ globalState, ...props }) => {
+const UserHeader = () => {
 
 
   return (
@@ -14,13 +13,13 @@ const UserHeader = ({ globalState, ...props }) => {
     <div className="container-fluid">
       <div className="nk-header-wrap">
         <div className="nk-menu-trigger d-xl-none ms-n1">
-          <a
-            href="#"
+          <span
+            
             className="nk-nav-toggle nk-quick-nav-icon"
             data-target="sidebarMenu"
           >
             <em className="icon la la-bars" />
-          </a>
+          </span>
         </div>
         <div className="nk-header-brand d-xl-none">
           <a href="/assets/index.html" className="logo-link">
@@ -33,13 +32,14 @@ const UserHeader = ({ globalState, ...props }) => {
             <img
               className="logo-dark logo-img"
               src="/assets/images/logo.png"
+              alt="logo"
             />
           </a>
         </div>
         {/* .nk-header-brand */}
         <div className="nk-header-news d-none d-xl-block">
           <div className="nk-news-list">
-            <a className="nk-news-item" href="#">
+            <span className="nk-news-item" >
               <div className="nk-news-icon">
                 <em className="icon la la-newspaper"></em> 
               </div>
@@ -50,14 +50,14 @@ const UserHeader = ({ globalState, ...props }) => {
                 </p>
                 <em className="icon la la-external-link"></em>
               </div>
-            </a>
+            </span>
           </div>
         </div>
         {/* .nk-header-news */}
         <div className="nk-header-tools">
           <ul className="nk-quick-nav">
             <li className="dropdown user-dropdown">
-              <a href="#" className="dropdown-toggle" data-bs-toggle="dropdown">
+              <span className="dropdown-toggle" data-bs-toggle="dropdown">
                 <div className="user-toggle">
                   <div className="user-avatar sm">
 
@@ -84,7 +84,7 @@ const UserHeader = ({ globalState, ...props }) => {
                     </div>
                   </div>
                 </div>
-              </a>
+              </span>
               <div className="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
                 <div className="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                   <div className="user-card">
@@ -136,10 +136,10 @@ const UserHeader = ({ globalState, ...props }) => {
                 <div className="dropdown-inner">
                   <ul className="link-list">
                     <li>
-                      <a href="#">
+                      <span>
                         <em className="icon las la-sign-out-alt" />
                         <span>Sign out</span>
-                      </a>
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -147,21 +147,20 @@ const UserHeader = ({ globalState, ...props }) => {
             </li>
             {/* .dropdown */}
             <li className="dropdown notification-dropdown me-n1">
-              <a
-                href="#"
+              <span
                 className="dropdown-toggle nk-quick-nav-icon"
                 data-bs-toggle="dropdown"
               >
                 <div className="icon-status icon-status-info">
                   <em className="icon la la-bell" />
                 </div>
-              </a>
+              </span>
               <div className="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
                 <div className="dropdown-head">
                   <span className="sub-title nk-dropdown-title">
                     Notifications
                   </span>
-                  <a href="#">Mark All as Read</a>
+                  <span>Mark All as Read</span>
                 </div>
                 <div className="dropdown-body">
                   <div className="nk-notification">
@@ -239,7 +238,7 @@ const UserHeader = ({ globalState, ...props }) => {
                 </div>
                 {/* .nk-dropdown-body */}
                 <div className="dropdown-foot center">
-                  <a href="#">View All</a>
+                  <a href="/">View All</a>
                 </div>
               </div>
             </li>
@@ -259,4 +258,4 @@ const UserHeader = ({ globalState, ...props }) => {
 }
 
 
-export default withGlobalState(UserHeader);
+export default UserHeader;

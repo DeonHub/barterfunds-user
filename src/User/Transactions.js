@@ -5,7 +5,6 @@ import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
 import UserFooter from "./components/UserFooter";
 import TransactionDetails from "./TransactionDetails";
-import { withGlobalState } from "../withGlobalState";
 import Loader from "../components/Loader";
 import axios from "axios";
 
@@ -14,7 +13,8 @@ const Transactions = ({ globalState, ...props }) => {
   const [transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
 
@@ -49,7 +49,7 @@ const Transactions = ({ globalState, ...props }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -153,40 +153,40 @@ const Transactions = ({ globalState, ...props }) => {
                         </div>
                         <div className="nk-block-head-content">
                           <div className="toggle-wrap nk-block-tools-toggle">
-                            <a
-                              href="#"
+                            <span
+                              
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
                               <em className="icon ni ni-menu-alt-r" />
-                            </a>
+                            </span>
                             <div
                               className="toggle-expand-content"
                               data-content="pageMenu"
                             >
                               <ul className="nk-block-tools g-3">
                                 <li>
-                                  <a
-                                    href="#"
+                                  <span
+                                   
                                     className="btn btn-white btn-dim btn-outline-light"
                                   >
                                     <span class="icon material-symbols-outlined">
                                       cloud_download
                                     </span>
                                     <span>Export</span>
-                                  </a>
+                                  </span>
                                 </li>
                                 <li className="nk-block-tools-opt">
                                   <div className="drodown">
-                                    <a
-                                      href="#"
+                                    <span
+                                     
                                       className="dropdown-toggle btn btn-icon btn-primary"
                                       data-bs-toggle="dropdown"
                                     >
                                       <span class="icon material-symbols-outlined">
                                         add
                                       </span>
-                                    </a>
+                                    </span>
                                   </div>
                                 </li>
                               </ul>
@@ -429,4 +429,4 @@ const Transactions = ({ globalState, ...props }) => {
   );
 };
 
-export default withGlobalState(Transactions);
+export default Transactions;

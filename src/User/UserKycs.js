@@ -11,12 +11,12 @@ import axios from "axios";
 const UserKycs = () => {
   const navigate = useNavigate();
   const [kycs, setKycs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  // const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
-  const transactions = [];
 
 
 
@@ -50,23 +50,23 @@ const UserKycs = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-    setCurrentPage(1);
-  };
+  // const handleSearchChange = (e) => {
+  //   setSearchTerm(e.target.value);
+  //   setCurrentPage(1);
+  // };
 
 
-  const filteredData = kycs.filter(
-    (kyc) =>
-      kyc.firstname
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-  );
+  // const filteredData = kycs.filter(
+  //   (kyc) =>
+  //     kyc.firstname
+  //       .toLowerCase()
+  //       .includes(searchTerm.toLowerCase())
+  // );
 
   // Calculate pagination
-  const totalItems = filteredData.length;
+  const totalItems = kycs.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   // const totalPages = 10;
 
@@ -75,7 +75,7 @@ const UserKycs = () => {
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
   // Get the data for the current page
-  const currentPageData = filteredData.slice(startIndex, endIndex);
+  const currentPageData = kycs.slice(startIndex, endIndex);
 
   // Pagination handlers
   const goToPage = (pageNumber) => {
@@ -100,33 +100,6 @@ const UserKycs = () => {
     return `${hours}:${minutes} ${amPM}`;
   };
 
-  const formatCurrency = (value) => {
-    const number = Number(value);
-
-    if (!Number.isFinite(number)) {
-      return "Invalid number";
-    }
-
-    return number.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  }
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'info'; 
-      case 'success':
-        return 'success'; 
-      case 'cancelled':
-        return 'warning'; 
-      case 'failed':
-        return 'danger'; 
-      default:
-        return '';
-    }
-  };
 
 
   return (
@@ -213,13 +186,13 @@ const UserKycs = () => {
                         </div>
                         <div className="nk-block-head-content">
                           <div className="toggle-wrap nk-block-tools-toggle">
-                            <a
-                              href="#"
+                            <span
+                      
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
                               <em className="icon ni ni-menu-alt-r" />
-                            </a>
+                            </span>
                             
                             <div
                               className="toggle-expand-content"

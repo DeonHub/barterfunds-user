@@ -2,7 +2,6 @@ import React from "react";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
-import { withGlobalState } from "../withGlobalState";
 import Success from "./Success";
 
 // {
@@ -48,17 +47,13 @@ class ForgotPassword extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const { globalState } = this.props;
-    const API_URL = globalState.api_url;
-    const REACT_APP_PUBLIC_URL = globalState.REACT_APP_PUBLIC_URL;
-
     const { email } = this.state;
 
     let body = {
       email,
     };
 
-    axios.post(`${API_URL}/auth/forgot-password`, body)
+    axios.post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, body)
     .then((response) => {
     if (response.data) {
       openNotification(
@@ -90,7 +85,6 @@ class ForgotPassword extends React.Component {
   }
 
   render() {
-    const { globalState } = this.props;
 
     return (
       <div class="nk-app-root">
@@ -101,7 +95,7 @@ class ForgotPassword extends React.Component {
                 <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                   <div className="brand-logo pb-4 text-center">
                     <a
-                      href={`${process.env.REACT_APP_PUBLIC_URL}/`}
+                      href={`/`}
                       className="logo-link"
                     >
                       <img
@@ -157,7 +151,7 @@ class ForgotPassword extends React.Component {
                         </form>
 
                         <div className="form-note-s2 text-center pt-4">
-                          <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}>
+                          <a href={`/login`}>
                             <strong>Return to Login</strong>
                           </a>
                         </div>
@@ -181,39 +175,7 @@ class ForgotPassword extends React.Component {
                   )}
                 </div>
 
-                {/* <div className="nk-footer nk-auth-footer-full">
-                  <div className="container wide-lg">
-                    <div className="row g-3">
-                      <div className="col-lg-6 order-lg-last">
-                        <ul className="nav nav-sm justify-content-center justify-content-lg-end">
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">
-                              Terms & Condition
-                            </a>
-                          </li>
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">
-                              Privacy Policy
-                            </a>
-                          </li>
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">
-                              Help
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="nk-block-content text-center text-lg-left">
-                          <p className="text-soft">
-                            &copy; {this.state.currentYear} Barter Funds. All
-                            Rights Reserved.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+              
               </div>
             </div>
           </div>
@@ -223,4 +185,4 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default withGlobalState(ForgotPassword);
+export default ForgotPassword;

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./User.css";
 
-import { withGlobalState } from "../withGlobalState";
 import Results from "./components/Results";
 
-const UserWelcome = ({ globalState, user }) => {
+const UserWelcome = ({ user }) => {
   const [index, setIndex] = useState(1);
   const [steps, setSteps] = useState([
     {
@@ -30,7 +29,7 @@ const UserWelcome = ({ globalState, user }) => {
     },
     {
       index: 3,
-      title: "Set up payment method",
+      title: "Activate your BarterFunds Wallet",
       done: false,
       current: false,
       pending: false,
@@ -54,7 +53,7 @@ const UserWelcome = ({ globalState, user }) => {
           return user.twoFactorAuth === false;
         case "Verify your identity (KYC)":
           return user.kycApproved === false;
-        case "Set up payment method":
+        case "Activate your BarterFunds Wallet":
           return user.addedPaymentMethod === false;
         case "Make transaction":
           return (
@@ -83,7 +82,7 @@ const UserWelcome = ({ globalState, user }) => {
 
     // Update state
     setSteps(updatedSteps);
-  }, [user]);
+  }, [user, steps]);
 
   const handleClick = (clickedIndex) => {
     if (steps[clickedIndex].pending) return;
@@ -227,16 +226,16 @@ const UserWelcome = ({ globalState, user }) => {
                         done={steps[index].done}
                         title={
                           steps[index].done
-                            ? "Payment Method Set Up!"
-                            : "Set Up Payment Method"
+                            ? "BarterFunds Wallet Activated!"
+                            : "Activate your BarterFunds Wallet"
                         }
                         subtitle={
                           steps[index].done
-                            ? "Your payment method has been successfully set up. You can now proceed with transactions and payments smoothly."
-                            : "Set up a payment method to proceed with transactions. Adding a payment method allows you to make purchases and transactions securely."
+                            ? "Your BarterFunds Wallet has been successfully set up. You can now proceed with transactions and payments smoothly."
+                            : "Activate your BarterFunds Wallet to proceed with transactions. Activating allows you to make purchases and transactions securely."
                         }
 
-                        redirectTo={'payment-methods'}
+                        redirectTo={'barter-wallet'}
                       />
                     ) : (
                       <Results
@@ -443,7 +442,7 @@ const UserWelcome = ({ globalState, user }) => {
                     </div>
                   </div>
                   <div className="nk-block-content flex-shrink-0">
-                    <a href="#" className="btn btn-lg btn-outline-primary">
+                    <a href="/support" className="btn btn-lg btn-outline-primary">
                       Get Support Now
                     </a>
                   </div>
@@ -457,4 +456,4 @@ const UserWelcome = ({ globalState, user }) => {
   );
 };
 
-export default withGlobalState(UserWelcome);
+export default UserWelcome;

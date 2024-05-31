@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./User.css";
 import UserSidebar from "./components/UserSidebar";
 import UserHeader from "./components/UserHeader";
@@ -78,7 +78,7 @@ const KycForm = () => {
     }
 
     setIsLoading(false);
-  }, [formData, selectedCountryCode]);
+  }, [formData, selectedCountryCode, navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -1185,29 +1185,14 @@ const KycForm = () => {
                               <div className="form-group text-center">
                                 <div className="">
                                   <span className="">
-                                    By submitting, I agree to The{" "}
-                                    <a href="#">Terms Of Condition</a> And{" "}
-                                    <a href="#">Privacy Policy</a> of
+                                    By submitting, I agree to The
+                                    <a href={"/"}>Terms Of Condition</a> And
+                                    <a href={"/"}>Privacy Policy</a> of
                                     BarterFunds
                                   </span>
                                 </div>
                               </div>
-                              {/* <div className="form-group">
-                              <div className="custom-control custom-control-xs custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="info-assure"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="info-assure"
-                                >
-                                  All The Personal Information I Have Entered Is
-                                  Correct.
-                                </label>
-                              </div>
-                            </div> */}
+                              
                               <div className="nk-kycfm-action pt-2">
                                 <button
                                   type="button"
