@@ -184,7 +184,7 @@ class TwoFactor extends React.Component {
             <div className="nk-content ">
               <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
                 <div className="brand-logo pb-4 text-center">
-                  <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className="logo-link">
+                  <a href={`/`} className="logo-link">
                     <img
                       className="logo-dark logo-img logo-img-lg"
                       src="/assets/images/barterfunds-logo.png"

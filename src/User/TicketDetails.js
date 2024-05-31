@@ -56,7 +56,7 @@ const TicketDetails = ({
           );
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/user/support`;
+            window.location.href = `/user/support`;
           }, 1000);
         } else {
           openNotification(

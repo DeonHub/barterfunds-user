@@ -161,7 +161,7 @@ const UserWallet = () => {
                                       <ul className="nk-block-tools gx-3">
                                         <li>
                                           <a
-                                            href={`${process.env.REACT_APP_PUBLIC_URL}/user/transactions-panel`}
+                                            href={`/user/transactions-panel`}
                                             className="btn btn-primary"
                                           >
                                             <span>Buy Sell</span>
@@ -233,7 +233,7 @@ const UserWallet = () => {
                                             <ul>
                                               <li>
                                                 <a
-                                                  href={`${process.env.REACT_APP_PUBLIC_URL}/user/transactions-panel`}
+                                                  href={`/user/transactions-panel`}
                                                 >
                                                   <span class="icon material-symbols-outlined">
                                                     north_east
@@ -243,7 +243,7 @@ const UserWallet = () => {
                                               </li>
                                               <li>
                                                 <a
-                                                  href={`${process.env.REACT_APP_PUBLIC_URL}/user/transactions-panel`}
+                                                  href={`/user/transactions-panel`}
                                                 >
                                                   <span class="icon material-symbols-outlined">
                                                     south_west

@@ -596,7 +596,7 @@ const ReceivePanel = ({
           </div>
 
           <div className="text-center my-3">
-            <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/orders`}>
+            <a href={`/user/orders`}>
               I will upload later
             </a>
           </div>

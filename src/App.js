@@ -38,34 +38,34 @@ const App = () => {
       <Routes>
 
         {/* Main routes go here */}
-        <Route path={`${process.env.PUBLIC_URL}/`} element={<Main />} />
+        <Route path={`/`} element={<Main />} />
  
         {/* Auth routes go here */}
-        <Route path={`${process.env.PUBLIC_URL}/login`} element={<Login navigate={navigateTo} />}/>
-        <Route path={`${process.env.PUBLIC_URL}/signup`} element={<Signup navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/forgot-password`} element={<ForgotPassword navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/login/mfa`} element={<TwoFactor navigate={navigateTo} />} />
-        <Route path={`${process.env.PUBLIC_URL}/account-activation/:activationToken`} element={<AccountActivation />} />
-        <Route path={`${process.env.PUBLIC_URL}/reset-password/:resetToken`} element={<ResetPassword />} />
+        <Route path={`/login`} element={<Login navigate={navigateTo} />}/>
+        <Route path={`/signup`} element={<Signup navigate={navigateTo} />} />
+        <Route path={`/forgot-password`} element={<ForgotPassword navigate={navigateTo} />} />
+        <Route path={`/login/mfa`} element={<TwoFactor navigate={navigateTo} />} />
+        <Route path={`/account-activation/:activationToken`} element={<AccountActivation />} />
+        <Route path={`/reset-password/:resetToken`} element={<ResetPassword />} />
 
 
         {/* User routes go here */}
-        <Route path={`${process.env.PUBLIC_URL}/user/dashboard`} element={<UserDashboard />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/profile`} element={<UserProfile />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/transactions-panel`} element={<TransactionsPanel />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/transactions`} element={<Transactions />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/transactions/success`} element={<TransactionSuccess />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/orders/success`} element={<OrderSuccess />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/kycs`} element={<UserKycs />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/wallet`} element={<UserWallet />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/support`} element={<UserSupport />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/faqs`} element={<Faqs />} />
-        <Route path={`${process.env.PUBLIC_URL}/user/kycs/application`} element={<KycForm />} />
+        <Route path={`/user/dashboard`} element={<UserDashboard />} />
+        <Route path={`/user/profile`} element={<UserProfile />} />
+        <Route path={`/user/transactions-panel`} element={<TransactionsPanel />} />
+        <Route path={`/user/transactions`} element={<Transactions />} />
+        <Route path={`/user/transactions/success`} element={<TransactionSuccess />} />
+        <Route path={`/user/orders/success`} element={<OrderSuccess />} />
+        <Route path={`/user/kycs`} element={<UserKycs />} />
+        <Route path={`/user/wallet`} element={<UserWallet />} />
+        <Route path={`/user/support`} element={<UserSupport />} />
+        <Route path={`/user/faqs`} element={<Faqs />} />
+        <Route path={`/user/kycs/application`} element={<KycForm />} />
         
         
         
 
-        <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound />} />
+        <Route path={`/*`} element={<NotFound />} />
 
       </Routes>
     </Router>

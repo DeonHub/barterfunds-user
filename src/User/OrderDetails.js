@@ -47,7 +47,7 @@ const OrderDetails = ({
           );
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/user/transactions`;
+            window.location.href = `/user/transactions`;
           }, 1000);
         } else {
           openNotification(

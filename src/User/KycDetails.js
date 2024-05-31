@@ -44,7 +44,7 @@ const KycDetails = ({
           );
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/user/kycs`;
+            window.location.href = `/user/kycs`;
           }, 1000);
         } else {
           openNotification(

@@ -140,7 +140,7 @@ const KycForm = () => {
           // setConfirmPassword("");
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/user/kycs`;
+            window.location.href = `/user/kycs`;
           }, 2000);
         }
       })

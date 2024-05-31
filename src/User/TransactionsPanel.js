@@ -153,7 +153,7 @@ const TransactionsPanel = () => {
                       subTitle="Complete your KYC verification to make transactions. If you have already submitted, please check on the progress or contact our support for help"
                       extra={[
                         <Button
-                          href={`${process.env.REACT_APP_PUBLIC_URL}/user/kycs`}
+                          href={`/user/kycs`}
                           type="primary"
                         >
                           Verify Identity

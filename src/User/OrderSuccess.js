@@ -158,7 +158,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                               <div className="nk-modal-action-lg">
                                 <ul className="btn-group gx-4">
                                   <li>
-                                    <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/wallet`}>
+                                    <a href={`/user/wallet`}>
                                     <button
                                       type="button"
                                       className="btn btn-lg btn-mw btn-primary"
@@ -250,7 +250,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
                           </div>
 
                           <div className="text-center my-3">
-                            <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/wallet`}>
+                            <a href={`/user/wallet`}>
                               I will upload later
                             </a>
                           </div>

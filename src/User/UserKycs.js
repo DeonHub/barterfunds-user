@@ -149,7 +149,7 @@ const UserKycs = () => {
                             </div>
                             <div className="nk-kyc-app-action">
                               <a
-                                href={`${process.env.REACT_APP_PUBLIC_URL}/user/kycs/application`}
+                                href={`/user/kycs/application`}
                                 className="btn btn-lg btn-primary"
                               >
                                 Click here to complete your KYC
@@ -201,7 +201,7 @@ const UserKycs = () => {
                               <ul className="nk-block-tools g-3">
                                 <li>
                                   <a
-                                    href={`${process.env.REACT_APP_PUBLIC_URL}/user/kycs/application`}
+                                    href={`/user/kycs/application`}
                                     className="btn btn-outline-primary"
                                   >
                                     <span class="icon material-symbols-outlined">

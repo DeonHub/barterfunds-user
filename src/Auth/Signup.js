@@ -144,7 +144,7 @@ class Signup extends React.Component {
             contact: "",
           });
           // setTimeout(()=>{
-          //     this.props.navigate(`${process.env.REACT_APP_PUBLIC_URL}/login`)
+          //     this.props.navigate(`/login`)
           // },2000)
           console.log("error :>> ", error.response.data.message);
         });
@@ -160,7 +160,7 @@ class Signup extends React.Component {
             <div class="nk-content ">
               <div class="nk-block nk-block-middle nk-auth-body wide-xs">
                 <div class="brand-logo pb-4 text-center">
-                  <a href={`${process.env.REACT_APP_PUBLIC_URL}/`} className="logo-link">
+                  <a href={`/`} className="logo-link">
                     <img
                       className="logo-dark logo-img logo-img-lg"
                       src="/assets/images/barterfunds-logo.png"
@@ -268,7 +268,7 @@ class Signup extends React.Component {
 
                       <div class="form-note-s2 text-center pt-4">
                         Already have an account?
-                        <a href={`${process.env.REACT_APP_PUBLIC_URL}/login`}>
+                        <a href={`/login`}>
                           <strong> Sign in instead</strong>
                         </a>
                       </div>
