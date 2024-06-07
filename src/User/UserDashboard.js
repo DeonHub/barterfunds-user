@@ -6,60 +6,67 @@ import UserFooter from "./components/UserFooter";
 
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
-import axios from "axios";
-
+// import axios from "axios";
+import { useSelector } from "react-redux";
 import UserWelcome from "./UserWelcome";
+
 
 const UserDashboard = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     document.title = "User Dashboard  | BarterFunds";
     const token = window.sessionStorage.getItem("token");
-    // const userId = window.sessionStorage.getItem("userId");
+    
 
-    if (!token) {
+    if (!token || !user) {
       navigate("/login");
       return;
     }
+    setIsLoading(false);
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   Authorization: `Bearer ${token}`,
+    // };
 
-    const body = {
-      token,
-    };
+    // const body = {
+    //   token,
+    // };
+
+    // console.log(body)
 
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/get-user-from-token`, body, {
-        headers: headers,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          setUser(response.data.user);
-          setIsLoading(false);
+    // axios
+    //   .post(`${process.env.REACT_APP_API_URL}/auth/get-user-from-token`, body, {
+    //     headers: headers,
+    //   })
+    //   .then((response) => {
+    //     if (response.data.success) {
+    //       setUser(response.data.user);
+    //       console.log(response.data.user)
+    //       setIsLoading(false);
 
-        } else {
-          setUser([]);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [navigate]);
+    //     } else {
+    //       setUser([]);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }, [navigate, user]);
+
 
   return (
+
     <div className="nk-body npc-crypto bg-white has-sidebar">
       <div className="nk-app-root">
         <div className="nk-main ">
           <UserSidebar active={"dashboard"} />
           <div className="nk-wrap ">
-            <UserHeader user={user} />
+            <UserHeader />
 
             {isLoading ? (
               <Loader />

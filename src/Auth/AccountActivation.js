@@ -28,7 +28,7 @@ const AccountActivation = () => {
   return (
     <div className="nk-app-root">
       {success ? (
-        <div className="nk-main ">
+        <div className="nk-main text-center">
           <div className="nk-wrap nk-wrap-nosidebar">
             <div className="nk-content ">
               <div className="nk-block nk-block-middle nk-auth-body">
@@ -42,7 +42,7 @@ const AccountActivation = () => {
                   </a>
                 </div>
 
-                <div className="nk-block-head">
+                <div className="nk-block-head text-center">
                   <div className="nk-block-head-content  text-success">
                     <h4 className="nk-block-title mb-3">
                       🎉 Congratulations! 🎉

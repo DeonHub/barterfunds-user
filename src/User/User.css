@@ -37624,20 +37624,22 @@ button.close {
 .nk-wgw-actions ul li:not(:last-child) {
   padding-right: 1.5rem;
 }
-.nk-wgw-actions a {
+.nk-wgw-actions a,
+.nk-wgw-actions span {
   display: inline-flex;
   align-items: center;
   font-size: 12px;
   padding: 0.5rem 0;
   color: #526484;
 }
-.nk-wgw-actions a .icon {
+.nk-wgw-actions a .icon,
+.nk-wgw-actions span .icon {
   font-size: 1.25em;
   margin-right: 0.5rem;
   color: #8094ae;
   margin-top: -1px;
 }
-.nk-wgw-actions a .icon, .nk-wgw-actions a span {
+.nk-wgw-actions a .icon, .nk-wgw-actions span .icon, .nk-wgw-actions a span {
   transition: color 0.3s;
 }
 .is-dark .nk-wgw-actions a {

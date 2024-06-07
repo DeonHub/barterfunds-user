@@ -24,6 +24,9 @@ import Transactions from './User/Transactions';
 import UserWallet from './User/Wallet';
 import UserSupport from './User/UserSupport';
 import Faqs from './User/Faqs';
+// import { useDispatch } from 'react-redux';
+// import { fetchCurrentUser } from './redux/userSlice';
+
 
 const App = () => {
 

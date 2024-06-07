@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './Main.css'
 import CurrencyLogosCarousel from './CurrencyLogosCarousel'; // Import the component
 
 const Main = () => {
   const currentYear = new Date().getFullYear();
+  useEffect(() => {
+    document.title = "Homepage | Barterfunds"
+  },[])
+  
   return (
     <>
 

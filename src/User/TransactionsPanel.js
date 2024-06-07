@@ -8,12 +8,18 @@ import SellPanel from "./SellPanel";
 
 import SendPanel from "./SendPanel";
 import ReceivePanel from "./ReceivePanel";
-import { user } from "./components/data";
+// import { user } from "./components/data";
 import { Button, Result } from "antd";
 import Loader from "../components/Loader";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const TransactionsPanel = () => {
+  const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
+
   const [action, setAction] = useState("buy");
   const [formStage, setFormStage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +28,12 @@ const TransactionsPanel = () => {
   useEffect(() => {
     document.title = "Transactions Panel | BarterFunds";
     const token = window.sessionStorage.getItem("token");
+
+    if (!token || user === null) {
+      navigate("/login");
+      return;
+    }
+
     const headers = {
           Authorization: `Bearer ${token}`,
         };
@@ -44,7 +56,7 @@ const TransactionsPanel = () => {
       setIsLoading(false)
     }, 2500)
     
-  },[])
+  },[navigate, user])
 
   const receiveDataFromChild = (data) => {
     setFormStage(data);

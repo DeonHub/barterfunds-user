@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./User.css";
-
+// import { user } from "./components/data";
 import Results from "./components/Results";
 
-const UserWelcome = ({ user }) => {
+const UserWelcome = ({ user } ) => {
+  
   const [index, setIndex] = useState(1);
   const [steps, setSteps] = useState([
     {
@@ -45,6 +46,7 @@ const UserWelcome = ({ user }) => {
 
   useEffect(() => {
     // Determine the index of the first undone step
+    // console.log(user)
     let firstUndoneIndex = steps.findIndex((step) => {
       switch (step.title) {
         case "Verify email address":

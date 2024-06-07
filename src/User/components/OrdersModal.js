@@ -259,9 +259,9 @@ const OrdersModal = ({
           <span class="icon material-symbols-outlined">{icon}</span>
         </span>
       ) : (
-        <span onClick={showModal}>
-          <span class="icon material-symbols-outlined">{icon}</span>
-          <span>{text}</span>
+        <span onClick={showModal} style={{ color: "#fff", cursor: "pointer"}}>
+          <span style={{ color: "#fff"}} class="icon material-symbols-outlined">{icon}</span>
+          <span style={{ color: "#fff"}}>{text}</span>
         </span>
       )}
 

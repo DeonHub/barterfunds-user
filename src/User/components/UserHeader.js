@@ -1,14 +1,47 @@
-import React from "react";
-import { user } from "./data";
+import React, { useEffect } from "react";
 import './userjs';
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearUser } from "../../redux/userSlice";
+
 
 const UserHeader = () => {
+  const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  if(user === null){
+    console.log('user is null')
+  }
+
+  useEffect(() => {
+    // const token = window.sessionStorage.getItem("token");
+    
+    if (user === null) {
+      // navigate("/login");
+      console.log('hello')
+      return;
+    }
+
+    
+  }, [user])
+
+
+  const handleLogout = () => {
+    // Clear all items from sessionStorage
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+    dispatch(clearUser());
+
+    // Redirect to login page
+    navigate('/login');
+  };
 
   return (
+
     <div className="nk-header nk-header-fixed is-light">
     <div className="container-fluid">
       <div className="nk-header-wrap">
@@ -120,13 +153,13 @@ const UserHeader = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="user/profile-setting.html">
+                      <a href={`${process.env.REACT_APP_PUBLIC_URL}`}>
                         <em className="icon las la-lock" />
                         <span>Password Reset</span>
                       </a>
                     </li>
                     <li>
-                      <a href="user/profile-activity.html">
+                      <a href={`${process.env.REACT_APP_PUBLIC_URL}`}>
                         <em className="icon las la-chart-line" />
                         <span>Login Activity</span>
                       </a>
@@ -136,7 +169,7 @@ const UserHeader = () => {
                 <div className="dropdown-inner">
                   <ul className="link-list">
                     <li>
-                      <span>
+                      <span style={{ cursor: "pointer" }} onClick={handleLogout}>
                         <em className="icon las la-sign-out-alt" />
                         <span>Sign out</span>
                       </span>
@@ -252,8 +285,8 @@ const UserHeader = () => {
     </div>
     {/* .container-fliud */}
   </div>
-  
-    
+
+
   );
 }
 

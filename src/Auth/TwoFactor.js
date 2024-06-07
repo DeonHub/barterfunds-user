@@ -1,59 +1,49 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
+import { useNavigate } from 'react-router-dom';
+import Loader from "../components/Loader";
 
+const TwoFactor = () => {
+  const navigate = useNavigate();
+  const inputsRef = useRef(null);
 
-class TwoFactor extends React.Component {
-  constructor(props) {
-    super(props);
+  const [inputValues, setInputValues] = useState(["", "", "", "", "", ""]);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [submitButton, setSubmitButton] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [twoFactorAuth, setTwoFactorAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    this.state = {
-      inputValues: ["", "", "", "", "", ""],
-      currentYear: new Date().getFullYear(),
-      imageSrc: null,
-      submitButton: false,
-      userId: '',
-      twoFactorAuth: false
-    };
-    this.inputsRef = React.createRef();
-  }
-
-  componentDidMount() {
-
+  useEffect(() => {
     document.title = "Two Factor Authentication | BarterFunds";
+    setIsLoading(true);
 
     const token = window.sessionStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
-
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/two-factor-auth`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/auth/two-factor-auth`, { headers })
       .then((response) => {
         if (response.data.success) {
-
-          this.setState({
-            imageSrc: response.data.user.twoFactorAuthQrcode,
-            userId: response.data.user._id,
-            twoFactorAuth: response.data.user.twoFactorAuth
-          });
+          setImageSrc(response.data.user.twoFactorAuthQrcode);
+          setUserId(response.data.user._id);
+          setTwoFactorAuth(response.data.user.twoFactorAuth);
+          setIsLoading(false);
         }
-
       })
       .catch((error) => {
         console.log("error :>> ", error);
       });
-  }
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    // Check if inputValues have changed
-    if (prevState.inputValues !== this.state.inputValues) {
-      // Perform any actions you want when inputValues change
-    }
-  }
+  useEffect(() => {
+    // Perform any actions you want when inputValues change
+  }, [inputValues]);
 
-  handleScan = () => {
+  const handleScan = () => {
     const token = window.sessionStorage.getItem("token");
     const headers = {
       "Authorization": `Bearer ${token}`,
@@ -65,280 +55,235 @@ class TwoFactor extends React.Component {
     });
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/${this.state.userId}`, body, {
-        headers: headers,
-      })
+      .patch(`${process.env.REACT_APP_API_URL}/users/${userId}`, body, { headers })
       .then((response) => {
-        this.props.setGlobalState((prevState) => ({
-          ...prevState,
-          user: response.data.user,
-        }));
+        // setGlobalState((prevState) => ({
+        //   ...prevState,
+        //   user: response.data.user,
+        // }));
+        console.log("response :>> ", response);
       })
       .catch((error) => {
         console.log("error :>> ", error);
       });
   };
 
-  handleInputChange = (index, value) => {
-    const { inputValues } = this.state;
+  const handleInputChange = (index, value) => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
-    this.setState({ inputValues: newInputValues }, () => {
-      // Check if all input fields are filled
-      const allFieldsFilled = newInputValues.every((value) => value !== "");
-      if (allFieldsFilled) {
-        this.setState({ submitButton: true });
-      } else {
-        this.setState({ submitButton: false });
-      }
+    setInputValues(newInputValues);
 
-      // Automatically move to the next input field when a character is entered
-      if (value && index < 5) {
-        this.focusNextInput(index + 1);
-      }
-    });
-  };
+    const allFieldsFilled = newInputValues.every((value) => value !== "");
+    setSubmitButton(allFieldsFilled);
 
-  handleKeyDown = (event, index) => {
-    if (event.key === "Backspace" && index > 0 && !event.target.value) {
-      // Clear the current input field and move back to the previous one on Backspace
-      this.handleInputChange(index, "");
-      this.focusPrevInput(index - 1);
+    if (value && index < 5) {
+      focusNextInput(index + 1);
     }
   };
 
-  handlePaste = (event, index) => {
+  const handleKeyDown = (event, index) => {
+    if (event.key === "Backspace" && index > 0 && !event.target.value) {
+      handleInputChange(index, "");
+      focusPrevInput(index - 1);
+    }
+  };
+
+  const handlePaste = (event, index) => {
     event.preventDefault();
     const pasteData = event.clipboardData.getData("text");
     if (/^\d{6}$/.test(pasteData)) {
-      // If pasted data has 6 digits, fill the input fields accordingly
-      const newInputValues = [...this.state.inputValues];
+      const newInputValues = [...inputValues];
       pasteData.split("").forEach((char, i) => {
         newInputValues[index + i] = char;
       });
-      this.setState({ inputValues: newInputValues });
+      setInputValues(newInputValues);
     }
   };
 
-  focusNextInput = (index) => {
-    const inputs = this.inputsRef.current.querySelectorAll(
-      ".input-section input"
-    );
+  const focusNextInput = (index) => {
+    const inputs = inputsRef.current.querySelectorAll(".input-section input");
     if (index < inputs.length) {
       inputs[index].focus();
     }
   };
 
-  focusPrevInput = (index) => {
-    const inputs = this.inputsRef.current.querySelectorAll(
-      ".input-section input"
-    );
+  const focusPrevInput = (index) => {
+    const inputs = inputsRef.current.querySelectorAll(".input-section input");
     if (index >= 0) {
       inputs[index].focus();
     }
   };
 
-  handleSubmit = () => {
-
-    const { inputValues } = this.state;
+  const handleSubmit = () => {
+    setIsLoading(true);
     const otp = inputValues.join("");
 
-    let token = window.sessionStorage.getItem("token");
+    const token = window.sessionStorage.getItem("token");
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
 
-    const headers = { 
-        'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${token}`
-      }
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/verify-otp/${otp}`, { headers })
+      .then((response) => {
+        if (response.data.success) {
+          setIsLoading(false);
+          openNotification('topRight', 'success', 'Success', 'Verification Successful');
 
-    
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/verify-otp/${otp}`, { headers: headers })
-    .then((response) => {
-      if (response.data.success) {
-        openNotification('topRight', 'success', 'Success', 'Verification Successful');
-
-        setTimeout(() => {
-          this.props.navigate(
-            `/user/dashboard`
-          );
-        }, 2000);
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-      openNotification('topRight', 'error', 'Invalid OTP', error.response.data.message);
-
-      this.setState({
-        inputValues: ["", "", "", "", "", ""],
-        submitButton: false
+          setTimeout(() => {
+            navigate(`/user/dashboard`);
+          }, 2000);
+        }
       })
-    });
-    
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        openNotification('topRight', 'error', 'Invalid OTP', error.response.data.message);
+
+        setInputValues(["", "", "", "", "", ""]);
+        setSubmitButton(false);
+      });
   };
 
-  render() {
-
-    return (
-      <div className="nk-app-root">
-        <div className="nk-main ">
-          <div className="nk-wrap nk-wrap-nosidebar">
-            <div className="nk-content ">
-              <div className="nk-block nk-block-middle nk-auth-body  wide-xs">
-                <div className="brand-logo pb-4 text-center">
-                  <a href={`/`} className="logo-link">
-                    <img
-                      className="logo-dark logo-img logo-img-lg"
-                      src="/assets/images/barterfunds-logo.png"
-                      alt="logo"
-                    />
-                  </a>
-                </div>
-                <div className="card card-bordered">
-                  <div className="card-inner card-inner-lg">
-                    <div className="nk-block-head">
-                      <div className="nk-block-head-content">
-                        <div
-                          className="nk-block-des"
-                          style={{ marginBottom: "-5%" }}
-                        >
-                          {this.state.twoFactorAuth ? (
-                            <p>
-                              Enter the 6-digit verification code generated by
-                              your authenticator app
-                            </p>
-                          ) : (
-                            <p>
-                              Open your authenticator app (e.g., Google
-                              Authenticator, Authy) and scan the QR code below.
-                              This will add a new account to your authenticator
-                              app.
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {this.state.twoFactorAuth ? (
-                      <div>
-                        <div>
-                          <div
-                            className="input-container mb-4"
-                            ref={this.inputsRef}
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "400px",
-                            }}
-                          >
-                            {this.state.inputValues.map((value, index) => (
-                              <div
-                                className="input-section"
-                                key={index}
-                                style={{ flex: 1, marginRight: "10px" }}
-                              >
-                                <input
-                                  type="text"
-                                  maxLength="1"
-                                  placeholder="x"
-                                  value={value}
-                                  onChange={(e) =>
-                                    this.handleInputChange(
-                                      index,
-                                      e.target.value
-                                    )
-                                  }
-                                  onKeyDown={(e) =>
-                                    this.handleKeyDown(e, index)
-                                  }
-                                  onPaste={(e) => this.handlePaste(e, index)}
-                                  style={{
-                                    width: "calc(100% - 10px)",
-                                    padding: "10px",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "5px",
-                                    fontSize: "16px",
-                                    textAlign: "center",
-                                    marginTop: "20px",
-                                  }}
-                                />
-                              </div>
-                            ))}
-                          </div>
-
-                          
-                        </div>
-
-                        <button
-                          onClick={this.handleSubmit}
-                          className="btn btn-lg btn-primary btn-block"
-                          disabled={!this.state.submitButton}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <div class="card mt-0">
-                          <img
-                            class="card-image"
-                            src={this.state.imageSrc}
-                            alt="QR Code"
-                          />
-                          <p class="card-description nk-block-des">
-                            
-                            Click on{" "}
-                            <span
-                              style={{
-                                color: "#810020",
-                                fontWeight: "bold",
-                                cursor: "pointer",
-                              }}
-                              onClick={this.handleScan}
-                            >
-                              NEXT
-                            </span>{" "}
-                            below once you are done scanning.
-                          </p>
-                        </div>
-
-                        <button
-                          onClick={this.handleScan}
-                          className="btn btn-lg btn-primary btn-block mt-3"
-                        >
-                          Next
-                        </button>
-                      </div>
-                    )}
-
-                    <div className="form-group mt-3"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-              <p class="card-description nk-block-des mb-5 mt-2"> 
-              Need help signing in? 
-                            <a href="mailto:barterfunds@gmail.com"
-                              style={{
-                                color: "#810020",
-                                // fontWeight: "bold",
-                                cursor: "pointer",
-                                marginLeft: "3px"
-                              }}
-                            >
-                              
-                            Contact Us
-                            </a>
-                            
-                          </p>
-              </div>
-
-             
-            </div>
-          </div>
+  return (
+    <div className="nk-app-root">
+      <div className="nk-main">
+        <div className="nk-wrap nk-wrap-nosidebar">
+          {isLoading ? (<Loader />) : (
+             <div className="nk-content">
+             <div className="nk-block nk-block-middle nk-auth-body wide-xs">
+               <div className="brand-logo pb-4 text-center">
+                 <a href={`/`} className="logo-link">
+                   <img
+                     className="logo-dark logo-img logo-img-lg"
+                     src="/assets/images/barterfunds-logo.png"
+                     alt="logo"
+                   />
+                 </a>
+               </div>
+               <div className="card card-bordered">
+                 <div className="card-inner card-inner-lg">
+                   <div className="nk-block-head">
+                     <div className="nk-block-head-content">
+                       <div className="nk-block-des" style={{ marginBottom: "-5%" }}>
+                         {twoFactorAuth ? (
+                           <p>
+                             Enter the 6-digit verification code generated by your authenticator app
+                           </p>
+                         ) : (
+                           <p>
+                             Open your authenticator app (e.g., Google Authenticator, Authy) and scan the QR code below.
+                             This will add a new account to your authenticator app.
+                           </p>
+                         )}
+                       </div>
+                     </div>
+                   </div>
+ 
+                   {twoFactorAuth ? (
+                     <div>
+                       <div>
+                         <div
+                           className="input-container mb-4"
+                           ref={inputsRef}
+                           style={{
+                             display: "flex",
+                             justifyContent: "space-between",
+                             width: "400px",
+                           }}
+                         >
+                           {inputValues.map((value, index) => (
+                             <div
+                               className="input-section"
+                               key={index}
+                               style={{ flex: 1, marginRight: "10px" }}
+                             >
+                               <input
+                                 type="text"
+                                 maxLength="1"
+                                 placeholder="x"
+                                 value={value}
+                                 onChange={(e) => handleInputChange(index, e.target.value)}
+                                 onKeyDown={(e) => handleKeyDown(e, index)}
+                                 onPaste={(e) => handlePaste(e, index)}
+                                 style={{
+                                   width: "calc(100% - 10px)",
+                                   padding: "10px",
+                                   border: "1px solid #ccc",
+                                   borderRadius: "5px",
+                                   fontSize: "16px",
+                                   textAlign: "center",
+                                   marginTop: "20px",
+                                 }}
+                               />
+                             </div>
+                           ))}
+                         </div>
+                       </div>
+ 
+                       <button
+                         onClick={handleSubmit}
+                         className="btn btn-lg btn-primary btn-block"
+                         disabled={!submitButton}
+                       >
+                         Submit
+                       </button>
+                     </div>
+                   ) : (
+                     <div>
+                       <div className="card mt-0">
+                         <img className="card-image" src={imageSrc} alt="QR Code" />
+                         <p className="card-description nk-block-des">
+                           Click on{" "}
+                           <span
+                             style={{
+                               color: "#810020",
+                               fontWeight: "bold",
+                               cursor: "pointer",
+                             }}
+                             onClick={handleScan}
+                           >
+                             NEXT
+                           </span>{" "}
+                           below once you are done scanning.
+                         </p>
+                       </div>
+ 
+                       <button
+                         onClick={handleScan}
+                         className="btn btn-lg btn-primary btn-block mt-3"
+                       >
+                         Next
+                       </button>
+                     </div>
+                   )}
+ 
+                   <div className="form-group mt-3"></div>
+                 </div>
+               </div>
+             </div>
+ 
+             <div>
+               <p className="card-description nk-block-des mb-5 mt-2 text-center">
+                 Need help signing in?
+                 <a href="mailto:barterfunds@gmail.com"
+                   style={{
+                     color: "#810020",
+                     cursor: "pointer",
+                     marginLeft: "3px"
+                   }}
+                 >
+                   Contact Us
+                 </a>
+               </p>
+             </div>
+           </div>
+          )}
+         
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default TwoFactor;

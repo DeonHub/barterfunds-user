@@ -1,108 +1,89 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
 import Success from "./Success";
+import Loader from "../components/Loader";
 
-// {
-//   "email": "hedeb97411@seosnaps.com",
-//   "password": "qwertyuiop"
-// }
+const Signup = () => {
 
-class Signup extends React.Component {
-  constructor(props) {
-    super(props);
+  const [firstname, setFirstname] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [contact, setContact] = useState("");
+  const [errorFirstname, setErrorFirstname] = useState(false);
+  const [errorSurname, setErrorSurname] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorContact, setErrorContact] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("This is a required field");
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const currentYear = new Date().getFullYear();
-
-    this.state = {
-      firstname: "",
-      surname: "",
-      email: "",
-      password: "",
-      contact: "",
-      errorFirstname: false,
-      errorSurname: false,
-      errorEmail: false,
-      errorPassword: false,
-      errorContact: false,
-      errorMessage: "This is a required field",
-      currentYear: currentYear,
-      success: false,
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-
-  componentDidMount(){
+  useEffect(() => {
     document.title = "Signup | BarterFunds";
-  }
+  }, []);
 
-  handleInputChange(event) {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
 
     if (name === "email") {
-      this.setState({
-        [name]: value,
-        errorEmail: false,
-      });
+      setEmail(value);
+      setErrorEmail(false);
     } else if (name === "password") {
-      this.setState({
-        [name]: value,
-        errorPassword: false,
-      });
+      setPassword(value);
+      setErrorPassword(false);
     } else if (name === "firstname") {
-      this.setState({
-        [name]: value,
-        errorFirstname: false,
-      });
+      setFirstname(value);
+      setErrorFirstname(false);
     } else if (name === "surname") {
-      this.setState({
-        [name]: value,
-        errorSurname: false,
-      });
+      setSurname(value);
+      setErrorSurname(false);
     } else if (name === "contact") {
-      this.setState({
-        [name]: value,
-        errorContact: false,
-      });
+      setContact(value);
+      setErrorContact(false);
     }
-  }
+  };
 
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     window.sessionStorage.clear();
     window.localStorage.clear();
 
-    const { firstname, surname, contact, email, password } = this.state;
-
-    this.setState({
+    const error = {
       errorFirstname: firstname.length === 0,
       errorSurname: surname.length === 0,
       errorContact: contact.length === 0,
       errorEmail: email.length === 0,
       errorPassword: password.length === 0,
-      errorMessage:
-        this.state.errorFirstname ||
-        this.state.errorSurname ||
-        this.state.errorEmail ||
-        this.state.errorPassword ||
-        this.state.errorContact
-          ? "This is a required field"
-          : "This is a required field",
-    });
+    };
+
+    setErrorFirstname(error.errorFirstname);
+    setErrorSurname(error.errorSurname);
+    setErrorContact(error.errorContact);
+    setErrorEmail(error.errorEmail);
+    setErrorPassword(error.errorPassword);
+    setErrorMessage(
+      error.errorFirstname ||
+        error.errorSurname ||
+        error.errorEmail ||
+        error.errorPassword ||
+        error.errorContact
+        ? "This is a required field"
+        : "This is a required field"
+    );
 
     if (
-      !this.state.errorFirstname &&
-      !this.state.errorSurname &&
-      !this.state.errorEmail &&
-      !this.state.errorPassword &&
-      !this.state.errorContact
+      !error.errorFirstname &&
+      !error.errorSurname &&
+      !error.errorEmail &&
+      !error.errorPassword &&
+      !error.errorContact
     ) {
-      let body = {
+      const body = {
         firstname,
         surname,
         contact,
@@ -110,197 +91,195 @@ class Signup extends React.Component {
         password,
       };
 
-
-
-
       axios
         .post(`${process.env.REACT_APP_API_URL}/auth/signup`, body)
         .then((response) => {
           if (response.data.success) {
-            // setMessage('Login Successfully')
-            console.log("response.data :>> ", response.data);
-            openNotification('topRight', "success", "Success", "Registration successful");
+            setIsLoading(false);
+            openNotification(
+              "topRight",
+              "success",
+              "Success",
+              "Registration successful"
+            );
             setTimeout(() => {
-              this.setState({
-                success: true,
-                firstname: "",
-                surname: "",
-                email: "",
-                password: "",
-                contact: "",
-              });
+              setSuccess(true);
+              setFirstname("");
+              setSurname("");
+              setEmail("");
+              setPassword("");
+              setContact("");
             }, 2000);
-
           }
         })
         .catch((error) => {
-          // openNotification("error", "Error", error.response.data.message);
-          openNotification('topRight', 'error', 'Error', error.response.data.message);
-          this.setState({
-            firstname: "",
-            surname: "",
-            email: "",
-            password: "",
-            contact: "",
-          });
-          // setTimeout(()=>{
-          //     this.props.navigate(`/login`)
-          // },2000)
+          setIsLoading(false);
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            error.response.data.message
+          );
+          setFirstname("");
+          setSurname("");
+          setEmail("");
+          setPassword("");
+          setContact("");
           console.log("error :>> ", error.response.data.message);
         });
     }
-  }
+  };
 
-  render() {
-
-    return (
-      <div class="nk-app-root">
-        <div class="nk-main ">
-          <div class="nk-wrap nk-wrap-nosidebar">
-            <div class="nk-content ">
-              <div class="nk-block nk-block-middle nk-auth-body wide-xs">
-                <div class="brand-logo pb-4 text-center">
-                  <a href={`/`} className="logo-link">
-                    <img
-                      className="logo-dark logo-img logo-img-lg"
-                      src="/assets/images/barterfunds-logo.png"
-                      alt="logo"
-                    />
-                  </a>
-                </div>
-
-                { this.state.success ? (
-                  <Success
-                    title={"🎉 Congratulations! 🎉"}
-                    subtitle={"You’re now part of Barter Funds community."}
-                    body={"Please check your email and verify your account to unlock all the exciting features awaiting you."}
+  return (
+    <div className="nk-app-root">
+      <div className="nk-main ">
+        <div className="nk-wrap nk-wrap-nosidebar">
+          {isLoading ? (<Loader />) : (
+            <div className="nk-content ">
+            <div className="nk-block nk-block-middle nk-auth-body wide-xs">
+              <div className="brand-logo pb-4 text-center">
+                <a href={`/`} className="logo-link">
+                  <img
+                    className="logo-dark logo-img logo-img-lg"
+                    src="/assets/images/barterfunds-logo.png"
+                    alt="logo"
                   />
-                ) : (
-                  <div class="card card-bordered">
-                    <div class="card-inner card-inner-lg">
-                      <div class="nk-block-head">
-                        <div class="nk-block-head-content">
-                          <h4 class="nk-block-title nk-block-des">Register</h4>
-                          <div class="nk-block-des">
-                            <p>Create A New Account With Us</p>
-                          </div>
-                        </div>
-                      </div>
-                      <form>
-                        <TextInput
-                          placeholder={"Enter your firstname"}
-                          label={"Firstname"}
-                          inputname={"firstname"}
-                          inputtype={"text"}
-                          value={this.state.firstname}
-                          errorState={this.state.errorFirstname}
-                          errorMessage={this.state.errorMessage}
-                          onValueChange={this.handleInputChange}
-                          required
-                        />
-
-                        <TextInput
-                          placeholder={"Enter your surname"}
-                          label={"Surname"}
-                          inputname={"surname"}
-                          inputtype={"text"}
-                          value={this.state.surname}
-                          errorState={this.state.errorSurname}
-                          errorMessage={this.state.errorMessage}
-                          onValueChange={this.handleInputChange}
-                          required
-                        />
-
-                        <TextInput
-                          placeholder={"Enter your email address"}
-                          label={"Email Address"}
-                          inputname={"email"}
-                          inputtype={"email"}
-                          value={this.state.email}
-                          errorState={this.state.errorEmail}
-                          errorMessage={this.state.errorMessage}
-                          onValueChange={this.handleInputChange}
-                          required
-                        />
-
-                        <TextInput
-                          placeholder={"Enter your password"}
-                          label={"Password"}
-                          inputname={"password"}
-                          inputtype={"password"}
-                          value={this.state.password}
-                          errorState={this.state.errorPassword}
-                          errorMessage={this.state.errorMessage}
-                          onValueChange={this.handleInputChange}
-                          showEye
-                          required
-                        />
-
-                        <TextInput
-                          placeholder={"Enter your contact"}
-                          label={"Contact"}
-                          inputname={"contact"}
-                          inputtype={"tel"}
-                          value={this.state.contact}
-                          errorState={this.state.errorContact}
-                          errorMessage={this.state.errorMessage}
-                          onValueChange={this.handleInputChange}
-                          required
-                        />
-
-                        <div class="form-note-s2 text-center my-4">
-                          <p class="" for="">
-                            By creating an account, you agree to Barter Funds
-                            <a href={"/"}> Privacy Policy</a> &amp;{" "}
-                            <a href={"/"}> Terms of Use.</a>
-                          </p>
-                        </div>
-
-                        <div className="form-group">
-                          <button
-                            onClick={this.handleSubmit}
-                            className="btn btn-lg btn-primary btn-block"
-                          >
-                            Register
-                          </button>
-                        </div>
-                      </form>
-
-                      <div class="form-note-s2 text-center pt-4">
-                        Already have an account?
-                        <a href={`/login`}>
-                          <strong> Sign in instead</strong>
-                        </a>
-                      </div>
-                      {/* <div class="text-center pt-4 pb-3">
-                        <h6 class="overline-title overline-title-sap">
-                          <span>OR</span>
-                        </h6>
-                      </div>
-                      <ul class="nav justify-center gx-8">
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">
-                            Facebook
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">
-                            Google
-                          </a>
-                        </li>
-                      </ul> */}
-                    </div>
-                  </div>
-                )}
+                </a>
               </div>
 
-              
+              {success ? (
+                <Success
+                  title={"🎉 Congratulations! 🎉"}
+                  subtitle={"You’re now part of Barter Funds community."}
+                  body={
+                    "Please check your email and verify your account to unlock all the exciting features awaiting you."
+                  }
+                />
+              ) : (
+                <div className="card card-bordered">
+                  <div className="card-inner card-inner-lg">
+                    <div className="nk-block-head">
+                      <div className="nk-block-head-content">
+                        <h4 className="nk-block-title nk-block-des">Register</h4>
+                        <div className="nk-block-des">
+                          <p>Create A New Account With Us</p>
+                        </div>
+                      </div>
+                    </div>
+                    <form>
+                      <TextInput
+                        placeholder={"Enter your firstname"}
+                        label={"Firstname"}
+                        inputname={"firstname"}
+                        inputtype={"text"}
+                        value={firstname}
+                        errorState={errorFirstname}
+                        errorMessage={errorMessage}
+                        onValueChange={handleInputChange}
+                        required
+                      />
+
+                      <TextInput
+                        placeholder={"Enter your surname"}
+                        label={"Surname"}
+                        inputname={"surname"}
+                        inputtype={"text"}
+                        value={surname}
+                        errorState={errorSurname}
+                        errorMessage={errorMessage}
+                        onValueChange={handleInputChange}
+                        required
+                      />
+
+                      <TextInput
+                        placeholder={"Enter your email address"}
+                        label={"Email Address"}
+                        inputname={"email"}
+                        inputtype={"email"}
+                        value={email}
+                        errorState={errorEmail}
+                        errorMessage={errorMessage}
+                        onValueChange={handleInputChange}
+                        required
+                      />
+
+                      <TextInput
+                        placeholder={"Enter your password"}
+                        label={"Password"}
+                        inputname={"password"}
+                        inputtype={"password"}
+                        value={password}
+                        errorState={errorPassword}
+                        errorMessage={errorMessage}
+                        onValueChange={handleInputChange}
+                        showEye
+                        required
+                      />
+
+                      <TextInput
+                        placeholder={"Enter your contact"}
+                        label={"Contact"}
+                        inputname={"contact"}
+                        inputtype={"tel"}
+                        value={contact}
+                        errorState={errorContact}
+                        errorMessage={errorMessage}
+                        onValueChange={handleInputChange}
+                        required
+                      />
+
+                      <div className="form-note-s2 text-center my-4">
+                        <p>
+                          By creating an account, you agree to Barter Funds
+                          <a href={"/"}> Privacy Policy</a> &amp;{" "}
+                          <a href={"/"}> Terms of Use.</a>
+                        </p>
+                      </div>
+
+                      <div className="form-group">
+                        <button
+                          onClick={handleSubmit}
+                          className="btn btn-lg btn-primary btn-block"
+                        >
+                          Register
+                        </button>
+                      </div>
+                    </form>
+
+                    <div className="form-note-s2 text-center pt-4">
+                      Already have an account?
+                      <a href={`/login`}>
+                        <strong> Sign in instead</strong>
+                      </a>
+                    </div>
+                    {/* <div className="text-center pt-4 pb-3">
+                      <h6 className="overline-title overline-title-sap">
+                        <span>OR</span>
+                      </h6>
+                    </div>
+                    <ul className="nav justify-center gx-8">
+                      <li className="nav-item">
+                        <a className="nav-link" href="#">
+                          Facebook
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a className="nav-link" href="#">
+                          Google
+                        </a>
+                      </li>
+                    </ul> */}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+          )}
+          
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Signup;
