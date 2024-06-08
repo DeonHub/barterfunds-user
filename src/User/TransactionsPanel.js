@@ -12,12 +12,12 @@ import ReceivePanel from "./ReceivePanel";
 import { Button, Result } from "antd";
 import Loader from "../components/Loader";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./components/UserContext";
 
 
 const TransactionsPanel = () => {
-  const user = useSelector((state) => state.user.user);
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const [action, setAction] = useState("buy");

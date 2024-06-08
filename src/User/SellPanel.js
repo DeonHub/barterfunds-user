@@ -527,7 +527,7 @@ const SellPanel = ({
           <div className="text-center w-100">
             <p>
               Earn up to GHS 100 for each friend your refer!
-              <a href={"/"}>Invite friends</a>
+              <a href={"/"}> Invite friends</a>
             </p>
           </div>
         </div>

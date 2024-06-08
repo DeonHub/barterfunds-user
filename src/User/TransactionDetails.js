@@ -117,12 +117,12 @@ const TransactionDetails = ({
                         <div className="nk-tnx-type-icon bg-warning text-white">
                             {/* <span className="icon material-symbols-outlined">north_east</span> */}
                             <img
-                                            src="/assets/images/currency/btc.png"
+                                            src={transaction?.currencyId ? transaction.currencyId.currencyLogo : "/assets/images/currency/btc.png"}
                                             alt="bitcoin"
                                           />
                         </div>
                         <div className="nk-tnx-type-text">
-                            <h5 className="title">{transaction ? (`${formatCurrency(transaction.amountUsd)} USD of Bitcoin(BTC)`): ''} </h5>
+                            <h5 className="title">{transaction ? (`${formatCurrency(transaction.amountUsd)} USD of ${transaction?.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}`): ''} </h5>
                             <span className="sub-text mt-n1">{transaction ? formatDate(transaction.createdAt) : ''} {transaction ? formatTime(transaction.createdAt) : ''}</span>
                         </div>
                     </div>

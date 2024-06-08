@@ -75,7 +75,7 @@ const OpenModal = ({
     const payment_body = {
       amount: (Number(ghsAmount) + Number(transactionFee)) * 100,
       email: email ? email : "barterfunds@gmail.com",
-      callback_url: `${process.env.REACT_APP_PUBLIC_URL}/user/transactions/success`,
+      callback_url: `/user/transactions/success`,
     };
 
     const transaction_body = {

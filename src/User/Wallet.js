@@ -9,10 +9,10 @@ import axios from "axios";
 import OrdersModal from "./components/OrdersModal";
 import OrderDetails from "./OrderDetails";
 import { Button, Result } from "antd";
-import { useSelector } from "react-redux";
+import { useUser } from "./components/UserContext";
 
 const UserWallet = () => {
-  const user = useSelector((state) => state.user.user);
+  const { user } = useUser();
 
   const navigate = useNavigate();
   const [wallet, setWallet] = useState({});

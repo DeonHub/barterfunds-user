@@ -146,9 +146,9 @@ const Transactions = ({ globalState, ...props }) => {
                     <div className="nk-block-head nk-block-head-sm">
                       <div className="nk-block-between g-3">
                         <div className="nk-block-head-content">
-                          <h3 className="nk-block-title page-title">Orders</h3>
+                          <h3 className="nk-block-title page-title">Transactions</h3>
                           <div className="nk-block-des text-soft">
-                            <p>You have total {count} orders.</p>
+                            <p>You have total {count} transactions.</p>
                           </div>
                         </div>
                         <div className="nk-block-head-content">
@@ -256,8 +256,8 @@ const Transactions = ({ globalState, ...props }) => {
                                       <div className="nk-tnx-type">
                                         <div className={`nk-tnx-type-icon bg-${getStatusColor(transaction.status)}-dim text-${getStatusColor(transaction.status)}`}>
                                         <img
-                                            src="/assets/images/currency/btc.png"
-                                            alt="bitcoin"
+                                            src={transaction.currencyId ? transaction.currencyId.currencyLogo : "/assets/images/currency/btc.png"}
+                                            alt="currency"
                                           />
                                         </div>
                                         <div className="nk-tnx-type-text">
@@ -274,10 +274,10 @@ const Transactions = ({ globalState, ...props }) => {
 
                                     <div className="nk-tb-col tb-col-lg">
                                       <span className="tb-lead-sub">
-                                        Bitcoin (BTC)
+                                      {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}
                                       </span>
                                       <span className="text">
-                                        1 USD = 12.32 GHS
+                                        1.00 USD = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS
                                       </span>
                                     </div>
                                     <div className="nk-tb-col text-end">

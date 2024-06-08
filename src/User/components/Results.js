@@ -10,7 +10,7 @@ const Results = ({ index, done, title, subtitle, redirectTo }) => {
         subTitle={subtitle}
         extra={[
             !done && (
-              <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/${redirectTo}`}  className="btn btn-lg btn-primary">
+              <a href={`/user/${redirectTo}`}  className="btn btn-lg btn-primary">
                 Get Started
               </a>
             )

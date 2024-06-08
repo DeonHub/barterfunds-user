@@ -6,15 +6,10 @@ import openNotification from "../components/OpenNotification";
 import FailedLogin from "./FailedLogin";
 import Loader from "../components/Loader";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-// import { useSelector } from "react-redux";
-import { setUser } from "../redux/userSlice";
-// import { fetchCurrentUser } from "../redux/userSlice";
 
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const storedData = JSON.parse(localStorage.getItem("loginData")) || {};
   const initialDeadline = storedData.deadline || Date.now() + 1000 * 60 * 5;
 
@@ -27,7 +22,6 @@ const Login = () => {
   const [failedLoginAttempts, setFailedLoginAttempts] = useState(storedData.failedLoginAttempts || 0);
   const [deadline, setDeadline] = useState(initialDeadline);
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     document.title = "Login | BarterFunds";
@@ -50,7 +44,7 @@ const Login = () => {
       }, 1000);
       return () => clearInterval(countdownTimer);
     }
-  }, [failedLoginAttempts, deadline, navigate, user]);
+  }, [failedLoginAttempts, deadline, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -89,7 +83,7 @@ const Login = () => {
 
             window.sessionStorage.setItem("token", token);
             window.sessionStorage.setItem("email", email);
-            dispatch(setUser(response.data.user));
+            // dispatch(setUser(response.data.user));
 
             setIsLoading(false);
 

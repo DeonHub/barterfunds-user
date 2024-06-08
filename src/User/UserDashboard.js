@@ -7,55 +7,29 @@ import UserFooter from "./components/UserFooter";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 // import axios from "axios";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import UserWelcome from "./UserWelcome";
+import { useUser } from "./components/UserContext";
 
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   // const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const user = useSelector((state) => state.user.user);
+  const { user } = useUser();
 
   useEffect(() => {
     document.title = "User Dashboard  | BarterFunds";
     const token = window.sessionStorage.getItem("token");
     
 
-    if (!token || !user) {
+    if (!token) {
       navigate("/login");
       return;
     }
     setIsLoading(false);
 
-    // const headers = {
-    //   Authorization: `Bearer ${token}`,
-    // };
-
-    // const body = {
-    //   token,
-    // };
-
-    // console.log(body)
-
-
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/auth/get-user-from-token`, body, {
-    //     headers: headers,
-    //   })
-    //   .then((response) => {
-    //     if (response.data.success) {
-    //       setUser(response.data.user);
-    //       console.log(response.data.user)
-    //       setIsLoading(false);
-
-    //     } else {
-    //       setUser([]);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    
   }, [navigate, user]);
 
 

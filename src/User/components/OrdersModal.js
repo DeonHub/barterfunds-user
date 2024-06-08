@@ -110,7 +110,7 @@ const OrdersModal = ({
     const payment_body = {
       amount: (Number(ghsAmount)) * 100,
       email: email ? email : "barterfunds@gmail.com",
-      callback_url: `${process.env.REACT_APP_PUBLIC_URL}/user/orders/success`,
+      callback_url: `/user/orders/success`,
     };
 
     const transaction_body = {
@@ -208,7 +208,7 @@ const OrdersModal = ({
           );
 
           setTimeout(() => {
-            window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/user/wallet`;
+            window.location.href = `/user/wallet`;
           }, 1000);
 
           setIsLoading(false)

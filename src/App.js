@@ -26,7 +26,7 @@ import UserSupport from './User/UserSupport';
 import Faqs from './User/Faqs';
 // import { useDispatch } from 'react-redux';
 // import { fetchCurrentUser } from './redux/userSlice';
-
+import { UserProvider } from './User/components/UserContext';
 
 const App = () => {
 
@@ -38,6 +38,7 @@ const App = () => {
 
   return (
     <Router>
+      <UserProvider>
       <Routes>
 
         {/* Main routes go here */}
@@ -71,6 +72,7 @@ const App = () => {
         <Route path={`/*`} element={<NotFound />} />
 
       </Routes>
+      </UserProvider>
     </Router>
   );
 };

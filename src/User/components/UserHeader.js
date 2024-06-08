@@ -1,42 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import './userjs';
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearUser } from "../../redux/userSlice";
+import { useUser } from "./UserContext";
 
 
 const UserHeader = () => {
-  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { user } = useUser();
 
-  if(user === null){
-    console.log('user is null')
-  }
 
-  useEffect(() => {
-    // const token = window.sessionStorage.getItem("token");
+  // if(user === null){
+  //   console.log('user is null')
+  // }
+
+  // useEffect(() => {
+  //   // const token = window.sessionStorage.getItem("token");
     
-    if (user === null) {
-      // navigate("/login");
-      console.log('hello')
-      return;
-    }
+  //   if (user === null) {
+  //     // navigate("/login");
+  //     console.log('hello')
+  //     return;
+  //   }
 
     
-  }, [user])
+  // }, [user])
 
 
   const handleLogout = () => {
     // Clear all items from sessionStorage
     window.sessionStorage.clear();
     window.localStorage.clear();
-    dispatch(clearUser());
 
-    // Redirect to login page
     navigate('/login');
   };
 
@@ -147,19 +144,19 @@ const UserHeader = () => {
                 <div className="dropdown-inner">
                   <ul className="link-list">
                     <li>
-                      <a href={`${process.env.REACT_APP_PUBLIC_URL}/user/profile`}>
+                      <a href={`/user/profile`}>
                         <em className="icon la la-user-alt" />
                         <span>View Profile</span>
                       </a>
                     </li>
                     <li>
-                      <a href={`${process.env.REACT_APP_PUBLIC_URL}`}>
+                      <a href={`/`}>
                         <em className="icon las la-lock" />
                         <span>Password Reset</span>
                       </a>
                     </li>
                     <li>
-                      <a href={`${process.env.REACT_APP_PUBLIC_URL}`}>
+                      <a href={`/`}>
                         <em className="icon las la-chart-line" />
                         <span>Login Activity</span>
                       </a>
