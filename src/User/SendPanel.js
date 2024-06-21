@@ -96,6 +96,20 @@ const SendPanel = ({
         alert("Please fill in all required fields.");
         return;
       }
+
+      const ghsValue = parseFloat(ghsAmount);
+      const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
+      const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
+
+      if (ghsValue < minAmount) {
+        alert(`The amount must be greater than the minimum amount of GHS ${formatCurrency(minAmount)}.`);
+        return;
+      }
+
+      if (ghsValue > maxAmount) {
+        alert(`The amount must be less than the maximum amount of GHS ${formatCurrency(maxAmount)}.`);
+        return;
+      }
     } else if (formStage === 2) {
       // Check if required fields in stage 2 have values
       if (!walletAddress || !paymentMethod || !transactionForm) {

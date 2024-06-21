@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
 
-const OrderSuccess = ({ globalState, ...props }) => {
+const OrderSuccess = () => {
   const [searchParams] = useSearchParams();
 
   const [formStage, setFormStage] = useState(1);
@@ -17,6 +17,9 @@ const OrderSuccess = ({ globalState, ...props }) => {
   const [success, setSuccess] = useState(false);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [selectedProof, setSelectedProof] = useState('');
+  const [submitButton, setSubmitButton] = useState(false);
 
   useEffect(() => {
     const reference = searchParams.get("reference");
@@ -52,6 +55,7 @@ const OrderSuccess = ({ globalState, ...props }) => {
            
             setGhsAmount(response.data.order.amountGhs)
             setUsdAmount(response.data.order.amountUsd)
+            setTransactionId(response.data.order.transactionId)
 
             openNotification(
               "topRight",
@@ -116,6 +120,54 @@ const OrderSuccess = ({ globalState, ...props }) => {
       maximumFractionDigits: 2,
     });
   }
+
+  const handleOk = () => {
+    setIsLoading(true);
+    const body = new FormData();
+    const token = window.sessionStorage.getItem("token");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+
+      body.append('paymentProof', selectedProof);
+
+      axios
+      .patch(`${process.env.REACT_APP_API_URL}/transactions/${transactionId}`, body, { headers: headers })
+      .then((updateResult) => {
+        
+        if (updateResult.data.success) {
+          openNotification(
+            "topRight",
+            "success",
+            "Success",
+            "Payment Proof uploaded successfully"
+          );
+
+          setTimeout(() => {
+            window.location.href = `/user/transactions`;
+          }, 1000);
+        } else {
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            "Failed to upload payment proof"
+          );
+        }
+      })
+      .catch((updateError) => {
+        openNotification(
+          "topRight",
+          "error",
+          "Error",
+          "Failed to upload payment proof"
+        );
+        console.log("cannot update transaction id")
+      });  
+
+  };
 
   return (
     <div className="nk-body npc-crypto bg-white has-sidebar">
@@ -237,16 +289,18 @@ const OrderSuccess = ({ globalState, ...props }) => {
                             </div>
                           </div>
                           <div className="buysell-field form-group">
-                            <FileUpload name={"screenshot"} id={"screenshot"} />
+                            <FileUpload name={"screenshot"} id={"screenshot"} setSelectedProof={setSelectedProof} setSubmitButton={setSubmitButton} />
                           </div>
 
                           <div className="form-navigation">
-                            <button
-                              type="button"
-                              className="btn btn-lg btn-block btn-primary"
-                            >
-                              Submit Screenshot
-                            </button>
+                          <button
+                             type="button"
+                             className="btn btn-lg btn-block btn-primary"
+                             onClick={handleOk}
+                             disabled={!submitButton}
+                         >
+                             Submit Screenshot
+                         </button>
                           </div>
 
                           <div className="text-center my-3">

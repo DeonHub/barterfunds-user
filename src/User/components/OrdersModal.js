@@ -29,7 +29,7 @@ const OrdersModal = ({
   topText,
   isButton,
   walletId,
-
+  claxx
 }) => {
   const [open, setOpen] = useState(false);
   const [usdAmount, setUsdAmount] = useState("");
@@ -253,10 +253,12 @@ const OrdersModal = ({
       {isButton ? (
         <span
           onClick={showModal}
-          className="btn btn-dim btn-outline-light"
+          // className={"btn btn-dim btn-outline-light"}
+          className={claxx}
         >
           <span>{text}</span>
-          <span class="icon material-symbols-outlined">{icon}</span>
+          {icon && (<span class="icon material-symbols-outlined">{icon}</span>)}
+          
         </span>
       ) : (
         <span onClick={showModal} style={{ color: "#fff", cursor: "pointer"}}>

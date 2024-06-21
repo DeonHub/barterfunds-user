@@ -46,7 +46,8 @@ const Faqs = () => {
                 data-bs-target="#faq-q1"
               >
                 <h6 className="title">What is Barter Funds?</h6>
-                <span className="accordion-icon" />
+                {/* <span className="accordion-icon" /> */}
+                <i className="accordion-icon las la-chevron-circle-bottom"></i>
               </span>
               <div
                 className="accordion-body collapse show"

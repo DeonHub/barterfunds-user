@@ -191,6 +191,7 @@ const UserWallet = () => {
                                       "Enter amount you want to withdraw from your wallet (GHS)."
                                     }
                                     isButton={true}
+                                    claxx={"btn btn-dim btn-outline-light"}
                                     walletId={walletId}
                                     setIsLoading={setIsLoading}
                                   />

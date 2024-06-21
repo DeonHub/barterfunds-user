@@ -23,10 +23,10 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const token = window.sessionStorage.getItem("token");
 
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+    // if (!token) {
+    //   navigate("/login");
+    //   return;
+    // }
 
     const storedUser = localStorage.getItem("sha");
     if (storedUser) {

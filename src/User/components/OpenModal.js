@@ -105,10 +105,13 @@ const OpenModal = ({
     }
 
 
+
     axios
     .post(`${process.env.REACT_APP_API_URL}/transactions`, transaction_body, { headers: transaction_headers })
     .then((result) => {
       if (result.data.success) {
+
+        window.sessionStorage.setItem('transactionId', result.data.transaction._id)
 
         if( transactionType === 'buy' || transactionType === 'send' ){
           axios
@@ -129,6 +132,8 @@ const OpenModal = ({
                         "Success",
                         "Redirecting to payment page..."
                       );
+
+                      
           
                       setTimeout(() => {
                         window.location.href = response.data.data.authorization_url;

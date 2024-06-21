@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
@@ -6,6 +7,8 @@ import Success from "./Success";
 import Loader from "../components/Loader";
 
 const Signup = () => {
+  const [searchParams] = useSearchParams();
+  const ref = searchParams.get("ref") ? searchParams.get("ref") : '';
 
   const [firstname, setFirstname] = useState("");
   const [surname, setSurname] = useState("");
@@ -89,6 +92,7 @@ const Signup = () => {
         contact,
         email,
         password,
+        ref
       };
 
       axios

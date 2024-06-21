@@ -1,32 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './userjs';
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
-
+import axios from "axios";
 
 const UserHeader = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [notifications, setNotifications] = useState([]);
 
 
-  // if(user === null){
-  //   console.log('user is null')
-  // }
+  useEffect(() => {
+    const token = window.sessionStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
-  // useEffect(() => {
-  //   // const token = window.sessionStorage.getItem("token");
-    
-  //   if (user === null) {
-  //     // navigate("/login");
-  //     console.log('hello')
-  //     return;
-  //   }
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
-    
-  // }, [user])
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/notifications/x/user`, {
+        headers: headers,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          const sortedNotifications = response.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setNotifications(sortedNotifications);
+        } else {
+          setNotifications([]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [navigate]);
 
 
   const handleLogout = () => {
@@ -35,6 +48,24 @@ const UserHeader = () => {
     window.localStorage.clear();
 
     navigate('/login');
+  };
+
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const formatTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const amPM = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12 || 12;
+    hours = hours.toString().padStart(2, "0");
+
+    return `${hours}:${minutes} ${amPM}`;
   };
 
   return (
@@ -91,16 +122,14 @@ const UserHeader = () => {
                 <div className="user-toggle">
                   <div className="user-avatar sm">
 
-                  {!user.kycApproved ? (
+                  {!user.profilePicture ? (
                           <Avatar size={30} icon={<UserOutlined />} />
                         ) : (
                           <Avatar
                             size={30}
                             src={
                               <img
-                                src={
-                                  "https://media.istockphoto.com/id/1311084168/photo/overjoyed-pretty-asian-woman-look-at-camera-with-sincere-laughter.webp?b=1&s=170667a&w=0&k=20&c=XPuGhP9YyCWquTGT-tUFk6TwI-HZfOr1jNkehKQ17g0="
-                                }
+                                src={user.profilePicture}
                                 alt="avatar"
                               />
                             }
@@ -108,9 +137,9 @@ const UserHeader = () => {
                         )}
                   </div>
                   <div className="user-info d-none d-md-block">
-                    <div className="user-status">Administrator</div>
+                    <div className="user-status text-bold">{user.firstname} {user.surname}</div>
                     <div className="user-name dropdown-indicator">
-                      {user.firstname} {user.surname}
+                      {user.username}
                     </div>
                   </div>
                 </div>
@@ -118,17 +147,15 @@ const UserHeader = () => {
               <div className="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
                 <div className="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                   <div className="user-card">
-                    <div className="user-avatar">
-                      {!user.kycApproved ? (
+                    <div className="user-avatar sm">
+                    {!user.profilePicture ? (
                           <Avatar size={30} icon={<UserOutlined />} />
                         ) : (
                           <Avatar
-                            size={38}
+                            size={30}
                             src={
                               <img
-                                src={
-                                  "https://media.istockphoto.com/id/1311084168/photo/overjoyed-pretty-asian-woman-look-at-camera-with-sincere-laughter.webp?b=1&s=170667a&w=0&k=20&c=XPuGhP9YyCWquTGT-tUFk6TwI-HZfOr1jNkehKQ17g0="
-                                }
+                                src={user.profilePicture}
                                 alt="avatar"
                               />
                             }
@@ -150,7 +177,7 @@ const UserHeader = () => {
                       </a>
                     </li>
                     <li>
-                      <a href={`/`}>
+                      <a href={`/user/password-reset`}>
                         <em className="icon las la-lock" />
                         <span>Password Reset</span>
                       </a>
@@ -190,85 +217,52 @@ const UserHeader = () => {
                   <span className="sub-title nk-dropdown-title">
                     Notifications
                   </span>
-                  <span>Mark All as Read</span>
+                  {/* <span>Mark All as Read</span> */}
                 </div>
                 <div className="dropdown-body">
                   <div className="nk-notification">
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          You have requested to
-                          <span>Widthdrawl</span>
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          Your <span>Deposit Order</span> is placed
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          You have requested to
-                          <span>Widthdrawl</span>
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          Your <span>Deposit Order</span> is placed
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-warning-dim ni ni-curve-down-right" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          You have requested to
-                          <span>Widthdrawl</span>
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
-                    <div className="nk-notification-item dropdown-inner">
-                      <div className="nk-notification-icon">
-                        <em className="icon icon-circle bg-success-dim ni ni-curve-down-left" />
-                      </div>
-                      <div className="nk-notification-content">
-                        <div className="nk-notification-text">
-                          Your <span>Deposit Order</span> is placed
-                        </div>
-                        <div className="nk-notification-time">2 hrs ago</div>
-                      </div>
-                    </div>
+                  {notifications.map((notification) => {
+                      const isUnread = !notification.read;
+                      return (
+
+                        
+                        <a
+                          href="/"
+                          className={`nk-notification-item dropdown-inner ${isUnread ? 'unread' : 'read'}`}
+                          key={notification._id} 
+                        >
+                          <div className="nk-notification-icon">
+                            <img
+                              className={`icon icon-circle bg-${isUnread ? 'primary' : 'success'}-dim`}
+                              src={'/assets/images/logo-icon.png'}
+                              alt="noti"
+                            />
+                          </div>
+                          <div className="nk-notification-content">
+                            <div
+                              className="nk-notification-text"
+                              style={{ fontWeight: isUnread ? 'bold' : 'normal' }}
+                            >
+                              {notification.subject}
+                              
+                            </div>
+                            <div className="nk-notification-time" style={{ fontWeight: isUnread ? 'bold' : 'normal' }}>
+                              {formatDate(notification.createdAt)}, {formatTime(notification.createdAt)}
+                            </div>
+                          </div>
+                        </a>
+                        
+                      );
+                    })}
+
+                    
+                    
                   </div>
-                  {/* .nk-notification */}
+                  
                 </div>
-                {/* .nk-dropdown-body */}
+                
                 <div className="dropdown-foot center">
-                  <a href="/">View All</a>
+                  <a href="/user/notifications">View All</a>
                 </div>
               </div>
             </li>

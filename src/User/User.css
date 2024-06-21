@@ -31047,12 +31047,12 @@ li {
   line-height: 20px;
 }
 .accordion-icon:before {
-  content: "\e9da";
-  font-family: "Nioicon";
+  content: "\e5cc";
+  font-family: "Material Symbols Outlined";
   transition: 0.4s;
 }
 .accordion-head.collapsed .accordion-icon:before {
-  content: "\e9c5";
+  content: "\e5cc";
 }
 
 @media (min-width: 768px) {
@@ -32277,13 +32277,13 @@ h6 .badge, .h6 .badge {
 }
 .user-avatar, [class^=user-avatar]:not([class*=-group]) {
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  background: #810020;
+  /* background: #810020; */
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -43219,4 +43219,15 @@ border-radius: 4px;
 .buysell-tt-control:checked~.buysell-tt-label:after {
   opacity: 1;
 }
+
+.userx {
+    margin-left: 25%;
+  }
+
+@media (max-width: 991.98px) {
+  .userx {
+    margin-left: 10%;
+  }
+}
+
 /*! END @iO */

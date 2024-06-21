@@ -4,6 +4,9 @@ import OpenModal from "./components/OpenModal";
 import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import FileUpload from "./components/FileUpload";
+import openNotification from "../components/OpenNotification";
+import axios from "axios";
+
 
 const SellPanel = ({   
   currencies,
@@ -21,10 +24,10 @@ const SellPanel = ({
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [usdInputChangedByUser, setUsdInputChangedByUser] = useState(true);
   const [ghsInputChangedByUser, setGhsInputChangedByUser] = useState(true);
-
+  const [selectedProof, setSelectedProof] = useState('');
   const [receipientMethod, setReceipientMethod] = useState("");
   const [receipientNumber, setReceipientNumber] = useState("");
-
+  const [submitButton, setSubmitButton] = useState(false);
   const transactionFee = 10;
   const transactionType = "sell";
 
@@ -95,7 +98,21 @@ const SellPanel = ({
         alert("Please fill in all required fields.");
         return;
       }
-    } else if (formStage === 2) {
+
+      const ghsValue = parseFloat(ghsAmount);
+      const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
+      const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
+
+      if (ghsValue < minAmount) {
+        alert(`The amount must be greater than the minimum amount of GHS ${formatCurrency(minAmount)}.`);
+        return;
+      }
+
+      if (ghsValue > maxAmount) {
+        alert(`The amount must be less than the maximum amount of GHS ${formatCurrency(maxAmount)}.`);
+        return;
+      }
+    }  else if (formStage === 2) {
       // Check if required fields in stage 2 have values
       if (!receipientMethod || !receipientNumber) {
         alert("Please fill in all required fields.");
@@ -123,6 +140,58 @@ const SellPanel = ({
     setSelectedCurrency(currency);
     setConversionRate(currency.exchangeRate);
   };
+
+  const handleOk = () => {
+    setIsLoading(true);
+    const body = new FormData();
+    const token = window.sessionStorage.getItem("token");
+    const transactionId = window.sessionStorage.getItem("transactionId");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+
+      body.append('paymentProof', selectedProof);
+
+      axios
+      .patch(`${process.env.REACT_APP_API_URL}/transactions/${transactionId}`, body, { headers: headers })
+      .then((updateResult) => {
+        
+        if (updateResult.data.success) {
+          openNotification(
+            "topRight",
+            "success",
+            "Success",
+            "Payment Proof uploaded successfully"
+          );
+
+          window.sessionStorage.removeItem('transactionId');
+
+          setTimeout(() => {
+            window.location.href = `/user/transactions`;
+          }, 1000);
+        } else {
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            "Failed to upload payment proof"
+          );
+        }
+      })
+      .catch((updateError) => {
+        openNotification(
+          "topRight",
+          "error",
+          "Error",
+          "Failed to upload payment proof"
+        );
+        console.log("cannot update transaction id")
+      });  
+
+  };
+
 
   return (
     <>
@@ -554,13 +623,18 @@ const SellPanel = ({
             </div>
           </div>
           <div className="buysell-field form-group">
-            <FileUpload name={"screenshot"} id={"screenshot"} />
+            <FileUpload name={"screenshot"} id={"screenshot"} setSelectedProof={setSelectedProof} setSubmitButton={setSubmitButton} />
           </div>
 
           <div className="form-navigation">
-            <button type="button" className="btn btn-lg btn-block btn-primary">
-              Submit Screenshot
-            </button>
+          <button
+            type="button"
+            className="btn btn-lg btn-block btn-primary"
+            onClick={handleOk}
+            disabled={!submitButton}
+        >
+            Submit Screenshot
+        </button>
           </div>
 
           <div className="text-center my-3">

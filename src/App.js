@@ -27,6 +27,8 @@ import Faqs from './User/Faqs';
 // import { useDispatch } from 'react-redux';
 // import { fetchCurrentUser } from './redux/userSlice';
 import { UserProvider } from './User/components/UserContext';
+import PasswordReset from './User/PasswordReset';
+import Notifications from './User/Notifications';
 
 const App = () => {
 
@@ -64,6 +66,8 @@ const App = () => {
         <Route path={`/user/wallet`} element={<UserWallet />} />
         <Route path={`/user/support`} element={<UserSupport />} />
         <Route path={`/user/faqs`} element={<Faqs />} />
+        <Route path={`/user/password-reset`} element={<PasswordReset />} />
+        <Route path={`/user/notifications`} element={<Notifications />} />
         <Route path={`/user/kycs/application`} element={<KycForm />} />
         
         

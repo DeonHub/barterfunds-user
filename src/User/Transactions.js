@@ -61,7 +61,10 @@ const Transactions = ({ globalState, ...props }) => {
     (transaction) =>
       transaction.transactionType
         .toLowerCase()
-        .includes(searchTerm.toLowerCase()) 
+        .includes(searchTerm.toLowerCase()) || 
+        transaction.transactionId
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
   );
 
   // Calculate pagination
