@@ -8,7 +8,6 @@ import CurrencyLogosCarousel from './CurrencyLogosCarousel';
 import MainHeader from './Header'; 
 import MainFooter from './Footer'; 
 import FAQ from './FAQ';
-// import Features from './Features';
 import Hero from "./Hero";
 import axios from "axios";
 

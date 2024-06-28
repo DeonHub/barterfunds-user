@@ -1,4 +1,3 @@
-/* Features.css */
 
 .features-list {
     display: flex;
@@ -47,7 +46,7 @@
 
 .feature .feature-text {
     display: flex;
-    flex-direction: column; /* Stack title and description vertically */
+    flex-direction: column;
 }
 .feature .feature-title {
     font-weight: bold;
@@ -56,17 +55,12 @@
 
 
 
-
-
-
-
-/* Mobile specific styles */
 @media (max-width: 768px) {
     .features-list {
         overflow-x: auto;
         display: flex;
         flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+        -webkit-overflow-scrolling: touch;
     }
 
     .feature {
