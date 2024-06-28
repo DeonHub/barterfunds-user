@@ -21,7 +21,7 @@ function Hero() {
           
           <div className="get-started">
         <a
-          href="https://wa.me/message/ON5PHWAZTGKWI1"
+          href="/login"
           className="btn-get-started"
         >
           Get Started
