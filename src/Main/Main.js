@@ -10,6 +10,7 @@ import MainFooter from './Footer';
 import FAQ from './FAQ';
 // import Features from './Features';
 import Hero from "./Hero";
+import axios from "axios";
 
 
 class Main extends React.Component {
@@ -33,6 +34,23 @@ class Main extends React.Component {
       easing: 'ease-in-out', // Easing option
       once: true, // Animation only happens once
     });
+
+    const headers = {};
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}`, {
+        headers: headers,
+      })
+
+      .then((response) => {
+          console.log('')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    
+
   }
 
   
