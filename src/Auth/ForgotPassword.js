@@ -12,8 +12,21 @@ const ForgotPassword = () => {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  
   useEffect(() => {
     document.title = "Forgot Password | BarterFunds";
+    const headers = {};
+    axios
+      .get(`${process.env.REACT_APP_API_URL}`, {
+        headers: headers,
+      })
+
+      .then((response) => {
+          console.log('')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleInputChange = (event) => {

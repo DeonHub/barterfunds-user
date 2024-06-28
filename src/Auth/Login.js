@@ -25,11 +25,18 @@ const Login = () => {
 
   useEffect(() => {
     document.title = "Login | BarterFunds";
+    const headers = {};
+    axios
+    .get(`${process.env.REACT_APP_API_URL}`, {
+      headers: headers,
+    })
 
-    // if (user) {
-    //   navigate(`/user/dashboard`);
-    //   // console.log(user);
-    // }
+    .then((response) => {
+        console.log('')
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     if (failedLoginAttempts >= 5) {
       const countdownTimer = setInterval(() => {
