@@ -236,15 +236,15 @@ const SendPanel = ({
                       className="form-control form-control-lg form-control-number"
                       id="usd-input"
                       name="usd-input"
-                      placeholder="Amount in USD"
+                      placeholder={`Amount in ${selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}`}
                       value={usdAmount}
                       onChange={handleUsdInputChange}
                       required
                     />
-                    <span className="currency-symbol">&nbsp;USD</span>
+                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}</span>
                     <img
-                      src="/assets/images/payment/usd-icon.png"
-                      alt="US Dollar (USD)"
+                      src={selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
+                      alt={selectedCurrency.currencyName.includes('yuan') ? "Chinese Yuan (CNY)" : "US Dollar (USD)"}
                     />
                   </div>
                   &nbsp;
@@ -279,7 +279,7 @@ const SendPanel = ({
                       Maximum: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 USD = {conversionRate} GHS
+                      1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {conversionRate} GHS
                     </span>
                   </div>
                 </div>
@@ -524,10 +524,10 @@ const SendPanel = ({
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to send
-                <strong> {formatCurrency(usdAmount)}</strong> USD of {selectedCurrency.currencyName} for <strong>{formatCurrency(ghsAmount)}</strong> GHS
+                <strong> {formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for <strong>{formatCurrency(ghsAmount)}</strong> GHS
               </div>
               <span className="sub-text-sm">
-                Exchange rate: 1 USD = {formatCurrency(conversionRate)} GHS
+                Exchange rate: 1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
               </span>
             </div>
           </div>
@@ -613,7 +613,7 @@ const SendPanel = ({
               <p className="caption-text">
                 You’ve successfully bought
                 <strong>100</strong>
-                USD for <strong>1,200.00</strong> GHS.
+                {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} for <strong>1,200.00</strong> GHS.
               </p>
               <p className="sub-text-sm">
                 Learn when you reciveve bitcoin in your wallet.

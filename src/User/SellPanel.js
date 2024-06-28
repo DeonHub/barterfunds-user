@@ -292,15 +292,15 @@ const SellPanel = ({
                       className="form-control form-control-lg form-control-number"
                       id="usd-input"
                       name="usd-input"
-                      placeholder="Amount in USD"
+                      placeholder={`Amount in ${selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}`}
                       value={usdAmount}
                       onChange={handleUsdInputChange}
                       required
                     />
-                    <span className="currency-symbol">&nbsp;USD</span>
+                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}</span>
                     <img
-                      src="/assets/images/payment/usd-icon.png"
-                      alt="US Dollar (USD)"
+                      src={selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
+                      alt={selectedCurrency.currencyName.includes('yuan') ? "Chinese Yuan (CNY)" : "US Dollar (USD)"}
                     />
                   </div>
                   &nbsp;
@@ -335,7 +335,7 @@ const SellPanel = ({
                       Maximum: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 USD = {conversionRate} GHS
+                      1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {conversionRate} GHS
                     </span>
                   </div>
                 </div>
@@ -483,11 +483,11 @@ const SellPanel = ({
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to sell
-                <strong> <strong>{formatCurrency(usdAmount)}</strong> USD
+                <strong> <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}
                 of {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)}</strong> GHS 
               </div>
               <span className="sub-text-sm">
-                Exchange rate: 1 USD = {formatCurrency(selectedCurrency.exchangeRate)} GHS
+                Exchange rate: 1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {formatCurrency(selectedCurrency.exchangeRate)} GHS
               </span>
             </div>
           </div>
@@ -570,8 +570,8 @@ const SellPanel = ({
             <h4 className="nk-modal-title">Order Successfully Made!</h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive {formatCurrency(ghsAmount)} GHS for{" "}
-                {formatCurrency(usdAmount)} USD of{" "}
+                You will receive {formatCurrency(ghsAmount)} GHS for
+                {formatCurrency(usdAmount)} {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of{" "}
                 {selectedCurrency.currencyName}.
               </p>
               <p className="sub-text-sm">

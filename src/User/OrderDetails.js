@@ -162,18 +162,18 @@ const OrderDetails = ({
                         <span className="sub-text">Amount Paid (GHS)</span>
                         <span className="caption-text">{order ? formatCurrency(order.amountGhs) : ''} GHS</span>
                     </div>
-                    <div className="col-lg-6">
+                    {/* <div className="col-lg-6">
                         <span className="sub-text">Amount Paid (USD)</span>
                         <span className="caption-text">{order ? formatCurrency(order.amountUsd) : ''} USD</span>
-                    </div>
+                    </div> */}
                     <div className="col-lg-6">
                         <span className="sub-text">Wallet Balance (GHS)</span>
                         <span className="caption-text">{order ? formatCurrency(order.balanceGhs) : ''} GHS</span>
                     </div>
-                    <div className="col-lg-6">
+                    {/* <div className="col-lg-6">
                         <span className="sub-text">Wallet Balance (USD)</span>
                         <span className="caption-text">{order ? formatCurrency(order.balanceUsd) : ''} USD</span>
-                    </div>
+                    </div> */}
 
                     <div className="col-lg-6">
                         <span className="sub-text">Paid via</span>

@@ -10,6 +10,7 @@ const TwoFactor = () => {
 
   const [inputValues, setInputValues] = useState(["", "", "", "", "", ""]);
   const [imageSrc, setImageSrc] = useState(null);
+  const [authCode, setAuthCode] = useState("");
   const [submitButton, setSubmitButton] = useState(false);
   const [userId, setUserId] = useState('');
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
@@ -31,6 +32,7 @@ const TwoFactor = () => {
           setImageSrc(response.data.user.twoFactorAuthQrcode);
           setUserId(response.data.user._id);
           setTwoFactorAuth(response.data.user.twoFactorAuth);
+          setAuthCode(response.data.user.twoFactorAuthSecretKey)
           setIsLoading(false);
         }
       })
@@ -44,6 +46,7 @@ const TwoFactor = () => {
   }, [inputValues]);
 
   const handleScan = () => {
+    setIsLoading(true);
     const token = window.sessionStorage.getItem("token");
     const headers = {
       "Authorization": `Bearer ${token}`,
@@ -61,7 +64,7 @@ const TwoFactor = () => {
         //   ...prevState,
         //   user: response.data.user,
         // }));
-        console.log("response :>> ", response);
+        window.location.reload();
       })
       .catch((error) => {
         console.log("error :>> ", error);
@@ -146,6 +149,20 @@ const TwoFactor = () => {
       });
   };
 
+  const copyText = () => {
+
+    var text = document.getElementById("usdt-address-input");
+    text.select();
+ 
+    navigator.clipboard.writeText(text.value);
+    openNotification(
+      "topRight",
+      "success",
+      "Code copied successfully",
+      ""
+    );
+}
+
   return (
     <div className="nk-app-root">
       <div className="nk-main">
@@ -153,7 +170,7 @@ const TwoFactor = () => {
           {isLoading ? (<Loader />) : (
              <div className="nk-content">
              <div className="nk-block nk-block-middle nk-auth-body wide-xs">
-               <div className="brand-logo pb-4 text-center">
+               {/* <div className="brand-logo pb-4 text-center">
                  <a href={`/`} className="logo-link">
                    <img
                      className="logo-dark logo-img logo-img-lg"
@@ -161,7 +178,7 @@ const TwoFactor = () => {
                      alt="logo"
                    />
                  </a>
-               </div>
+               </div> */}
                <div className="card card-bordered">
                  <div className="card-inner card-inner-lg">
                    <div className="nk-block-head">
@@ -174,7 +191,7 @@ const TwoFactor = () => {
                          ) : (
                            <p>
                              Open your authenticator app (e.g., Google Authenticator, Authy) and scan the QR code below.
-                             This will add a new account to your authenticator app.
+                             This will add a new account to your authenticator app. 
                            </p>
                          )}
                        </div>
@@ -201,14 +218,14 @@ const TwoFactor = () => {
                              >
                                <input
                                  type="text"
-                                 maxLength="1"
+                                //  maxLength="1"
                                  placeholder="x"
                                  value={value}
                                  onChange={(e) => handleInputChange(index, e.target.value)}
                                  onKeyDown={(e) => handleKeyDown(e, index)}
                                  onPaste={(e) => handlePaste(e, index)}
                                  style={{
-                                   width: "calc(100% - 10px)",
+                                   width: "100%",
                                    padding: "10px",
                                    border: "1px solid #ccc",
                                    borderRadius: "5px",
@@ -234,7 +251,39 @@ const TwoFactor = () => {
                      <div>
                        <div className="card mt-0">
                          <img className="card-image" src={imageSrc} alt="QR Code" />
-                         <p className="card-description nk-block-des">
+                         <div className="buysell-field form-group">
+          
+                              <div className="form-label-group text-center mt-4">
+                                <label className="form-label text center">You can also copy the code below and enter manually.</label>
+                              </div>
+                              <div className="currency-box">
+                                <input
+                                  type="text"
+                                  className="form-control form-control-lg form-control-number usdt-address-input"
+                                  id="usdt-address-input"
+                                  name="usdt-address-input"
+                                  placeholder="1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
+                                  value={authCode}
+                                  onClick={copyText}
+                                  disabled
+                                />
+                                <span className="currency-symbol" />
+                                <div className="buysell-field form-group">
+                                  <img
+                                    src="/assets/images/copy-icon.svg"
+                                    alt="Copy Icon"
+                                    className="currency-image"
+                                    id="uploaded-image"
+                                    title="Click to copy code"
+                                    onClick={copyText}
+                                    style={{
+                                      cursor: "pointer"
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                         <p className="card-description nk-block-des text-center">
                            Click on{" "}
                            <span
                              style={{
@@ -246,7 +295,7 @@ const TwoFactor = () => {
                            >
                              NEXT
                            </span>{" "}
-                           below once you are done scanning.
+                           below once you are done scanning or entering the code.
                          </p>
                        </div>
  

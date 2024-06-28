@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { Modal, Image } from "antd";
+import { Modal } from "antd";
 import openNotification from "../components/OpenNotification";
 
 
@@ -17,6 +17,13 @@ const KycDetails = ({
 
   const showModal = () => {
     setOpen(true);
+  };
+
+  const getFileUrl = (filepath) => {
+    if (filepath?.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${filepath}`;
+    }
+    return filepath;
   };
 
   const handleOk = () => {
@@ -73,6 +80,7 @@ const KycDetails = ({
   const handleCancel = () => {
     setOpen(false);
   };
+
 
 
   return (
@@ -226,31 +234,26 @@ const KycDetails = ({
                     <h5 className="title">Document Upload</h5>
                 </div>
                 <div className="row gy-3">
-                    <div className="col-lg-6">
-                        <span className="sub-text">Document Uploaded</span>
+                    <div className="col-lg-12">
+                        <span className="sub-text">Documents Uploaded</span>
                         <span className="caption-text">{kyc ? kyc.identityDocumentUploaded : 'National ID'}</span>
                     </div>
-                    <div className="col-lg-12">
-                        <span className="sub-text">ID Front</span>
+                    <div className="col-lg-6">
+                        {/* <span className="sub-text">ID Front</span> */}
                         <div className='preview-image'>
-                        
-                        <Image
-                            width={500}
-                            src={kyc.frontImage}
-                            alt="Uploaded File"
-                        />
+                        <a href={getFileUrl(kyc.frontImage)} target='_blank' rel="noreferrer" className="caption-text">View ID Card Front</a>
                         
                       </div>
                     </div>
-                    <div className="col-lg-12">
-                        <span className="sub-text">ID Back</span>
+                    <div className="col-lg-6">
+                        {/* <span className="sub-text">ID Back</span> */}
                         <div className='preview-image'>
-                        
-                        <Image
+                        <a href={getFileUrl(kyc.backImage)} target='_blank' rel="noreferrer" className="caption-text">View ID Card Back</a>
+                        {/* <Image
                             width={500}
                             src={kyc.backImage}
                             alt="Uploaded File"
-                        />
+                        /> */}
                         
                       </div>
                     </div>
@@ -262,20 +265,15 @@ const KycDetails = ({
                     <h5 className="title">Proof of address</h5>
                 </div>
                 <div className="row gy-3">
-                    <div className="col-lg-6">
+                    <div className="col-lg-12">
                         <span className="sub-text">Document Uploaded</span>
                         <span className="caption-text">{kyc ? kyc.proofDocumentUploaded : 'Utility Bill'}</span>
                     </div>
-                    <div className="col-lg-12">
-                        <span className="sub-text">Proof Document</span>
+                    <div className="col-lg-6">
+                        
                         <div className='preview-image'>
-                        
-                        <Image
-                            width={500}
-                            src={kyc.proofOfAddress}
-                            alt="Uploaded File"
-                        />
-                        
+                        <a href={getFileUrl(kyc.proofOfAddress)} target='_blank' rel="noreferrer" className="caption-text">View Proof of Address</a>
+
                       </div>
                     </div>
                     
@@ -287,14 +285,14 @@ const KycDetails = ({
                 <div className="row gy-3">
                     
                     <div className="col-lg-12">
-                        <span className="sub-text">Uploaded Selfie</span>
+                        {/* <span className="sub-text">Uploaded Selfie</span> */}
                         <div className='preview-image'>
-                        
-                        <Image
+                        <a href={getFileUrl(kyc.photograph)} target='_blank' rel="noreferrer" className="caption-text">View Uploaded Selfie With ID</a>
+                        {/* <Image
                             width={500}
                             src={kyc.photograph}
                             alt="Uploaded File"
-                        />
+                        /> */}
                         
                       </div>
                     </div>

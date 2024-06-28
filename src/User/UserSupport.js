@@ -8,6 +8,7 @@ import TicketDetails from "./TicketDetails";
 import CreateTicket from "./CreateTicket";
 import Loader from "../components/Loader";
 import axios from "axios";
+import ReplyTicket from "./ReplyTicket";
 
 const UserSupport = () => {
   const navigate = useNavigate();
@@ -189,16 +190,16 @@ const UserSupport = () => {
                                 <div className="nk-tb-col">
                                   <span>Ticket ID</span>
                                 </div>
-                                <div className="nk-tb-col ">
+                                <div className="nk-tb-col tb-col-lg">
                                   <span>Category</span>
                                 </div>
-                                <div className="nk-tb-col ">
+                                <div className="nk-tb-col tb-col-lg">
                                   <span>Subject</span>
                                 </div>
-                                <div className="nk-tb-col">
+                                {/* <div className="nk-tb-col tb-col-lg">
                                   <span>Reviewer</span>
-                                </div>
-                                <div className="nk-tb-col ">
+                                </div> */}
+                                <div className="nk-tb-col tb-col-lg">
                                   <span>Date Added</span>
                                 </div>
                                 <div className="nk-tb-col nk-tb-col-status">
@@ -206,7 +207,7 @@ const UserSupport = () => {
                                     Status
                                   </span>
                                 </div>
-                                <div className="nk-tb-col nk-tb-col-tools" />
+                                <div class="nk-tb-col nk-tb-col-tools"></div>
                               </div>
 
                               {currentPageData.length === 0 ? (
@@ -246,12 +247,12 @@ const UserSupport = () => {
                                       
                                     </div>
 
-                                    <div className="nk-tb-col ">
+                                    {/* <div className="nk-tb-col ">
                                       <span className="tb-amount">
                                         {ticket.reviewer ? ticket.reviewer : 'Not reviewed'}
                                       </span>
                                       
-                                    </div>
+                                    </div> */}
 
                                     <div className="nk-tb-col tb-col-sm">
                                       <span className="tb-amount">
@@ -288,37 +289,20 @@ const UserSupport = () => {
                                     )}
                                   </div>
 
-                                    <div className="nk-tb-col nk-tb-col-tools">
-                                      <ul className="nk-tb-actions gx-2">
-                                        
-                                        <li className="">
-                                          <TicketDetails ticket={ticket} id={ticket._id} formatDate={formatDate} formatTime={formatTime} setIsLoading={setIsLoading} />
-                                        </li>
-                                        {/* <li className="">
-                                          <span
-                                            onClick={() => {
-                                              if (transaction.status === 'success') {
-                                                // Handle the click action here
-                                                // For example, show an alert
-                                                alert("Download Receipt");
-                                              }
-                                            }}
-                                            className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Download Receipt"
-                                            style={{
-                                              cursor: transaction.status === 'success' ? 'pointer' : 'not-allowed' 
-                                            }}
-                                          >
-                                            <span className="icon material-symbols-outlined">
-                                              download
-                                            </span>
-                                          </span>
-                                        </li> */}
+                                   
 
-                                      </ul>
-                                    </div>
+<div className="nk-tb-col nk-tb-col-tools">
+                                            <ul className="nk-tb-actions gx-2">
+                                              <li className="">
+                                              <TicketDetails ticket={ticket} id={ticket._id} formatDate={formatDate} formatTime={formatTime} setIsLoading={setIsLoading} />
+                                              </li>
+                                              <li className="">
+                                                
+
+                                                <ReplyTicket setIsLoading={setIsLoading} ticketId={ticket._id} />
+                                              </li>
+                                            </ul>
+                                          </div>
                                   </div>
                                   )
                                   

@@ -11,7 +11,8 @@ import openNotification from "../components/OpenNotification";
 import axios from "axios";
 import { Modal } from "antd";
 import Loader from "../components/Loader";
-
+import intlTelInput from "intl-tel-input";
+import { countryStates } from "./components/countryStates";
 
 const KycForm = () => {
   const navigate = useNavigate();
@@ -20,11 +21,14 @@ const KycForm = () => {
   const minDate = today.toISOString().split("T")[0];
   const [submitButton, setSubmitButton] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState('');
+
   const [formData, setFormData] = useState({
     firstname: "",
     surname: "",
     email: "",
-    contact: "233 558587873",
+    contact: "",
     dateOfBirth: "",
     country: "",
     nationality: "",
@@ -80,6 +84,14 @@ const KycForm = () => {
     setIsLoading(false);
   }, [formData, selectedCountryCode, navigate]);
 
+  const handlePhoneNumberInput = (number) => {
+    const phoneNumber = `${selectedCountryCode} ${number}`;
+    setFormData((prevState) => ({
+      ...prevState,
+      contact: phoneNumber,
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 
@@ -93,9 +105,16 @@ const KycForm = () => {
         ? String(value)
         : value;
 
+        if (name === 'country') {
+          setStates(countryStates.states[value] || []);
+          setSelectedState('');
+        } else if (name === 'region') {
+          setSelectedState(value);
+        }
+
     // If the name is 'contact', append the country code to the input value
     const updatedValue =
-      name === "contact" ? `${selectedCountryCode} ${newValue}` : newValue;
+       name === 'country' ? countryStates.country[value] : newValue;
 
     // Update state based on the name of the input field
     setFormData((prevState) => ({
@@ -113,7 +132,6 @@ const KycForm = () => {
     console.log(formData);
 
     const token = window.sessionStorage.getItem("token");
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlZGViOTc0MTFAc2Vvc25hcHMuY29tIiwidXNlcklkIjoiNjVkMjFmMzZjYjE3Nzc0MWJiZmE3ZTk2IiwiaWF0IjoxNzE0MDU1OTg0LCJleHAiOjE3MTY2NDc5ODR9.bWMdV8VRZoQV2DNIsFHFIUFZbQCLoNyfrMkmq-m9rPg";
 
     const body = new FormData();
     for (const key in formData) {
@@ -191,6 +209,7 @@ const KycForm = () => {
                           <h2 className="nk-block-title fw-normal">
                             Begin your ID-Verification
                           </h2>
+                          {intlTelInput}
                           <div className="nk-block-des">
                             <p>
                               To comply with regulation each participant will
@@ -245,7 +264,7 @@ const KycForm = () => {
                                   <div className="form-group">
                                     <div className="form-label-group">
                                       <label className="form-label">
-                                        Surname
+                                        Surname{" "}
                                         <span className="text-danger">*</span>
                                       </label>
                                     </div>
@@ -264,7 +283,7 @@ const KycForm = () => {
                                   <div className="form-group">
                                     <div className="form-label-group">
                                       <label className="form-label">
-                                        Email Address
+                                        Email Address{" "}
                                         <span className="text-danger">*</span>
                                       </label>
                                     </div>
@@ -290,9 +309,11 @@ const KycForm = () => {
                                     </div>
                                     <div className="form-control-group">
                                       <PhoneNumberInput
-                                        handleChange={handleChange}
                                         setSelectedCountryCode={
                                           setSelectedCountryCode
+                                        }
+                                        handlePhoneNumberInput={
+                                          handlePhoneNumberInput
                                         }
                                       />
                                     </div>
@@ -323,8 +344,8 @@ const KycForm = () => {
                                   <div className="form-group">
                                     <div className="form-label-group">
                                       <label className="form-label">
-                                        Whatsapp Number
-                                        <span className="text-danger">*</span>
+                                        Whatsapp Number (Optional)
+                                        {/* <span className="text-danger">*</span> */}
                                       </label>
                                     </div>
                                     <div className="form-control-group">
@@ -358,58 +379,64 @@ const KycForm = () => {
                                 </p>
                               </div>
                               <div className="row g-4">
-                                <div className="col-md-6">
-                                  <div className="form-group">
-                                    <div className="form-label-group">
-                                      <label className="form-label">
-                                        Country
-                                        <span className="text-danger"> *</span>
-                                      </label>
-                                    </div>
-                                    <div className="form-control-group">
-                                      <select
-                                        className="form-control form-control-lg nationality-selector"
-                                        id="nationality-select"
-                                        name="country"
-                                        onChange={handleChange}
-                                      >
-                                        <option value="">
-                                          Select a country
-                                        </option>
-                                        {countries.map((country, index) => (
-                                          <option key={index} value={country}>
-                                            {country}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="col-md-6">
-                                  <div className="form-group">
-                                    <div className="form-label-group">
-                                      <label className="form-label">
-                                        State or Region
-                                        <span className="text-danger"> *</span>
-                                      </label>
-                                    </div>
-                                    <div className="form-control-group">
-                                      <input
-                                        type="text"
-                                        className="form-control form-control-lg"
-                                        placeholder="Greater Accra"
-                                        name="region"
-                                        onChange={handleChange}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
+                              <div className="col-md-6">
+          <div className="form-group">
+            <div className="form-label-group">
+              <label className="form-label">
+                Country
+                <span className="text-danger"> *</span>
+              </label>
+            </div>
+            <div className="form-control-group">
+              <select
+                className="form-control form-control-lg nationality-selector"
+                id="nationality-select"
+                name="country"
+                onChange={handleChange}
+                // value={selectedCountryIso}
+              >
+                <option value="">Select a country</option>
+                {Object.entries(countryStates.country).map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group">
+            <div className="form-label-group">
+              <label className="form-label">
+                State or Region
+                <span className="text-danger"> *</span>
+              </label>
+            </div>
+            <div className="form-control-group">
+              <select
+                className="form-control form-control-lg"
+                name="region"
+                onChange={handleChange}
+                value={selectedState}
+                disabled={!formData.country}
+              >
+                <option value="">Select a state or region</option>
+                {states.map((state) => (
+                  <option key={state.code} value={state.name}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
                                 <div className="col-md-6">
                                   <div className="form-group">
                                     <div className="form-label-group">
                                       <label className="form-label">
                                         Town or City
-                                        <span className="text-danger">*</span>
+                                        <span className="text-danger"> *</span>
                                       </label>
                                     </div>
                                     <div className="form-control-group">
@@ -588,7 +615,6 @@ const KycForm = () => {
                                       <input
                                         type="date"
                                         className="form-control form-control-lg"
-                                        placeholder="GHA-007463639-8"
                                         max={minDate}
                                         name="issueDate"
                                         onChange={handleChange}
@@ -1185,19 +1211,18 @@ const KycForm = () => {
                               <div className="form-group text-center">
                                 <div className="">
                                   <span className="">
-                                    By submitting, I agree to The
-                                    <a href={"/"}>Terms Of Condition</a> And
-                                    <a href={"/"}>Privacy Policy</a> of
+                                    By submitting, I agree to the
+                                    <a href={"/"}> Terms Of Condition</a> and
+                                    <a href={"/"}> Privacy Policy</a> of
                                     BarterFunds
                                   </span>
                                 </div>
                               </div>
-                              
+
                               <div className="nk-kycfm-action pt-2">
                                 <button
                                   type="button"
                                   className="btn btn-lg btn-primary btn-block"
-                                  // onClick={handleSubmit}
                                   onClick={showModal}
                                   disabled={!submitButton}
                                 >

@@ -30109,6 +30109,8 @@ body.nav-shown {
 @media (max-width: 991.98px) {
   .nk-sidebar-mobile {
     width: 290px !important;
+    z-index: 50;
+    background-color: #F5F6FA;
   }
 }
 @media (min-width: 1200px) {

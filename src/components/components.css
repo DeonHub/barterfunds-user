@@ -14,15 +14,15 @@
    
   .loader-container img {
    /* Set the size of the loader image */
-   width: 40%; /* This will make the image fit the container width */
-   height: 40%; /* This will make the image fit the container height */
+   width: 30%; /* This will make the image fit the container width */
+   height: 30%; /* This will make the image fit the container height */
    object-fit: contain; /* Adjusts the aspect ratio of the image */
    margin-right: -10%;
   }
   
   @media screen and (max-width: 600px) {
     .loader-container img {
-      width: 80%; /* Adjust width for smaller screens */
+      width: 60%; /* Adjust width for smaller screens */
       height: auto; /* Allow height to adjust proportionally */
       /* margin-top: -50%; */
     }

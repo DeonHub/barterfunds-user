@@ -3,8 +3,22 @@ import "./userjs";
 
 const UserSidebar = ({ active }) => {
 
+  const handleToggle = () => {
+    const sidebar = document.querySelector('.nk-sidebar') || document.querySelector('.nk-sidebar-mobile');
+    if (sidebar) {
+      if (sidebar.classList.contains('nk-sidebar')) {
+        sidebar.classList.remove('nk-sidebar');
+        sidebar.classList.add('nk-sidebar-mobile');
+      } else {
+        sidebar.classList.remove('nk-sidebar-mobile');
+        sidebar.classList.add('nk-sidebar');
+      }
+    }
+  };
+
   return (
-    <div className="nk-sidebar nk-sidebar-fixed " data-content="sidebarMenu">
+    <div className="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
+
 
       <div className="nk-sidebar-element nk-sidebar-head">
         <div className="nk-sidebar-brand">
@@ -19,12 +33,13 @@ const UserSidebar = ({ active }) => {
             />
           </a>
         </div>
-        <div className="nk-menu-trigger me-n2">
+        <div className="nk-menu-trigger me-n2" style={{ cursor: "pointer" }}>
           <span
             className="nk-nav-toggle nk-quick-nav-icon d-xl-none"
             data-target="sidebarMenu"
+            onClick={handleToggle}
           >
-            <em className="icon ni ni-arrow-left" />
+            <em className="icon la la-close" />
           </span>
         </div>
       </div>

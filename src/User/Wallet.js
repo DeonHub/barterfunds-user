@@ -221,7 +221,7 @@ const UserWallet = () => {
                                         <i class="icon las la-coins"></i>
                                       </div>
                                       <h5 className="nk-wgw-title title">
-                                        {wallet.walletName}
+                                        User Wallet
                                       </h5>
                                     </span>
                                     <div className="nk-wgw-balance">
@@ -231,12 +231,12 @@ const UserWallet = () => {
                                           GHS
                                         </span>
                                       </div>
-                                      <div className="amount-sm">
+                                      {/* <div className="amount-sm">
                                         {formatCurrency(wallet.balanceUsd)}
                                         <span className="currency currency-usd">
                                           USD
                                         </span>
-                                      </div>
+                                      </div> */}
                                     </div>
                                   </div>
                                   <div className="nk-wgw-actions">
@@ -339,12 +339,12 @@ const UserWallet = () => {
                                           GHS
                                         </span>
                                       </div>
-                                      <div className="amount-sm">
+                                      {/* <div className="amount-sm">
                                         0.00
                                         <span className="currency currency-usd">
                                           USD
                                         </span>
-                                      </div>
+                                      </div> */}
                                     </div>
                                   </div>
                                   <div className="nk-wgw-actions">
@@ -535,20 +535,20 @@ const UserWallet = () => {
                                               {formatCurrency(order.amountGhs)}
                                               <span> GHS</span>
                                             </span>
-                                            <span class="tb-amount-sm">
+                                            {/* <span class="tb-amount-sm">
                                               {formatCurrency(order.amountUsd)}{" "}
                                               USD
-                                            </span>
+                                            </span> */}
                                           </div>
                                           <div class="nk-tb-col text-end tb-col-sm">
                                             <span class="tb-amount">
                                               {formatCurrency(order.balanceGhs)}
                                               <span> GHS</span>
                                             </span>
-                                            <span class="tb-amount-sm">
+                                            {/* <span class="tb-amount-sm">
                                               {formatCurrency(order.balanceUsd)}{" "}
                                               USD
-                                            </span>
+                                            </span> */}
                                           </div>
 
                                           <div className="nk-tb-col nk-tb-col-status">

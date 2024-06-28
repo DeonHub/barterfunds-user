@@ -44,8 +44,10 @@ const UserDashboard = () => {
       .then((response) => {
         if (response.data.success) {
           setCurrencies(response.data.info.currencies);
-          setWallet(response.data.info.wallet);
+
           setReferrals(response.data.info.referrals);
+          setWallet(response.data.info.wallet);
+
           setIsLoading(false);
         } else {
           setCurrencies([]);
@@ -102,6 +104,8 @@ const UserDashboard = () => {
         <div className="nk-main ">
           
           <UserSidebar active={"dashboard"} />
+
+
           <div className="nk-wrap ">
             <UserHeader />
 
@@ -113,11 +117,15 @@ const UserDashboard = () => {
             !user.addedPaymentMethod ? (
               <UserWelcome user={user} />
             ) : (
-              <div className="nk-content nk-content-fluid">
+            // {wallet && wallet._id && ()}
+            <>
+            {wallet && wallet._id && (
+            <div className="nk-content nk-content-fluid">
                 <div className="container-xl wide-lg">
                   <div className="nk-content-body">
                     <div className="nk-block">
                       <div className="row gy-gs">
+                      
                         <div className="col-lg-5 col-xl-4">
                           <div className="nk-block">
                             <div className="nk-block-head-xs">
@@ -127,8 +135,11 @@ const UserDashboard = () => {
                                 </h5>
                               </div>
                             </div>
+
+                            
                             <div className="nk-block">
-                              <div className="card card-bordered text-light is-dark h-100">
+
+                               <div className="card card-bordered text-light is-dark h-100">
                                 <div className="card-inner">
                                   <div className="nk-wg7">
                                     <div className="nk-wg7-stats">
@@ -188,8 +199,11 @@ const UserDashboard = () => {
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div> 
                             </div>
+                            
+                            
+
                           </div>
                         </div>
 
@@ -319,6 +333,9 @@ const UserDashboard = () => {
                   </div>
                 </div>
               </div>
+            )}
+            </>
+              
             )}
             
 

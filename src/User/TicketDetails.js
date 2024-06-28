@@ -1,8 +1,10 @@
 import React, {useState } from 'react';
 import axios from 'axios';
 
-import { Modal, Image, Rate } from "antd";
+// import { Modal, Image, Rate } from "antd";
+import { Modal } from "antd";
 import openNotification from "../components/OpenNotification";
+import ReplyTicket from './ReplyTicket';
 
 
 const TicketDetails = ({ 
@@ -13,20 +15,19 @@ const TicketDetails = ({
     id 
 }) => {
   const [open, setOpen] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const [rating, setRating] = useState(0);
-  const [submitButton, setSubmitButton] = useState(!feedback || !rating ? false : true);
+  // const [rating, setRating] = useState(0);
+  // const [submitButton, setSubmitButton] = useState(!rating ? false : true);
 
 
   const showModal = () => {
     setOpen(true);
   };
 
-  const handleRatingChange = (value) => {
-    setRating(value);
+  // const handleRatingChange = (value) => {
+  //   setRating(value);
 
-    setSubmitButton(value > 0);
-  };
+  //   setSubmitButton(value > 0);
+  // };
 
   const handleOk = () => {
     setIsLoading(true);
@@ -34,8 +35,7 @@ const TicketDetails = ({
     const token = window.sessionStorage.getItem("token");
 
     const body = {
-      feedback: feedback,
-      rating: rating
+      // rating: rating
     }
 
     const headers = {
@@ -86,13 +86,22 @@ const TicketDetails = ({
     setOpen(false);
   };
 
+  const getFileUrl = (path) => {
+    if (path.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${path}`;
+    }
+    return path;
+  };
 
   return (
     <>
       <span
-        className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+        className="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip mr-5"
         title="View Details"
         onClick={showModal}
+        // style={{
+        //   marginRight: "5px !important"
+        // }}
         >
         <span className="icon material-symbols-outlined">
             visibility
@@ -117,16 +126,16 @@ const TicketDetails = ({
 
 
         <div className="p-3">
-            <div className="nk-modal-head mb-3 mb-sm-5">
+            {/* <div className="nk-modal-head mb-3 mb-sm-5">
                 <h4 className="nk-modal-title title">Ticket <small className="text-primary">#{ticket ? ticket.ticketId : "1234567890"}</small></h4>
-            </div>
+            </div> */}
             <div className="nk-tnx-details">
                 <div className="nk-block-between flex-wrap g-3">
                     <div className="nk-tnx-type">
                         
                         <div className="nk-tnx-type-text">
-                            <h5 className="title">Submitted On</h5>
-                            <span className="sub-text mt-n1">{ticket ? formatDate(ticket.createdAt) : ''} {ticket ? formatTime(ticket.createdAt) : ''}</span>
+                            <h5 className="title">Ticket ID: #{ticket?.ticketId } </h5>
+                            <span className="sub-text mt-n1">Submitted On: {ticket ? formatDate(ticket.createdAt) : ''} {ticket ? formatTime(ticket.createdAt) : ''}</span>
                         </div>
                     </div>
                     <ul className="align-center flex-wrap gx-3">
@@ -153,14 +162,9 @@ const TicketDetails = ({
                                     ) : ''}
                     </ul>
                 </div>
-                <div className="nk-modal-head mt-sm-5 mt-4 mb-4">
-                    <h5 className="title">Ticket Details</h5>
-                </div>
-                <div className="row gy-3">
-                    <div className="col-lg-6">
-                        <span className="sub-text">Ticket ID</span>
-                        <span className="caption-text">{ticket ? ticket.ticketId : ''}</span>
-                    </div>
+                
+                <div className="row gy-3 mt-3">
+                    
                     <div className="col-lg-6">
                         <span className="sub-text">Category</span>
                         <span className="caption-text text-break">{ticket ? ticket.category ? ticket.category : 'Customer Service and General Inquiries'  : ''}</span>
@@ -183,11 +187,8 @@ const TicketDetails = ({
                           {ticket.files.map((file, index) => {
                               return(
                                 <span className="">
-                                <div className="col-lg-6" key={index}>
-                                  {file.description}
-                                  {file.originalName}
-                                  <Image src={file.path} />
-                                  </div>
+                                
+                                  <a href={getFileUrl(file.path)} target='_blank' key={index} rel="noreferrer">View {file.description}</a>
                                   <br/>
                                   </span>
                               )
@@ -199,28 +200,46 @@ const TicketDetails = ({
 
                     <hr/>
 
-{ticket ? ticket.status === 'resolved' || ticket.status === 'closed' ? (
+
+
+            {ticket?.replies?.length > 0 ? (
+              <>
+              
+                <div className="nk-modal-head mb-1">
+                  <h5 className="title">Ticket Replies</h5>
+                </div>
+                {ticket.replies.map((reply, index) => {
+                  return (
+                    <div key={index} className={`col-lg-12 mb-1 ${reply.role === 'user' ? "" : "text-end"}`}>
+                      <span className="sub-text" style={{ fontWeight: "bold", color: "black" }} >{reply.role === 'user' ? `${ticket.userId.username}` : "BarterFunds"}</span>
+                      <span className="caption-text">{reply.message}</span>
+
+                      {reply.files.length > 0 && (
+                        <div className="col-lg-12">
+                          <span className="sub-text">Supporting Documents</span>
+                          <div className="col-lg-6">
+                            {reply.files.map((file, fileIndex) => (
+                              <div key={fileIndex} className="col-lg-6">
+                                <a href={getFileUrl(file.path)} target='_blank' key={index} rel="noreferrer">View {file.description}</a>
+                                <br />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            ) : ('')}
+
+                <hr/>
+
+                <ReplyTicket ticketId={ticket?._id} isButton={true} setIsLoading={setIsLoading} />
+               
+               {/* { ticket?.status === 'closed' ? (
           <div>
           <div className='row gy-3'>
-          <div className="col-lg-6 mb-3">
-          <span className="sub-text">Reviewer</span>
-          <span className="caption-text">{ticket ? ticket.reviewer ? ticket.reviewer : 'Not reviewed' : ''}</span>
-        </div>
-
-        <div className="col-lg-6 mb-3">
-          <span className="sub-text">Reviewed On</span>
-          <span className="caption-text">{ticket ? `${formatDate(ticket.updatedAt)} ${formatTime(ticket.updatedAt)}` : ''}</span>
-        </div>
-
-        <div className="col-lg-12 mb-3">
-          <span className="sub-text">Reviewer comments</span>
-          <span className="caption-text">{ticket ? ticket.comments ? ticket.comments : 'No comments yet' : ''}</span>
-        </div>
-
-        <div className="col-lg-12 mb-3">
-          <span className="sub-text">Feedback</span>
-          <span className="caption-text"><textarea class="form-control" placeholder="Enter your feedback here..." onChange={(e) => {setFeedback(e.target.value); setSubmitButton(e.target.value.length > 0)}} disabled={ticket.feedback}>{ticket.feedback ? ticket.feedback : ''}</textarea></span>
-        </div>
 
         <div className="col-lg-12 mb-3">
           <span className="sub-text">Provide rating</span>
@@ -235,7 +254,7 @@ const TicketDetails = ({
         </div>
         <br/>
 
-      { ticket ? !ticket.feedback || !ticket.rating ? (
+      { !ticket?.rating ? (
         <div className="form-navigation">
         <button
             type="button"
@@ -244,18 +263,14 @@ const TicketDetails = ({
             disabled={!submitButton}
             
         >
-            Submit Feedback
+            Submit Rating
         </button>
         </div>
-      ) : '' : ''}
+      ) : ''}
         
 
           </div>
-) : '' : ''}
-
-                    
-                
-               
+) : ''} */}
             </div>
             </div>
         </div>

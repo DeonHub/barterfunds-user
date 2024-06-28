@@ -274,7 +274,7 @@ const OpenModal = ({
                 id="usdt-address-input"
                 name="usdt-address-input"
                 placeholder="1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
-                value="1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
+                value={selectedCurrency.walletAddress}
                 disabled
               />
               <span className="currency-symbol" />

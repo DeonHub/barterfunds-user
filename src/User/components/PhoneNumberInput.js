@@ -1,12 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
 
-const PhoneNumberInput = ({
-  handleChange,
-  setSelectedCountryCode
-}) => {
+const PhoneNumberInput = ({ handlePhoneNumberInput, setSelectedCountryCode }) => {
   const inputRef = useRef(null);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const inputElement = inputRef.current;
@@ -22,7 +20,6 @@ const PhoneNumberInput = ({
     const handleCountryChange = () => {
       const countryData = iti.getSelectedCountryData();
       setSelectedCountryCode(countryData.dialCode);
-      // console.log(countryData.dialCode);
     };
 
     inputElement.addEventListener("countrychange", handleCountryChange);
@@ -34,20 +31,33 @@ const PhoneNumberInput = ({
     };
   }, [setSelectedCountryCode]);
 
-  return (
-    
-    <>
-        <input
-            ref={inputRef}
-            type="tel"
-            id="contact"
-            name="contact"
-            className="form-control form-control-lg"
-            placeholder="Enter phone number"
-            onChange={handleChange}
-            />
-</>
+  const handleInput = (e) => {
+    const rawValue = e.target.value;
+    setInputValue(rawValue.replace(/x/g, ''));
+    handlePhoneNumberInput(rawValue.replace(/x/g, ''));
+    // console.log(rawValue.replace(/x/g, ''));
+  };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      
+      setInputValue((prev) => prev.slice(0, -1));
+    }
+  };
+
+  return (
+    <input
+      ref={inputRef}
+      type="tel"
+      id="contact"
+      name="contact"
+      className="form-control form-control-lg"
+      value={inputValue}
+      placeholder="Enter phone number"
+      onInput={handleInput}
+      onKeyDown={handleKeyDown}
+    />
   );
 };
 

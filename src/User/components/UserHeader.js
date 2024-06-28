@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import './userjs';
+// import './userjs';
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
 import axios from "axios";
+import Bell from "./Bell";
 
 const UserHeader = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [notifications, setNotifications] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
 
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const UserHeader = () => {
         if (response.data.success) {
           const sortedNotifications = response.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setNotifications(sortedNotifications);
+          setUnreadNotifications(sortedNotifications.filter((notification) => !notification.read).length);
         } else {
           setNotifications([]);
         }
@@ -68,26 +70,43 @@ const UserHeader = () => {
     return `${hours}:${minutes} ${amPM}`;
   };
 
+
+  const handleToggle = () => {
+    const sidebar = document.querySelector('.nk-sidebar') || document.querySelector('.nk-sidebar-mobile');
+    if (sidebar) {
+      if (sidebar.classList.contains('nk-sidebar')) {
+        sidebar.classList.remove('nk-sidebar');
+        sidebar.classList.add('nk-sidebar-mobile');
+      } else {
+        sidebar.classList.remove('nk-sidebar-mobile');
+        sidebar.classList.add('nk-sidebar');
+      }
+    }
+  };
+  
+
+
   return (
 
     <div className="nk-header nk-header-fixed is-light">
     <div className="container-fluid">
       <div className="nk-header-wrap">
-        <div className="nk-menu-trigger d-xl-none ms-n1">
+        <div className="nk-menu-trigger me-n2" style={{ cursor: "pointer" }}>
           <span
             
             className="nk-nav-toggle nk-quick-nav-icon"
             data-target="sidebarMenu"
+            onClick={handleToggle}
           >
             <em className="icon la la-bars" />
           </span>
         </div>
         <div className="nk-header-brand d-xl-none">
-          <a href="/assets/index.html" className="logo-link">
+          <a href={`/user/dashboard`} className="logo-link">
             <img
               className="logo-light logo-img"
               src="/assets/images/logo.png"
-              srcSet="/assets/images/logo2x.png 2x"
+              srcSet="/assets/images/logo.png"
               alt="logo"
             />
             <img
@@ -202,22 +221,13 @@ const UserHeader = () => {
                 </div>
               </div>
             </li>
-            {/* .dropdown */}
             <li className="dropdown notification-dropdown me-n1">
-              <span
-                className="dropdown-toggle nk-quick-nav-icon"
-                data-bs-toggle="dropdown"
-              >
-                <div className="icon-status icon-status-info">
-                  <em className="icon la la-bell" />
-                </div>
-              </span>
+            <Bell notificationCount={unreadNotifications} />
               <div className="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
                 <div className="dropdown-head">
                   <span className="sub-title nk-dropdown-title">
                     Notifications
                   </span>
-                  {/* <span>Mark All as Read</span> */}
                 </div>
                 <div className="dropdown-body">
                   <div className="nk-notification">
@@ -227,7 +237,7 @@ const UserHeader = () => {
 
                         
                         <a
-                          href="/"
+                          href="/user/notifications"
                           className={`nk-notification-item dropdown-inner ${isUnread ? 'unread' : 'read'}`}
                           key={notification._id} 
                         >
@@ -266,15 +276,10 @@ const UserHeader = () => {
                 </div>
               </div>
             </li>
-            {/* .dropdown */}
           </ul>
-          {/* .nk-quick-nav */}
         </div>
-        {/* .nk-header-tools */}
       </div>
-      {/* .nk-header-wrap */}
     </div>
-    {/* .container-fliud */}
   </div>
 
 

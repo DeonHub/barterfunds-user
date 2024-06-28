@@ -243,7 +243,7 @@ const UserKycs = () => {
                             </div>
                           </div>
 
-                          <div className="card-inner p-0 text-center">
+                          <div className="card-inner p-0 text-start">
                             <div className="nk-tb-list nk-tb-tnx">
                               <div className="nk-tb-item nk-tb-head">
                                 <div className="nk-tb-col">
@@ -270,7 +270,7 @@ const UserKycs = () => {
 
                               {currentPageData.map((kyc) => {
                                   return(
-                                    <div className="nk-tb-item text-center" key={kyc._id}>
+                                    <div className="nk-tb-item text-start" key={kyc._id}>
                                    
 
                                     <div className="nk-tb-col">

@@ -1,0 +1,80 @@
+/* Features.css */
+
+.features-list {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 80px;
+
+}
+
+.feature {
+    flex: 1;
+    padding: 5px;
+    margin-bottom: -15px;
+    text-align: center;
+    position: relative;
+    border: none;
+    
+    
+    
+}
+
+.feature:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 1px;
+    background: #ddd;
+}
+
+.feature .media {
+    display: flex;
+}
+
+.feature .feature-icon {
+    font-size: 3.2em;
+    color: hsl(345, 100%, 25%);
+    margin-top: -10px;
+    
+    
+
+}
+
+.feature .feature-text {
+    display: flex;
+    flex-direction: column; /* Stack title and description vertically */
+}
+.feature .feature-title {
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+/* Mobile specific styles */
+@media (max-width: 768px) {
+    .features-list {
+        overflow-x: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+    }
+
+    .feature {
+        flex: 0 0 50%;
+        min-width: 50%;
+    }
+
+    .feature:not(:last-child)::after {
+        display: block;
+    }
+}

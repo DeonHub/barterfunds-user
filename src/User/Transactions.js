@@ -7,6 +7,7 @@ import UserFooter from "./components/UserFooter";
 import TransactionDetails from "./TransactionDetails";
 import Loader from "../components/Loader";
 import axios from "axios";
+import CsvExportButton from "./components/CsvExportButton";
 
 const Transactions = ({ globalState, ...props }) => {
   const navigate = useNavigate();
@@ -17,6 +18,17 @@ const Transactions = ({ globalState, ...props }) => {
   // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
+
+  const fields = [
+    { header: 'ID', accessor: '_id' },
+    { header: 'User', accessor: 'userId.username' },
+    { header: 'Currency', accessor: 'currencyId.currencyName' },
+    { header: 'Transaction Type', accessor: 'transactionType' },
+    { header: 'Amount (GHS)', accessor: 'amountGhs' },
+    { header: 'Amount (USD)', accessor: 'amountUsd' },
+    { header: 'Status', accessor: 'status' },
+    { header: 'Created At', accessor: 'createdAt' },
+  ];
 
   useEffect(() => {
     document.title = "Transactions | BarterFunds";
@@ -129,6 +141,8 @@ const Transactions = ({ globalState, ...props }) => {
         return '';
     }
   };
+
+  
   
 
   return (
@@ -169,15 +183,7 @@ const Transactions = ({ globalState, ...props }) => {
                             >
                               <ul className="nk-block-tools g-3">
                                 <li>
-                                  <span
-                                   
-                                    className="btn btn-white btn-dim btn-outline-light"
-                                  >
-                                    <span class="icon material-symbols-outlined">
-                                      cloud_download
-                                    </span>
-                                    <span>Export</span>
-                                  </span>
+                                  <CsvExportButton data={transactions} filename={"transactions-data.csv"} fields={fields} />
                                 </li>
                                 <li className="nk-block-tools-opt">
                                   <div className="drodown">

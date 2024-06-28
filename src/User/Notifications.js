@@ -17,6 +17,7 @@ const Notifications = () => {
   const itemsPerPage = 20;
   // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
+  // const [unreadNotifications, setUnreadNotifications] = useState(0);
 
   useEffect(() => {
     document.title = "User Notifications | BarterFunds";
@@ -39,6 +40,7 @@ const Notifications = () => {
         if (response.data.success) {
           const sortedNotifications = response.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setNotifications(sortedNotifications);
+          // setUnreadNotifications(sortedNotifications.filter((notification) => !notification.read).length);
         } else {
           setNotifications([]);
         }
@@ -214,26 +216,13 @@ const Notifications = () => {
 
                                           <div className="nk-tb-col nk-tb-col-status">
                                             <div className="dot dot-primary d-md-none" />
-                                            {notification.status === "active" && (
+                                           
                                               <span className="badge badge-sm badge-dim bg-outline-info d-none d-md-inline-flex">
-                                                Active
+                                              {notification.read ? 'Read' : 'Unread' }
                                               </span>
-                                            )}
-                                            {notification.status === "success" && (
-                                              <span className="badge badge-sm badge-dim bg-outline-success d-none d-md-inline-flex">
-                                                Completed
-                                              </span>
-                                            )}
-                                            {notification.status === "cancelled" && (
-                                              <span className="badge badge-sm badge-dim bg-outline-warning d-none d-md-inline-flex">
-                                                Cancelled
-                                              </span>
-                                            )}
-                                            {notification.status === "failed" && (
-                                              <span className="badge badge-sm badge-dim bg-outline-danger d-none d-md-inline-flex">
-                                                Failed
-                                              </span>
-                                            )}
+                                          
+                                           
+                                            
                                           </div>
 
                                           <div className="nk-tb-col nk-tb-col-tools">
