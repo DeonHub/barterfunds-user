@@ -40,7 +40,8 @@ const UserKycs = () => {
 
       .then((response) => {
         if (response.data.success) {
-          setKycs(response.data.kycs);
+          const sortedKycs = response.data.kycs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setKycs(sortedKycs);
           setCount(response.data.count);
           setIsLoading(false);
         } else {
@@ -191,11 +192,11 @@ const UserKycs = () => {
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
-                              <em className="icon ni ni-menu-alt-r" />
+                              {/* <em className="icon ni ni-menu-alt-r" /> */}
                             </span>
                             
                             <div
-                              className="toggle-expand-content"
+                              className=""
                               data-content="pageMenu"
                             >
                               <ul className="nk-block-tools g-3">

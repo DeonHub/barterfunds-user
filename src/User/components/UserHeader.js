@@ -7,7 +7,7 @@ import { useUser } from "./UserContext";
 import axios from "axios";
 import Bell from "./Bell";
 
-const UserHeader = () => {
+const UserHeader = ({ unreadNotificationx }) => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [notifications, setNotifications] = useState([]);
@@ -222,7 +222,7 @@ const UserHeader = () => {
               </div>
             </li>
             <li className="dropdown notification-dropdown me-n1">
-            <Bell notificationCount={unreadNotifications} />
+            <Bell notificationCount={ unreadNotificationx ? unreadNotificationx : unreadNotifications } />
               <div className="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
                 <div className="dropdown-head">
                   <span className="sub-title nk-dropdown-title">

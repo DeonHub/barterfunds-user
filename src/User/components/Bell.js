@@ -2,10 +2,11 @@ import React from 'react';
 
 const Bell = ({ notificationCount }) => {
   return (
-    <span className="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
-      <div className="status"style={{
+    <span className="dropdown-toggle nk-quick-nav-icon no-hover" data-bs-toggle="dropdown">
+      <div className="status" style={{
           position: "relative",
-          display: "inline-block"
+          display: "inline-block",
+          borderRadius: "50%",
         }}>
         <em className="icon la la-bell"></em>
         {notificationCount > 0 && <span className="badge" style={{

@@ -11,6 +11,7 @@ const NotificationDetails = ({
     formatTime,
     setIsLoading,
     setNotifications,
+    setUnreadNotificationx,
     id
 }) => {
   const [open, setOpen] = useState(false);
@@ -30,16 +31,18 @@ const NotificationDetails = ({
     
     axios.request(config)
     .then((response) => {
-          setNotifications((prevData) =>
-            prevData.map((notification) =>
-              notification._id === notificationId ? { ...notification, read: true } : notification
-            )
-          );
+      setNotifications((prevData) => {
+        const updatedNotifications = prevData.map((notification) =>
+          notification._id === notificationId ? { ...notification, read: true } : notification
+        );
+        const unreadCount = updatedNotifications.filter(notification => !notification.read).length;
+        setUnreadNotificationx(unreadCount);
+        return updatedNotifications;
+      });
     })
     .catch((error) => {
       console.log(error);
     });
-
   };
 
   const showModal = () => {

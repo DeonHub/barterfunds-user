@@ -175,7 +175,7 @@ const Transactions = ({ globalState, ...props }) => {
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
-                              <em className="icon ni ni-menu-alt-r" />
+                              {/* <em className="icon la la-eye-slash" /> */}
                             </span>
                             <div
                               className="toggle-expand-content"
@@ -286,7 +286,7 @@ const Transactions = ({ globalState, ...props }) => {
                                       {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}
                                       </span>
                                       <span className="text">
-                                        1.00 USD = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS
+                                        1.00 {transaction?.currencyId?.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS
                                       </span>
                                     </div>
                                     <div className="nk-tb-col text-end">
@@ -294,7 +294,7 @@ const Transactions = ({ globalState, ...props }) => {
                                         {formatCurrency(transaction.amountGhs)} <span>GHS</span>
                                       </span>
                                       <span className="tb-amount-sm">
-                                      {formatCurrency(transaction.amountUsd)} USD
+                                      {formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}
                                       </span>
                                     </div>
 

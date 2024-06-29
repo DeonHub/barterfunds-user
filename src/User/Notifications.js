@@ -17,7 +17,7 @@ const Notifications = () => {
   const itemsPerPage = 20;
   // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
-  // const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [unreadNotificationx, setUnreadNotificationx] = useState(0);
 
   useEffect(() => {
     document.title = "User Notifications | BarterFunds";
@@ -40,7 +40,7 @@ const Notifications = () => {
         if (response.data.success) {
           const sortedNotifications = response.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setNotifications(sortedNotifications);
-          // setUnreadNotifications(sortedNotifications.filter((notification) => !notification.read).length);
+          setUnreadNotificationx(sortedNotifications.filter((notification) => !notification.read).length);
         } else {
           setNotifications([]);
         }
@@ -104,7 +104,7 @@ const Notifications = () => {
         <div className="nk-main ">
           <UserSidebar active={"dashboard"} />
           <div className="nk-wrap ">
-            <UserHeader />
+            <UserHeader unreadNotificationx={unreadNotificationx} />
 
             {isLoading ? (
               <Loader />
@@ -122,6 +122,7 @@ const Notifications = () => {
                                 <div class="card-title-group">
                                   <div class="card-title">
                                     <h5 class="title">All Notifications</h5>
+                                    {/* <p>You have a total of {unreadNotificationx} unread notifications</p> */}
                                   </div>
                                   <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
@@ -236,6 +237,7 @@ const Notifications = () => {
                                                  
                                                   setIsLoading={setIsLoading}
                                                   setNotifications={setNotifications}
+                                                  setUnreadNotificationx={setUnreadNotificationx}
                                                 
                                                 />
                                               </li>

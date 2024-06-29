@@ -26,6 +26,7 @@ const UserDashboard = () => {
     setIsLoading(true);
     document.title = "User Dashboard  | BarterFunds";
     const token = window.sessionStorage.getItem("token");
+    console.log(user)
     
     if (!token) {
       navigate("/login");

@@ -142,10 +142,10 @@ const UserSupport = () => {
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
-                              <em className="icon ni ni-menu-alt-r" />
+                              {/* <em className="icon ni ni-menu-alt-r" /> */}
                             </span>
                             <div
-                              className="toggle-expand-content"
+                              className=""
                               data-content="pageMenu"
                             >
                               <ul className="nk-block-tools g-3">

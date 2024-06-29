@@ -29854,8 +29854,7 @@ body.nav-shown {
 }
 .nk-quick-nav-icon:hover:before, .nk-quick-nav-icon.active:before {
   opacity: 1;
-  height: 116%;
-  width: 116%;
+  padding: 60%;
 }
 
 @media (max-width: 359px) {
@@ -30098,6 +30097,10 @@ body.nav-shown {
   padding-right: 24px;
 }
 
+.nk-menu-trigger{
+  display: none;
+}
+
 @keyframes overlay-fade-in {
   0% {
     opacity: 0;
@@ -30107,6 +30110,18 @@ body.nav-shown {
   }
 }
 @media (max-width: 991.98px) {
+
+  .nk-menu-trigger {
+    display: block;
+  }
+
+  .nk-tb-list {
+    display: table;
+    width: 100%;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+
   .nk-sidebar-mobile {
     width: 290px !important;
     z-index: 50;
@@ -35451,6 +35466,9 @@ button.close {
 }
 
 @media (min-width: 576px) {
+  .nk-tb-list {
+    display: table;
+  }
   .nk-tb-col-check {
     width: 3.25rem;
   }
@@ -35464,6 +35482,7 @@ button.close {
 @media (min-width: 1540px) {
   .nk-tb-list {
     font-size: 14px;
+    display: table;
   }
   .nk-tb-list .list-status, .nk-tb-list .tb-status {
     font-size: 13px;
@@ -35519,16 +35538,16 @@ button.close {
 }
 @media (max-width: 575.98px) {
   .nk-tb-tnx .nk-tb-head .nk-tb-col-tools {
-    opacity: 0;
+    opacity: 1;
   }
   .nk-tb-tnx .nk-tb-col-status {
     text-align: right;
     padding-right: 1.25rem !important;
   }
   .nk-tb-tnx .nk-tb-col-tools {
-    position: absolute;
+    /* position: absolute; */
     right: 0;
-    opacity: 0;
+    opacity: 1;
     transition: 0.3s ease;
   }
   .nk-tb-tnx .nk-tb-item:hover .nk-tb-col-tools {
@@ -43231,5 +43250,3 @@ border-radius: 4px;
     margin-left: 10%;
   }
 }
-
-/*! END @iO */

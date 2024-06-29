@@ -122,7 +122,7 @@ const TransactionDetails = ({
                                           />
                         </div>
                         <div className="nk-tnx-type-text">
-                            <h5 className="title">{transaction ? (`${formatCurrency(transaction.amountUsd)} USD of ${transaction?.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}`): ''} </h5>
+                            <h5 className="title">{transaction ? (`${formatCurrency(transaction.amountUsd)} ${transaction?.currencyId?.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of ${transaction?.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}`): ''} </h5>
                             <span className="sub-text mt-n1">{transaction ? formatDate(transaction.createdAt) : ''} {transaction ? formatTime(transaction.createdAt) : ''}</span>
                         </div>
                     </div>
