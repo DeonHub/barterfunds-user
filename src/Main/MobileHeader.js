@@ -6,6 +6,7 @@ const MobileMenu = () => {
     const [activeMenu, setActiveMenu] = useState(null);
     const [activeSubMenu, setActiveSubMenu] = useState({});
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Assuming 768px as the breakpoint for mobile devices
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
         const handleResize = () => {
@@ -26,19 +27,19 @@ const MobileMenu = () => {
           {
             title: "Digital Assets",
             links: [
-              { title: "Buy Assets", url: "https://barter-funds.com", description: "Purchase digital assets securely." },
-              { title: "Sell Assets", url: "https://barter-funds.com", description: "Sell your digital assets easily." },
-              { title: "Send Assets", url: "https://barter-funds.com", description: "Transfer assets to others." },
-              { title: "Receive Assets", url: "https://barter-funds.com", description: "Accept digital assets from others." }
+              { title: "Buy Assets", url: "/", description: "Purchase digital assets securely." },
+              { title: "Sell Assets", url: "/", description: "Sell your digital assets easily." },
+              { title: "Send Assets", url: "/", description: "Transfer assets to others." },
+              { title: "Receive Assets", url: "/", description: "Accept digital assets from others." }
             ]
           },
           {
             title: "Payments",
             links: [
-              { title: "International Payments", url: "https://barter-funds.com", description: "Make payments across borders." },
-              { title: "Online Payments", url: "https://barter-funds.com", description: "Pay for services online." },
-              { title: "Bill/Invoice Payments", url: "https://barter-funds.com", description: "Settle your bills and invoices." },
-              { title: "Escrow Services", url: "https://barter-funds.com", description: "Secure transactions with escrow." }
+              { title: "International Payments", url: "/", description: "Make payments across borders." },
+              { title: "Online Payments", url: "/", description: "Pay for services online." },
+              { title: "Bill/Invoice Payments", url: "/", description: "Settle your bills and invoices." },
+              { title: "Escrow Services", url: "/", description: "Secure transactions with escrow." }
             ]
           }
         ]
@@ -49,19 +50,19 @@ const MobileMenu = () => {
           {
             title: "Get Paid",
             links: [
-              { title: "Get paid by clients/customers", url: "https://barter-funds.com", description: "Acquire digital assets for your business." },
-              { title: "Get paid by marketplaces", url: "https://barter-funds.com", description: "Get paid for your goods and services on marketplaces" },
-              { title: "Multicurrency account", url: "https://barter-funds.com", description: "Manage multiple currencies in one account." },
-              { title: "Receive Assets", url: "https://barter-funds.com", description: "Collect digital assets from clients." }
+              { title: "Get paid by clients/customers", url: "/", description: "Acquire digital assets for your business." },
+              { title: "Get paid by marketplaces", url: "/", description: "Get paid for your goods and services on marketplaces" },
+              { title: "Multicurrency account", url: "/", description: "Manage multiple currencies in one account." },
+              { title: "Receive Assets", url: "/", description: "Collect digital assets from clients." }
             ]
           },
           {
             title: "Make Payments",
             links: [
-              { title: "Pay suppliers", url: "https://barter-funds.com", description: "Facilitate global business payments." },
-              { title: "Pay for Goods and Services", url: "https://barter-funds.com", description: "Handle online transactions smoothly." },
-              { title: "Bill/Invoice Payments", url: "https://barter-funds.com", description: "Manage your business invoices." },
-              { title: "Escrow Services", url: "https://barter-funds.com", description: "Secure business deals with escrow." }
+              { title: "Pay suppliers", url: "/", description: "Facilitate global business payments." },
+              { title: "Pay for Goods and Services", url: "/", description: "Handle online transactions smoothly." },
+              { title: "Bill/Invoice Payments", url: "/", description: "Manage your business invoices." },
+              { title: "Escrow Services", url: "/", description: "Secure business deals with escrow." }
             ]
           }
         ]
@@ -72,19 +73,19 @@ const MobileMenu = () => {
           {
             title: "Get Paid",
             links: [
-              { title: "Get paid by clients/customers", url: "https://barter-funds.com", description: "Receive payments from clients and customers." },
-              { title: "Get paid by marketplaces", url: "https://barter-funds.com", description: "Get paid for your work on various marketplaces." },
-              { title: "Multicurrency account", url: "https://barter-funds.com", description: "Manage earnings in multiple currencies." },
-              { title: "Receive Assets", url: "https://barter-funds.com", description: "Accept payments in digital assets." }
+              { title: "Get paid by clients/customers", url: "/", description: "Receive payments from clients and customers." },
+              { title: "Get paid by marketplaces", url: "/", description: "Get paid for your work on various marketplaces." },
+              { title: "Multicurrency account", url: "/", description: "Manage earnings in multiple currencies." },
+              { title: "Receive Assets", url: "/", description: "Accept payments in digital assets." }
             ]
           },
           {
             title: "Receive Payments",
             links: [
-              { title: "International Payments", url: "https://barter-funds.com", description: "Receive international payments easily." },
-              { title: "Receive Assets", url: "https://barter-funds.com", description: "Collect digital assets for your freelance work." },
-              { title: "Bill/Invoice Payments", url: "https://barter-funds.com", description: "Get paid by sending bills or invoices." },
-              { title: "Escrow Services", url: "https://barter-funds.com", description: "Securely receive payments with escrow." }
+              { title: "International Payments", url: "/", description: "Receive international payments easily." },
+              { title: "Receive Assets", url: "/", description: "Collect digital assets for your freelance work." },
+              { title: "Bill/Invoice Payments", url: "/", description: "Get paid by sending bills or invoices." },
+              { title: "Escrow Services", url: "/", description: "Securely receive payments with escrow." }
             ]
           }
         ]
@@ -95,19 +96,19 @@ const MobileMenu = () => {
           {
             title: "Paypal Tools",
             links: [
-              { title: "Paypal fees checker", url: "https://barter-funds.com", description: "Calculate Paypal fees for transactions." },
-              { title: "Paypal rate checker", url: "https://barter-funds.com", description: "Check the current Paypal exchange rates." },
-              { title: "Paypal currency converter", url: "https://barter-funds.com", description: "Convert currencies using Paypal rates." },
-              { title: "Paypal Account Creation", url: "https://barter-funds.com", description: "Exchange currencies via Paypal." }
+              { title: "Paypal fees checker", url: "/", description: "Calculate Paypal fees for transactions." },
+              { title: "Paypal rate checker", url: "/", description: "Check the current Paypal exchange rates." },
+              { title: "Paypal currency converter", url: "/", description: "Convert currencies using Paypal rates." },
+              { title: "Paypal Account Creation", url: "/", description: "Exchange currencies via Paypal." }
             ]
           },
           {
             title: "General Tools",
             links: [
-              { title: "Invoice Generator", url: "https://barter-funds.com", description: "Create professional invoices easily." },
-              { title: "Fees Checker", url: "https://barter-funds.com", description: "Check fees for various transactions." },
-              { title: "Currency Converter", url: "https://barter-funds.com", description: "Convert between different currencies." },
-              { title: "Exchange Rate Checker", url: "https://barter-funds.com", description: "Create a verified Paypal account." }
+              { title: "Invoice Generator", url: "/", description: "Create professional invoices easily." },
+              { title: "Fees Checker", url: "/", description: "Check fees for various transactions." },
+              { title: "Currency Converter", url: "/", description: "Convert between different currencies." },
+              { title: "Exchange Rate Checker", url: "/", description: "Create a verified Paypal account." }
             ]
           }
         ]
@@ -143,7 +144,7 @@ const MobileMenu = () => {
               <div className="d-flex align-items-center me-auto">
                 <div className="d-flex align-items-center flex-fill">
                   <div className="site-branding header-logo flex-fill">
-                    <a href="https://www.payoneer.com" className="custom-logo-link dark" rel="home">
+                    <a href="/" className="custom-logo-link dark" rel="home">
                       <img src="/assets/images/barterfunds-logo.png" width={200} height={40} alt="BarterFunds" />
                     </a>
                   </div>
@@ -203,8 +204,8 @@ const MobileMenu = () => {
                     </div>
                   ))}
                   <div className="mmenu-footer">
-                <button className="mmenu-footer-button">Login</button>
-                <button className="mmenu-footer-button">Get Started</button>
+                <a href="/login"><button className="mmenu-footer-button">Login</button></a>
+                <a href="/signup"><button className="mmenu-footer-button">Register</button></a>
                 <div className="mfooter-links">
                     <a href="/privacy-policy" className="mfooter-link">Privacy Policy</a>
                     <a href="/terms-conditions" className="mfooter-link">Terms & Conditions</a>
@@ -220,7 +221,7 @@ const MobileMenu = () => {
                     <a href="https://www.tiktok.com/barterfunds" className="msocial-icon"><i className="fa-brands fa-tiktok"></i></a>
                 </div>
                 <div className="mcopyright">
-                    &copy; 2019 - 2024 BarterFunds. All Rights Reserved.
+                    &copy; 2019 - {currentYear} BarterFunds. All Rights Reserved.
                 </div>
             </div>
                 </div>
