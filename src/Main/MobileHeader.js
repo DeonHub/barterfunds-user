@@ -204,8 +204,8 @@ const MobileMenu = () => {
                     </div>
                   ))}
                   <div className="mmenu-footer">
-                <a href="/login" className="mmenu-footer-button"><button>Login</button></a>
-                <a href="/signup" className="mmenu-footer-button"><button>Register</button></a>
+                <a href="/login" className="mmenu-footer-button"><span>Login</span></a>
+                <a href="/signup" className="mmenu-footer-button"><span>Register</span></a>
                 <div className="mfooter-links">
                     <a href="/privacy-policy" className="mfooter-link">Privacy Policy</a>
                     <a href="/terms-conditions" className="mfooter-link">Terms & Conditions</a>
