@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import OpenModal from "./components/OpenModal";
 import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import axios from "axios";
+import FileUpload from "./components/FileUpload";
+import openNotification from "../components/OpenNotification";
+
 
 const BuyPanel = ({
   currencies,
@@ -21,7 +25,8 @@ const BuyPanel = ({
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
-
+  const [submitButton, setSubmitButton] = useState(false);
+  const [selectedProof, setSelectedProof] = useState('');
   const transactionFee = 10;
   const transactionType = "buy";
 
@@ -130,6 +135,58 @@ const BuyPanel = ({
     setConversionRate(currency.exchangeRate);
   };
 
+
+  const handleOk = () => {
+    setIsLoading(true);
+    const body = new FormData();
+    const token = window.sessionStorage.getItem("token");
+    const transactionId = window.sessionStorage.getItem("transactionId");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+
+      body.append('paymentProof', selectedProof);
+
+      axios
+      .patch(`${process.env.REACT_APP_API_URL}/transactions/${transactionId}`, body, { headers: headers })
+      .then((updateResult) => {
+        
+        if (updateResult.data.success) {
+          openNotification(
+            "topRight",
+            "success",
+            "Success",
+            "Payment Proof uploaded successfully"
+          );
+
+          window.sessionStorage.removeItem('transactionId');
+
+          setTimeout(() => {
+            window.location.href = `/user/transactions`;
+          }, 1000);
+        } else {
+          openNotification(
+            "topRight",
+            "error",
+            "Error",
+            "Failed to upload payment proof"
+          );
+        }
+      })
+      .catch((updateError) => {
+        openNotification(
+          "topRight",
+          "error",
+          "Error",
+          "Failed to upload payment proof"
+        );
+        console.log("cannot update transaction id")
+      });  
+
+  };
+
   return (
     <>
       {formStage === 1 && (
@@ -227,15 +284,15 @@ const BuyPanel = ({
                       className="form-control form-control-lg form-control-number"
                       id="usd-input"
                       name="usd-input"
-                      placeholder={`Amount in ${selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}`}
+                      placeholder={`Amount in ${selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}`}
                       value={usdAmount}
                       onChange={handleUsdInputChange}
                       required
                     />
-                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}</span>
+                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}</span>
                     <img
-                      src={selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
-                      alt={selectedCurrency.currencyName.includes('yuan') ? "Chinese Yuan (CNY)" : "US Dollar (USD)"}
+                      src={selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
+                      alt={selectedCurrency.currencyCode.includes('rmb') ? "Chinese Yuan (CNY)" : "US Dollar (USD)"}
                     />
                   </div>
                   &nbsp;
@@ -270,7 +327,7 @@ const BuyPanel = ({
                       Maximum: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {conversionRate} GHS
+                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {conversionRate} GHS
                     </span>
                   </div>
                 </div>
@@ -416,11 +473,11 @@ const BuyPanel = ({
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to buy
-                <strong> {usdAmount}</strong> {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for
-                <strong> {ghsAmount}</strong> GHS
+                <strong> {formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for
+                <strong> {formatCurrency(ghsAmount)}</strong> GHS
               </div>
               <span className="sub-text-sm">
-                Exchange rate: 1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
+                Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
               </span>
             </div>
           </div>
@@ -481,7 +538,7 @@ const BuyPanel = ({
             </div>
 
             <OpenModal
-              title={"Proceed to Payment"}
+              title={"Confirm your Order"}
               content={
                 "Are you sure you want to proceed to payment? Please ensure all details provided are correct to prevent processing delay."
               }
@@ -493,39 +550,41 @@ const BuyPanel = ({
               walletAddress={walletAddress}
               transactionType={transactionType}
               setIsLoading={setIsLoading}
+              nextFormStage={nextFormStage}
+              formatCurrency={formatCurrency}
             />
           </div>
         </div>
       )}
 
-      {formStage === 4 && (
+{formStage === 4 && (
         <div
           className={`form-stage ${formStage === 4 ? "visible" : ""}`}
           id="stage4"
         >
           <div className="nk-modal text-center">
             <em className="nk-modal-icon icon icon-circle icon-circle-xxl la la-check bg-success" />
-            <h4 className="nk-modal-title">Successfully sent payment!</h4>
+            <h4 className="nk-modal-title">Order Successfully Made!</h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You’ve successfully bought
-                <strong> 100</strong>
-                {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} for <strong>1,200.00</strong> GHS.
+                You will receive {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
+                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.
+                
               </p>
               <p className="sub-text-sm">
-                Learn when you receive bitcoin in your wallet.
-                <a href={"/user/dashboard"}> Click here</a>
+                Once we confirm payment into our account.
               </p>
             </div>
             <div className="nk-modal-action-lg">
               <ul className="btn-group gx-4">
                 <li>
-                  <a
-                    href="/assets/transactions.html"
+                  <button
+                    type="button"
                     className="btn btn-lg btn-mw btn-primary"
+                    onClick={nextFormStage}
                   >
-                    Check Order Status
-                  </a>
+                    Upload Payment Screenshot
+                  </button>
                 </li>
               </ul>
             </div>
@@ -533,9 +592,52 @@ const BuyPanel = ({
           <br />
           <div className="text-center w-100">
             <p>
-              Earn upto GHS 100 for each friend your refer!
-              <a href={"/user/dashboard"}>Invite friends</a>
+              Earn up to GHS 100 for each friend your refer!
+              <a href={"/"}> Invite friends</a>
             </p>
+          </div>
+        </div>
+      )}
+
+      {formStage === 5 && (
+        <div
+          className={`form-stage ${formStage === 5 ? "visible" : ""}`}
+          id="stage5"
+        >
+          <div className="buysell-field form-group">
+            <div className="form-navigation">
+              <label type="button" onClick={previousFormStage}>
+                <i className="icon la la-arrow-left" />
+              </label>
+            </div>
+
+            <div className="text-center">
+              <p>
+                Please upload a screenshot proof of your payment. If you don't
+                have the screenshot now, you can go to your orders page and
+                upload it later.
+              </p>
+            </div>
+          </div>
+          <div className="buysell-field form-group">
+            <FileUpload name={"screenshot"} id={"screenshot"} setSelectedProof={setSelectedProof} setSubmitButton={setSubmitButton} />
+          </div>
+
+          <div className="form-navigation">
+          <button
+            type="button"
+            className="btn btn-lg btn-block btn-primary"
+            onClick={handleOk}
+            disabled={!submitButton}
+        >
+            Submit Screenshot
+        </button>
+          </div>
+
+          <div className="text-center my-3">
+            <a href={`/user/transactions`}>
+              I will upload later
+            </a>
           </div>
         </div>
       )}

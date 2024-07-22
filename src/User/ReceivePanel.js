@@ -291,14 +291,14 @@ const ReceivePanel = ({
                       className="form-control form-control-lg form-control-number"
                       id="usd-input"
                       name="usd-input"
-                      placeholder={`Amount in ${selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}`}
+                      placeholder={`Amount in ${selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}`}
                       value={usdAmount}
                       onChange={handleUsdInputChange}
                       required
                     />
-                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}</span>
+                    <span className="currency-symbol">&nbsp;{selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}</span>
                     <img
-                      src={selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
+                      src={selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "/assets/images/currency/cny.png" : "/assets/images/payment/usd-icon.png"}
                       alt={selectedCurrency.currencyName.includes('yuan') ? "Chinese Yuan (CNY)" : "US Dollar (USD)"}
                     />
                   </div>
@@ -347,7 +347,7 @@ const ReceivePanel = ({
                       GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {conversionRate} GHS
+                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {conversionRate} GHS
                     </span>
                   </div>
                 </div>
@@ -511,14 +511,14 @@ const ReceivePanel = ({
                 You are about to receive
                 <strong>
                   {" "}
-                  <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of
+                  <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of
                   {selectedCurrency.currencyName} for{" "}
                   {formatCurrency(ghsAmount)}
                 </strong>{" "}
                 GHS
               </div>
               <span className="sub-text-sm">
-                Exchange rate: 1 {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} =
+                Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} =
                 {formatCurrency(selectedCurrency.exchangeRate)} GHS
               </span>
             </div>
@@ -605,7 +605,7 @@ const ReceivePanel = ({
             <div className="nk-modal-text">
               <p className="caption-text">
                 You will receive {formatCurrency(ghsAmount)} GHS for{" "}
-                {formatCurrency(usdAmount)} {selectedCurrency.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} of{" "}
+                {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
                 {selectedCurrency.currencyName}.
               </p>
               <p className="sub-text-sm">
@@ -672,7 +672,7 @@ const ReceivePanel = ({
           </div>
 
           <div className="text-center my-3">
-            <a href={`/user/orders`}>
+            <a href={`/user/transactions`}>
               I will upload later
             </a>
           </div>

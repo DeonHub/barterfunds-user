@@ -8,8 +8,10 @@ import TransactionDetails from "./TransactionDetails";
 import Loader from "../components/Loader";
 import axios from "axios";
 import CsvExportButton from "./components/CsvExportButton";
+// import ReceiptDownload from "./components/ReceiptDownload";
 
-const Transactions = ({ globalState, ...props }) => {
+
+const Transactions = () => {
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -166,6 +168,7 @@ const Transactions = ({ globalState, ...props }) => {
                           <h3 className="nk-block-title page-title">Transactions</h3>
                           <div className="nk-block-des text-soft">
                             <p>You have total {count} transactions.</p>
+                            {/* <ReceiptDownload/> */}
                           </div>
                         </div>
                         <div className="nk-block-head-content">
@@ -286,7 +289,7 @@ const Transactions = ({ globalState, ...props }) => {
                                       {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}
                                       </span>
                                       <span className="text">
-                                        1.00 {transaction?.currencyId?.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"} = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS
+                                        1.00 {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS
                                       </span>
                                     </div>
                                     <div className="nk-tb-col text-end">
@@ -294,7 +297,7 @@ const Transactions = ({ globalState, ...props }) => {
                                         {formatCurrency(transaction.amountGhs)} <span>GHS</span>
                                       </span>
                                       <span className="tb-amount-sm">
-                                      {formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyName.toLowerCase().includes('yuan') ? "RMB" : "USD"}
+                                      {formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}
                                       </span>
                                     </div>
 

@@ -47,7 +47,8 @@ const UserWallet = () => {
           //   const sortedTickets = response.data.tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           // console.log(response.data.wallet);
           setWallet(response.data.wallet);
-          setOrderHistory(response.data.wallet.orderHistory);
+          const sortedOrderHistory = response?.data?.wallet?.orderHistory.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setOrderHistory(sortedOrderHistory);
           setWalletId(response.data.wallet._id);
           //   setCount(response.data.count);
           setIsLoading(false);
@@ -194,6 +195,7 @@ const UserWallet = () => {
                                     claxx={"btn btn-dim btn-outline-light"}
                                     walletId={walletId}
                                     setIsLoading={setIsLoading}
+                                    wallet={wallet}
                                   />
                                 </li>
                               </ul>
@@ -226,7 +228,7 @@ const UserWallet = () => {
                                     </span>
                                     <div className="nk-wgw-balance">
                                       <div className="amount">
-                                        {formatCurrency(wallet.balanceGhs)}
+                                        {formatCurrency(wallet.balanceGhs > 0 ? wallet.balanceGhs : 0)}
                                         <span className="currency currency-nio">
                                           GHS
                                         </span>
@@ -295,6 +297,7 @@ const UserWallet = () => {
                                           isButton={false}
                                           walletId={walletId}
                                           setIsLoading={setIsLoading}
+                                          wallet={wallet}
                                         />
                                       </li>
                                     </ul>

@@ -28,7 +28,7 @@ const generateTransactionReference = () => {
   return reference.toString();
 }
 
-const OpenModal = ({
+const DepositModal = ({
   title,
   content,
   usdAmount,
@@ -341,4 +341,4 @@ const copyNumber = () => {
   );
 };
 
-export default OpenModal;
+export default DepositModal;

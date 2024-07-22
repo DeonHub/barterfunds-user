@@ -26,7 +26,7 @@ const UserDashboard = () => {
     setIsLoading(true);
     document.title = "User Dashboard  | BarterFunds";
     const token = window.sessionStorage.getItem("token");
-    console.log(user)
+    // console.log(user)
     
     if (!token) {
       navigate("/login");
@@ -48,6 +48,7 @@ const UserDashboard = () => {
 
           setReferrals(response.data.info.referrals);
           setWallet(response.data.info.wallet);
+          // console.log(response.data.info.wallet)
 
           setIsLoading(false);
         } else {
@@ -148,7 +149,8 @@ const UserDashboard = () => {
                                         Barter Wallet Balance
                                       </div>
                                       <div className="number-lg amount">
-                                        GHS {formatCurrency(wallet.balanceGhs || 0)}
+                                        GHS {formatCurrency(wallet.balanceGhs > 0 ? wallet.balanceGhs : 0)}
+
                                       </div>
                                     </div>
                                     <div className="user-account-actions">
