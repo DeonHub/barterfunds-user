@@ -1,7 +1,7 @@
 import React, {useState } from 'react';
 import axios from 'axios';
 import FileUpload from './components/FileUpload';
-import { Modal, Image } from "antd";
+import { Modal } from "antd";
 import openNotification from "../components/OpenNotification";
 
 
@@ -36,7 +36,7 @@ const TransactionDetails = ({
       axios
       .patch(`${process.env.REACT_APP_API_URL}/transactions/${id}`, body, { headers: headers })
       .then((updateResult) => {
-        
+        console.log(updateResult);
         if (updateResult.data.success) {
           openNotification(
             "topRight",
@@ -76,7 +76,12 @@ const TransactionDetails = ({
     setOpen(false);
   };
 
-
+  const getFileUrl = (path) => {
+    if (path.startsWith('uploads')) {
+      return `${process.env.REACT_APP_API_URL}/${path}`;
+    }
+    return path;
+  };
 
   return (
     <>
@@ -181,7 +186,7 @@ const TransactionDetails = ({
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Payment Gateway</span>
-                        <span className="caption-text align-center">{transaction ? transaction.transactionType === 'receive' || transaction.transactionType === 'sell' ? 'Manual' : 'Paystack' : ''}</span>
+                        <span className="caption-text align-center">Manual</span>
                                 
                     </div>
                     <div className="col-lg-6">
@@ -210,17 +215,21 @@ const TransactionDetails = ({
                     <hr/>
 
                     { transaction ? transaction.paymentProof ? (
-                        <div className='preview-image'>
-                        {/* <img src={transaction.paymentProof} alt="Uploaded File" /> */}
-                        <Image
-                            // width={200}
-                            src={transaction.paymentProof}
-                            alt="Uploaded File"
-                        />
-                        
-                        {/* <div className="overlay"></div> */}
-                        
+                      <div className="text-center">
+                        <a href={getFileUrl(transaction.paymentProof)} target='_blank' rel="noreferrer">View Payment Proof</a>
                       </div>
+                      //   <div className='preview-image'>
+                      //   {/* <img src={transaction.paymentProof} alt="Uploaded File" /> */}
+                      //   <Image
+                      //       // width={200}
+                      //       src={transaction.paymentProof}
+                      //       alt="Uploaded File"
+                      //   />
+
+                        
+                      //   {/* <div className="overlay"></div> */}
+                        
+                      // </div>
                     ) : (
                          <div className="col-lg-12">
                          <div className="buysell-field form-group">
