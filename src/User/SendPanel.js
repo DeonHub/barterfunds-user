@@ -105,7 +105,7 @@ const SendPanel = ({
       const ghsValue = parseFloat(ghsAmount);
       const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
       const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
-
+      const reserveAmount = selectedCurrency.reserveAmount || 10000.00;
       if (ghsValue < minAmount) {
         alert(`The amount must be greater than the minimum amount of GHS ${formatCurrency(minAmount)}.`);
         return;
@@ -115,6 +115,12 @@ const SendPanel = ({
         alert(`The amount must be less than the maximum amount of GHS ${formatCurrency(maxAmount)}.`);
         return;
       }
+
+      if (ghsValue > reserveAmount) {
+        alert(`The amount must be less than the reserved amount`);
+        return;
+      }
+
     } else if (formStage === 2) {
       // Check if required fields in stage 2 have values
       if (!walletAddress || !paymentMethod || !transactionForm) {
