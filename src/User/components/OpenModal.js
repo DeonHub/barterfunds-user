@@ -43,7 +43,9 @@ const OpenModal = ({
   receipientNumber,
   nextFormStage,
   transactionForm,
-  formatCurrency
+  formatCurrency,
+  selectedFile,
+  exchangeRate
 }) => {
 
   const [open, setOpen] = useState(false);
@@ -82,7 +84,7 @@ const copyNumber = () => {
 
   const handleOk = () => {
     setIsLoading(true);
-    // const body = new FormData();
+    const body = new FormData();
     const token = window.sessionStorage.getItem("token");
     // const email = window.sessionStorage.getItem("email");
     // const secret_key = process.env.REACT_APP_TEST_SECRET_KEY;
@@ -112,11 +114,17 @@ const copyNumber = () => {
       transactionForm: transactionForm ? transactionForm : "",
       referenceId: generateTransactionReference(),
       status: "pending",
-      action: "Pending User Payment"
+      action: "Pending User Payment",
+      qrCode: selectedFile ? selectedFile?.file : "",
+      transactionFee: transactionFee,
+      exchangeRate: exchangeRate ? exchangeRate : 0
     };
+
+    // console.log(transaction_body)
 
     const transaction_headers = {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
     };
 
     if(transactionType === 'sell' || transactionType === 'receive' || transactionType === 'buy' || transactionType === 'send'){
@@ -126,10 +134,16 @@ const copyNumber = () => {
       }, 2000)
     }
 
+    // const body = new FormData();
+    for (const key in transaction_body) {
+      body.append(key, transaction_body[key]);
+    }
+
+    // console.log(body)
 
 
     axios
-    .post(`${process.env.REACT_APP_API_URL}/transactions`, transaction_body, { headers: transaction_headers })
+    .post(`${process.env.REACT_APP_API_URL}/transactions`, body, { headers: transaction_headers })
     .then((result) => {
       if (result.data.success) {
 
@@ -264,7 +278,7 @@ const copyNumber = () => {
             Cancel
           </Button>,
           <Button type="primary" onClick={handleOk}>
-            OK
+            I Have Transferred
           </Button>,
         ]}
         // style={modalStyle}
@@ -275,7 +289,7 @@ const copyNumber = () => {
               <div className="buysell-field form-group">
               
                 <div className="form-label-group">
-                  <label className="form-label text center">Copy the number below and make the transfer. You are to transfer a total of {formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS. Click OK once you're done with the transfer.</label>
+                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><span style={{ fontWeight: 'bold'}}>(ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO)</span></label>
                 </div>
                 <div className="currency-box">
                   <input
@@ -306,7 +320,7 @@ const copyNumber = () => {
           <div className="buysell-field form-group">
           
             <div className="form-label-group">
-              <label className="form-label text center">Copy the wallet address below and make the transfer. Click OK once you're done with the transfer.</label>
+              <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
             </div>
             <div className="currency-box">
               <input

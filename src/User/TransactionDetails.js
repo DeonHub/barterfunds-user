@@ -138,6 +138,11 @@ const TransactionDetails = ({
                                         Pending
                                       </li>
                                     ) : ''}
+                                    { transaction ? transaction.status === 'processing' && (
+                                      <li className="badge badge-sm bg-info">
+                                        Processing
+                                      </li>
+                                    ) : ''}
                                     {transaction ? transaction.status === 'success' && (
                                       <li className="badge badge-sm bg-success">
                                         Completed
@@ -169,7 +174,7 @@ const TransactionDetails = ({
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Transaction Fee</span>
-                        <span className="caption-text">0.002 GHS</span>
+                        <span className="caption-text">{transaction ? formatCurrency(transaction.transactionFee) : ''} GHS</span>
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Amount Paid</span>
@@ -191,7 +196,7 @@ const TransactionDetails = ({
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Payment From</span>
-                        <span className="caption-text text-break">1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71</span>
+                        <span className="caption-text text-break">User Account</span>
                     </div>
 
                     { transaction ? transaction.transactionType === 'receive' || transaction.transactionType === 'sell' ?
@@ -204,8 +209,17 @@ const TransactionDetails = ({
 
                     <div className="col-lg-6">
                         <span className="sub-text">Transfer To</span>
-                        <span className="caption-text text-break">{transaction ? transaction.receipientNumber ? transaction.receipientNumber  : transaction.walletAddress : ''}</span>
+                        <span className="caption-text text-break">{transaction ? transaction.receipientNumber ? transaction.receipientNumber : transaction.walletAddress : ''}</span>
                     </div>
+
+                    {transaction?.qrCode && (
+                      <div className="col-lg-6">
+                        <span className="sub-text">Wallet QR Code</span>
+                        <span className="caption-text text-break">
+                          <a href={getFileUrl(transaction?.qrCode)} target='_blank' rel="noreferrer">View Wallet QR Code</a>
+                        </span>
+                    </div>
+                    )}
                     
                     <div className="col-lg-12">
                         <span className="sub-text">Action</span>

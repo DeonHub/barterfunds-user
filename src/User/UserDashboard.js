@@ -186,6 +186,7 @@ const UserDashboard = () => {
                                     isButton={true}
                                     claxx={"btn btn-lg btn-primary"}
                                     walletId={wallet._id}
+                                    wallet={wallet}
                                     setIsLoading={setIsLoading}
                                   />
                                         </li>
@@ -204,9 +205,6 @@ const UserDashboard = () => {
                                 </div>
                               </div> 
                             </div>
-                            
-                            
-
                           </div>
                         </div>
 
@@ -219,8 +217,14 @@ const UserDashboard = () => {
                                     Currencies
                                   </h5>
                                 </div>
+                                <div className="nk-block-head-content">
+                                  <a href="/user/currencies" className="nk-block-title title">
+                                    View All Currencies
+                                  </a>
+                                </div>
                               </div>
                             </div>
+                            
 
                             <div className="row g-2">
                               {currencies.map((currency) => {
@@ -320,9 +324,9 @@ const UserDashboard = () => {
                                     </div>
                                     
                                     <div className="nk-refwg-sub">
-                                      <div className="title">0</div>
+                                      <div className="title">GHS {formatCurrency(wallet.referralEarned)}</div>
                                       <div className="sub-text">
-                                        Referral Earn
+                                        Referral Earned
                                       </div>
                                     </div>
                                   </div>

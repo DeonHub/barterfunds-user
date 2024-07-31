@@ -13,6 +13,7 @@ const BuyPanel = ({
   formatCurrency,
   setIsLoading,
 }) => {
+  currencies = currencies.filter(currency => currency.availableForBuy === true);
   const [formStage, setFormStage] = useState(1);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
@@ -27,7 +28,8 @@ const BuyPanel = ({
   const [walletAddress, setWalletAddress] = useState("");
   const [submitButton, setSubmitButton] = useState(false);
   const [selectedProof, setSelectedProof] = useState('');
-  const transactionFee = 10;
+  const [transactionFee, setTransactionFee] = useState(0)
+  const [selectedFile, setSelectedFile] = useState(null);
   const transactionType = "buy";
 
 
@@ -98,7 +100,7 @@ const BuyPanel = ({
       const ghsValue = parseFloat(ghsAmount);
       const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
       const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
-      const reserveAmount = selectedCurrency.reserveAmount || 10000.00;
+
 
       if (ghsValue < minAmount) {
         alert(`The amount must be greater than the minimum amount of GHS ${formatCurrency(minAmount)}.`);
@@ -110,13 +112,17 @@ const BuyPanel = ({
         return;
       }
 
-      if (ghsValue > reserveAmount) {
-        alert(`The amount must be less than the reserved amount`);
-        return;
+
+      if(selectedCurrency.buyFixedCharge > 0){
+        setTransactionFee(selectedCurrency.buyFixedCharge)
+      } else{
+      setTransactionFee((selectedCurrency.buyPercentCharge / 100) * ghsValue)
       }
+
+
     } else if (formStage === 2) {
       // Check if required fields in stage 2 have values
-      if (!walletAddress || !paymentMethod) {
+      if ((!walletAddress && !selectedFile) || !paymentMethod) {
         alert("Please fill in all required fields.");
         return;
       }
@@ -191,6 +197,34 @@ const BuyPanel = ({
         console.log("cannot update transaction id")
       });  
 
+  };
+
+
+
+const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    // const name = e.target.name;
+    // console.log(file)
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const fileURL = event.target.result;
+
+        setSelectedFile(() => {
+          return { file, fileURL };
+        });
+
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(() => {
+      return null;
+    });
+    document.getElementById('qrcode-upload').value = null;
   };
 
   return (
@@ -327,13 +361,13 @@ const BuyPanel = ({
                   
                   <div className="form-note-group">
                     <span className="buysell-min form-note-alt">
-                      Minimum: {selectedCurrency.minimumBuyAmount ? formatCurrency(selectedCurrency.minimumBuyAmount) : formatCurrency(100.00)} GHS
+                      Min: {selectedCurrency.minimumBuyAmount ? formatCurrency(selectedCurrency.minimumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-max form-note-alt">
-                      Maximum: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
+                      Max: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {conversionRate} GHS
+                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
                     </span>
                   </div>
                 </div>
@@ -354,6 +388,7 @@ const BuyPanel = ({
       )}
 
       {formStage === 2 && (
+        <div>
         <div
           className={`form-stage ${formStage === 2 ? "visible" : ""}`}
           id="stage2"
@@ -367,7 +402,7 @@ const BuyPanel = ({
 
             
             <div className="form-label-group">
-              <label className="form-label">Enter Wallet Address <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
+              <label className="form-label">Enter {selectedCurrency.currencyName} Address <Tooltip placement="right" title={"Enter Wallet Address or Upload QR Code"}><QuestionCircleOutlined /></Tooltip></label>
             </div>
             <div className="currency-box">
               <input
@@ -375,7 +410,7 @@ const BuyPanel = ({
                 className="form-control form-control-lg form-control-number usdt-address-input"
                 id="usdt-address-input"
                 name="usdt-address-input"
-                placeholder="1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
+                placeholder={`Enter ${selectedCurrency.currencyName} Address`}
                 value={walletAddress}
                 onChange={handleWalletInputChange}
               />
@@ -389,8 +424,43 @@ const BuyPanel = ({
                 />
               </div>
             </div>
+
+            <div className="form-label-group">
+              <label className="form-label">Upload Wallet QR Code <Tooltip placement="right" title={"Upload Wallet Address QR code if you have"}><QuestionCircleOutlined /></Tooltip></label>
+            </div>
+            <div className="currency-box mb-3">
+            <input
+              type="file"
+              accept="image/*, application/pdf"
+              onChange={handleFileSelect}
+              // style={{ display: 'none' }}
+              id={'qrcode-upload'}
+              name={'name'}
+            />
+            </div>
+
+            {selectedFile && (
+        <div className="view-file mt-3 mb-3">
+          <span>View File: </span>
+          <a href={selectedFile.fileURL} target="_blank" rel="noopener noreferrer">Uploaded File</a>
+        
+          <span
+              onClick={handleRemoveFile}
+              className={`bg-white btn btn-sm btn-outline-light btn-icon success float-end`}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove File"
+            >
+              <span className="icon material-symbols-outlined">
+                delete
+              </span>
+            </span>
+        </div>
+      )}
           </div>
-          <div className="buysell-field form-group">
+          </div>
+
+          <div className="buysell-field form-group mt-3">
             <div className="form-label-group">
               <label className="form-label">I will pay with <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
             </div>
@@ -424,9 +494,9 @@ const BuyPanel = ({
                   onChange={handlePaymentMethodChange}
                 />
                 <label className="buysell-pm-label" htmlFor="pm-bank">
-                  <span className="pm-name">Credit Card</span>
+                  <span className="pm-name">Bank Transfer</span>
                   <span className="pm-icon">
-                    <em className="icon la la-credit-card" />
+                    <em className="icon la la-bank" />
                   </span>
                 </label>
               </li>
@@ -514,9 +584,23 @@ const BuyPanel = ({
                 <li className="buysell-overview-item">
                   <span className="pm-title">Wallet Address</span>
                   <span className="pm-currency">
-                    {walletAddress}
+                    {walletAddress ? walletAddress : 'No Wallet Address'}
                   </span>
                 </li>
+                {selectedFile && (
+                <li className="buysell-overview-item">
+                  <span className="pm-title">Wallet QR Code</span>
+                  <span className="pm-currency">
+                  
+                    <div className="view-file">
+                      {/* <span>View File: </span> */}
+                      <a href={selectedFile.fileURL} target="_blank" rel="noopener noreferrer">Uploaded File</a>
+                    
+                    </div>
+                  
+                  </span>
+                </li>
+              )}
                 <li className="buysell-overview-item">
                   <span className="pm-title">Sub Total</span>
                   <span className="pm-currency">
@@ -532,8 +616,8 @@ const BuyPanel = ({
                 <li className="buysell-overview-item">
                   <span className="pm-title">Total Amount</span>
                   <span className="pm-currency">
-                    {formatCurrency(Number(ghsAmount) + Number(transactionFee))}{" "}
-                    GHS
+                    {formatCurrency(Number(ghsAmount) + Number(transactionFee))}GHS
+                    {/* {selectedCurrency.buyFixedCharge} */}
                   </span>
                 </li>
               </ul>
@@ -558,6 +642,8 @@ const BuyPanel = ({
               setIsLoading={setIsLoading}
               nextFormStage={nextFormStage}
               formatCurrency={formatCurrency}
+              selectedFile={selectedFile}
+              exchangeRate={conversionRate}
             />
           </div>
         </div>

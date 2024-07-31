@@ -10,6 +10,8 @@ import OrdersModal from "./components/OrdersModal";
 import OrderDetails from "./OrderDetails";
 import { Button, Result } from "antd";
 import { useUser } from "./components/UserContext";
+import Invoice from "./components/Invoice";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const UserWallet = () => {
   const { user } = useUser();
@@ -47,7 +49,9 @@ const UserWallet = () => {
           //   const sortedTickets = response.data.tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           // console.log(response.data.wallet);
           setWallet(response.data.wallet);
-          const sortedOrderHistory = response?.data?.wallet?.orderHistory.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          const sortedOrderHistory = response?.data?.wallet?.orderHistory.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
           setOrderHistory(sortedOrderHistory);
           setWalletId(response.data.wallet._id);
           //   setCount(response.data.count);
@@ -228,7 +232,11 @@ const UserWallet = () => {
                                     </span>
                                     <div className="nk-wgw-balance">
                                       <div className="amount">
-                                        {formatCurrency(wallet.balanceGhs > 0 ? wallet.balanceGhs : 0)}
+                                        {formatCurrency(
+                                          wallet.balanceGhs > 0
+                                            ? wallet.balanceGhs
+                                            : 0
+                                        )}
                                         <span className="currency currency-nio">
                                           GHS
                                         </span>
@@ -282,6 +290,7 @@ const UserWallet = () => {
                                           isButton={false}
                                           walletId={walletId}
                                           setIsLoading={setIsLoading}
+                                          color={"#fff"}
                                         />
                                       </li>
                                       <li>
@@ -298,52 +307,46 @@ const UserWallet = () => {
                                           walletId={walletId}
                                           setIsLoading={setIsLoading}
                                           wallet={wallet}
+                                          color={"#fff"}
                                         />
                                       </li>
                                     </ul>
                                   </div>
-                                  <div className="nk-wgw-more dropdown">
-                                    <span
-                                      className="btn btn-icon btn-trigger"
-                                      data-bs-toggle="dropdown"
-                                    >
-                                      <i class="icon las la-ellipsis-h"></i>
-                                    </span>
-                                    <div className="dropdown-menu dropdown-menu-xs dropdown-menu-end">
-                                      <ul className="link-list-plain sm">
-                                        <li>
-                                          <span>Details</span>
-                                        </li>
-                                        <li>
-                                          <span>Edit</span>
-                                        </li>
-                                        <li>
-                                          <span>Delete</span>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
                                 </div>
                               </div>
                             </div>
+
                             <div className="col-sm-6 col-lg-4 col-xl-6 col-xxl-4">
-                              <div className="card card-bordered">
+                              <div
+                                className="card card-bordered"
+                                // style={{ backgroundColor: "#2c3782" }}
+                              >
                                 <div className="nk-wgw">
                                   <div className="nk-wgw-inner">
                                     <span className="nk-wgw-name">
+                                      <div
+                                        className="nk-wgw-icon is-default"
+                                        style={{
+                                          color: "#364A63",
+                                          border: "1px solid #364A63",
+                                          borderRadius: "50px",
+                                        }}
+                                      >
+                                        <i class="icon las la-coins"></i>
+                                      </div>
                                       <h5 className="nk-wgw-title title">
                                         Referral Commission Earned
                                       </h5>
                                     </span>
                                     <div className="nk-wgw-balance">
                                       <div className="amount">
-                                        0.00
-                                        <span className="currency currency-eth">
+                                        {formatCurrency(wallet.referralEarned)}
+                                        <span className="currency currency-nio">
                                           GHS
                                         </span>
                                       </div>
                                       {/* <div className="amount-sm">
-                                        0.00
+                                        {formatCurrency(wallet.balanceUsd)}
                                         <span className="currency currency-usd">
                                           USD
                                         </span>
@@ -354,63 +357,65 @@ const UserWallet = () => {
                                     <ul>
                                       <li>
                                         <a href={`/user/transactions-panel`}>
-                                          <span class="icon material-symbols-outlined">
+                                          <span
+                                            style={{ color: "#364A63" }}
+                                            class="icon material-symbols-outlined"
+                                          >
                                             north_east
                                           </span>
-                                          <span>Send</span>
+                                          <span style={{ color: "#364A63" }}>
+                                            Send
+                                          </span>
                                         </a>
                                       </li>
                                       <li>
                                         <a href={`/user/transactions-panel`}>
-                                          <span class="icon material-symbols-outlined">
+                                          <span
+                                            style={{ color: "#364A63" }}
+                                            class="icon material-symbols-outlined"
+                                          >
                                             south_west
                                           </span>
-                                          <span>Receive</span>
+                                          <span style={{ color: "#364A63" }}>
+                                            Receive
+                                          </span>
                                         </a>
                                       </li>
                                       <li>
-                                        <span>
-                                          <span class="icon material-symbols-outlined">
-                                            keyboard_tab
-                                          </span>
-                                          <span>Deposit</span>
-                                        </span>
+                                        <OrdersModal
+                                          text={"Deposit"}
+                                          icon={"keyboard_tab"}
+                                          title={"Deposit Form"}
+                                          action={"deposit"}
+                                          buttonText={"Proceed to Payment"}
+                                          topText={
+                                            "Enter amount you want to deposit into your wallet."
+                                          }
+                                          isButton={false}
+                                          walletId={walletId}
+                                          setIsLoading={setIsLoading}
+                                          color={"#364A63"}
+                                        />
                                       </li>
                                       <li>
-                                        <span>
-                                          <span class="icon material-symbols-outlined">
-                                            keyboard_tab_rtl
-                                          </span>
-                                          <span>Withdraw</span>
-                                        </span>
+                                        <OrdersModal
+                                          text={"Withdraw"}
+                                          icon={"keyboard_tab_rtl"}
+                                          title={"Withdrawal Form"}
+                                          action={"withdraw"}
+                                          buttonText={"Submit for Processing"}
+                                          topText={
+                                            "Enter amount you want to withdraw from your wallet."
+                                          }
+                                          isButton={false}
+                                          walletId={walletId}
+                                          setIsLoading={setIsLoading}
+                                          wallet={wallet}
+                                          color={"#364A63"}
+                                        />
                                       </li>
                                     </ul>
                                   </div>
-                                  {/* <div className="nk-wgw-more dropdown">
-                                            <a
-                                              href="#"
-                                              className="btn btn-icon btn-trigger"
-                                              data-bs-toggle="dropdown"
-                                            >
-                                              <em className="icon ni ni-more-h" />
-                                            </a>
-                                            <div className="dropdown-menu dropdown-menu-xs dropdown-menu-end">
-                                              <ul className="link-list-plain sm">
-                                                <li>
-                                                  <a href="#">Details</a>
-                                                </li>
-                                                <li>
-                                                  <a href="#">Edit</a>
-                                                </li>
-                                                <li>
-                                                  <a href="#">Delete</a>
-                                                </li>
-                                                <li>
-                                                  <a href="#">Make Default</a>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div> */}
                                 </div>
                               </div>
                             </div>
@@ -596,29 +601,30 @@ const UserWallet = () => {
                                                 />
                                               </li>
                                               <li className="">
-                                                <span
-                                                  onClick={() => {
-                                                    if (
-                                                      order.status === "success"
-                                                    ) {
-                                                      alert("Download Receipt");
-                                                    }
-                                                  }}
-                                                  className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
-                                                  data-bs-toggle="tooltip"
-                                                  data-bs-placement="top"
-                                                  title="Download Receipt"
-                                                  style={{
-                                                    cursor:
-                                                      order.status === "success"
-                                                        ? "pointer"
-                                                        : "not-allowed",
-                                                  }}
+                                                <PDFDownloadLink
+                                                  document={<Invoice />}
+                                                  fileName="invoice.pdf"
                                                 >
-                                                  <span className="icon material-symbols-outlined">
-                                                    download
-                                                  </span>
-                                                </span>
+                                                  <div>
+                                                    <span
+                                                      className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
+                                                      data-bs-toggle="tooltip"
+                                                      data-bs-placement="top"
+                                                      title="Download Receipt"
+                                                      style={{
+                                                        cursor:
+                                                          order.status ===
+                                                          "success"
+                                                            ? "pointer"
+                                                            : "not-allowed",
+                                                      }}
+                                                    >
+                                                      <span className="icon material-symbols-outlined">
+                                                        download
+                                                      </span>
+                                                    </span>
+                                                  </div>
+                                                </PDFDownloadLink>
                                               </li>
                                             </ul>
                                           </div>

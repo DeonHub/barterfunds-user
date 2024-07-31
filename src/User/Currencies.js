@@ -7,34 +7,22 @@ import UserFooter from "./components/UserFooter";
 import TransactionDetails from "./TransactionDetails";
 import Loader from "../components/Loader";
 import axios from "axios";
-import CsvExportButton from "./components/CsvExportButton";
-import Invoice from './components/Invoice';
-import { PDFDownloadLink } from "@react-pdf/renderer";
+// import CsvExportButton from "./components/CsvExportButton";
+// import ReceiptDownload from "./components/ReceiptDownload";
 
 
-const Transactions = () => {
+const Currencies = () => {
   const navigate = useNavigate();
-  const [transactions, setTransactions] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
-  const [count, setCount] = useState(0);
-
-  const fields = [
-    { header: 'ID', accessor: '_id' },
-    { header: 'User', accessor: 'userId.username' },
-    { header: 'Currency', accessor: 'currencyId.currencyName' },
-    { header: 'Transaction Type', accessor: 'transactionType' },
-    { header: 'Amount (GHS)', accessor: 'amountGhs' },
-    { header: 'Amount (USD)', accessor: 'amountUsd' },
-    { header: 'Status', accessor: 'status' },
-    { header: 'Created At', accessor: 'createdAt' },
-  ];
+  // const [count, setCount] = useState(0);
 
   useEffect(() => {
-    document.title = "Transactions | BarterFunds";
+    document.title = "Currencies | BarterFunds";
     const token = window.sessionStorage.getItem("token");
     // const userId = window.sessionStorage.getItem("userId");
 
@@ -48,17 +36,17 @@ const Transactions = () => {
     };
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/transactions/x/user`, {
+      .get(`${process.env.REACT_APP_API_URL}/currencies`, {
         headers: headers,
       })
       .then((response) => {
         if (response.data.success) {
-          const sortedTransactions = response.data.transactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          setTransactions(sortedTransactions);
-          setCount(response.data.count);
+          const activeCurrencies = response.data.currencies.filter(currency => currency.status === 'active');
+          setCurrencies(activeCurrencies);
+          // setCount(response.data.count);
           setIsLoading(false);
         } else {
-          setTransactions([]);
+          setCurrencies([]);
         }
       })
       .catch((error) => {
@@ -72,12 +60,9 @@ const Transactions = () => {
   };
 
 
-  const filteredData = transactions.filter(
-    (transaction) =>
-      transaction.transactionType
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) || 
-        transaction.transactionId
+  const filteredData = currencies.filter(
+    (currency) =>
+      currency.currencyName
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
   );
@@ -99,23 +84,23 @@ const Transactions = () => {
     setCurrentPage(pageNumber);
   };
 
-  const formatDate = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
-  };
+  // const formatDate = (dateTimeString) => {
+  //   const date = new Date(dateTimeString);
+  //   const options = { year: "numeric", month: "long", day: "numeric" };
+  //   return date.toLocaleDateString("en-US", options);
+  // };
 
-  const formatTime = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    let hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const amPM = hours >= 12 ? "PM" : "AM";
+  // const formatTime = (dateTimeString) => {
+  //   const date = new Date(dateTimeString);
+  //   let hours = date.getHours();
+  //   const minutes = date.getMinutes().toString().padStart(2, "0");
+  //   const amPM = hours >= 12 ? "PM" : "AM";
 
-    hours = hours % 12 || 12;
-    hours = hours.toString().padStart(2, "0");
+  //   hours = hours % 12 || 12;
+  //   hours = hours.toString().padStart(2, "0");
 
-    return `${hours}:${minutes} ${amPM}`;
-  };
+  //   return `${hours}:${minutes} ${amPM}`;
+  // };
 
   const formatCurrency = (value) => {
     const number = Number(value);
@@ -146,64 +131,13 @@ const Transactions = () => {
   };
 
   
-  // const receiptRef = useRef();
-
-  // const handlePrint = () => {
-  //   const input = receiptRef.current;
-  //   html2canvas(input)
-  //     .then((canvas) => {
-  //       const imgData = canvas.toDataURL('image/png');
-  //       const pdf = new jsPDF();
-  //       pdf.addImage(imgData, 'PNG', 0, 0);
-  //       pdf.save('receipt.pdf');
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
-
-  // const items = {
-  //   "id": "642be0b4bbe5d71a5341dfb1",
-  //   "invoice_no": "20200669",
-  //   "address": "739 Porter Avenue, Cade, Missouri, 1134",
-  //   "date": "24-09-2019",
-  //   "items": [
-  //     {
-  //       "id": 1,
-  //       "desc": "do ex anim quis velit excepteur non",
-  //       "qty": 8,
-  //       "price": 179.25
-  //     },
-  //     {
-  //       "id": 2,
-  //       "desc": "incididunt cillum fugiat aliqua Lorem sit Lorem",
-  //       "qty": 9,
-  //       "price": 107.78
-  //     },
-  //     {
-  //       "id": 3,
-  //       "desc": "quis Lorem ad laboris proident aliqua laborum",
-  //       "qty": 4,
-  //       "price": 181.62
-  //     },
-  //     {
-  //       "id": 4,
-  //       "desc": "exercitation non do eu ea ullamco cillum",
-  //       "qty": 4,
-  //       "price": 604.55
-  //     },
-  //     {
-  //       "id": 5,
-  //       "desc": "ea nisi non excepteur irure Lorem voluptate",
-  //       "qty": 6,
-  //       "price": 687.08
-  //     }
-  //   ]
-  // }
+  
 
   return (
     <div className="nk-body npc-crypto bg-white has-sidebar">
       <div className="nk-app-root">
         <div className="nk-main ">
-          <UserSidebar active={"orders"} />
+          <UserSidebar active={"dashboard"} />
 
           <div className="nk-wrap ">
             <UserHeader />
@@ -217,20 +151,20 @@ const Transactions = () => {
                     <div className="nk-block-head nk-block-head-sm">
                       <div className="nk-block-between g-3">
                         <div className="nk-block-head-content">
-                          <h3 className="nk-block-title page-title">Transactions</h3>
+                          <h3 className="nk-block-title page-title">Currencies</h3>
                           <div className="nk-block-des text-soft">
-                            <p>You have total {count} transactions.</p>
+                            {/* <p>You have total {count} currencies.</p> */}
                             {/* <ReceiptDownload/> */}
                           </div>
                         </div>
-                        <div className="nk-block-head-content">
+                        {/* <div className="nk-block-head-content">
                           <div className="toggle-wrap nk-block-tools-toggle">
                             <span
                               
                               className="btn btn-icon btn-trigger toggle-expand me-n1"
                               data-target="pageMenu"
                             >
-                              {/* <em className="icon la la-eye-slash" /> */}
+                             
                             </span>
                             <div
                               className="toggle-expand-content"
@@ -256,7 +190,7 @@ const Transactions = () => {
                               </ul>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
 
@@ -266,7 +200,7 @@ const Transactions = () => {
                           <div className="card-inner">
                             <div className="card-title-group">
                               <div className="card-title">
-                                <h5 className="title">All Transactions</h5>
+                                <h5 className="title">All Currencies</h5>
                               </div>
                               <div className="card-tools me-n1">
                                 <ul className="btn-toolbar gx-1">
@@ -283,25 +217,19 @@ const Transactions = () => {
                               </div>
                             </div>
                           </div>
-                          
+
                           <div className="card-inner p-0">
                             <div className="nk-tb-list nk-tb-tnx">
                               <div className="nk-tb-item nk-tb-head">
                                 <div className="nk-tb-col">
-                                  <span>Details</span>
-                                </div>
-                                <div className="nk-tb-col tb-col-xxl">
-                                  <span>Source</span>
-                                </div>
-                                <div className="nk-tb-col tb-col-lg">
                                   <span>Currency</span>
                                 </div>
-                                <div className="nk-tb-col text-end">
-                                  <span>Amount Paid</span>
+                                
+                                <div className="nk-tb-col tb-col-lg">
+                                  <span>Exchange Rate</span>
                                 </div>
-                                <div className="nk-tb-col text-end tb-col-sm">
-                                  <span>Date Created</span>
-                                </div>
+                                
+                               
                                 <div className="nk-tb-col nk-tb-col-status">
                                   <span className="sub-text d-none d-md-block">
                                     Status
@@ -313,82 +241,62 @@ const Transactions = () => {
                               {currentPageData.length === 0 ? (
                                 <div>No data</div>
                               ) : (
-                                currentPageData.map((transaction) => {
+                                currentPageData.map((currency) => {
                                   return(
-                                    <div className="nk-tb-item" key={transaction._id}>
+                                    <div className="nk-tb-item" key={currency._id}>
                                     <div className="nk-tb-col">
                                       <div className="nk-tnx-type">
-                                        <div className={`nk-tnx-type-icon bg-${getStatusColor(transaction.status)}-dim text-${getStatusColor(transaction.status)}`}>
+                                        <div className={`nk-tnx-type-icon bg-${getStatusColor(currency.status)}-dim text-${getStatusColor(currency.status)}`}>
                                         <img
-                                            src={transaction.currencyId ? transaction.currencyId.currencyLogo : "/assets/images/currency/btc.png"}
+                                            src={currency.currencyLogo}
                                             alt="currency"
                                           />
                                         </div>
                                         <div className="nk-tnx-type-text">
-                                          <span className="tb-lead">
-                                            {transaction.transactionId}
-                                          </span>
-                                          <span className={`badge badge-dot bg-${getStatusColor(transaction.status)}`}>
-                                            {transaction.transactionType === 'buy' ? "Buy" : transaction.transactionType === 'sell' ? "Sell" : transaction.transactionType === 'send' ? "Send" : "Receive"}
-                                          </span>
+                                        <span className="tb-lead">
+                                        {currency.currencyName}
+                                        </span>
+                                        
+                                        <span className="tb-lead">
+                                         {currency.currencyCode}
+                                        </span>
 
                                         </div>
                                       </div>
                                     </div>
 
                                     <div className="nk-tb-col tb-col-lg">
-                                      <span className="tb-amount">
-                                      {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}
+                                      <span className="tb-lead">
+                                      {/* {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"} */}
+                                      1.00 {currency?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(currency.exchangeRate)} GHS
+
                                       </span>
                                       <span className="text">
-                                        1.00 {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {transaction ? formatCurrency(transaction.exchangeRate) : "12.32"} GHS
-                                      </span>
-                                    </div>
-                                    <div className="nk-tb-col text-end">
-                                      <span className="tb-amount">
-                                        {formatCurrency(transaction.amountGhs)} GHS
-                                      </span>
-                                      <span className="tb-amount-sm">
-                                      {formatCurrency(transaction.amountUsd)} {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}
+                                        {/* 1.00 {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {transaction.currencyId ? formatCurrency(transaction.currencyId.exchangeRate) : "12.32"} GHS */}
                                       </span>
                                     </div>
 
-                                    <div className="nk-tb-col text-end tb-col-sm">
-                                      <span className="tb-amount">
-                                        <span className="tb-date">
-                                          {formatDate(transaction.createdAt)}
-                                        </span>
-                                      </span>
-                                      <span className="tb-amount-sm">
-                                      {formatTime(transaction.createdAt)}
-                                      </span>
-                                    </div>
 
                                     <div className="nk-tb-col nk-tb-col-status">
                                     <div className="dot dot-primary d-md-none" />
-                                    {transaction.status === 'pending' && (
+                                    {currency.status === 'pending' && (
                                       <span className="badge badge-sm badge-dim bg-outline-info d-none d-md-inline-flex">
                                         Pending
                                       </span>
                                     )}
-                                    {transaction.status === 'processing' && (
-                                      <span className="badge badge-sm badge-dim bg-outline-info d-none d-md-inline-flex">
-                                        Processing
-                                      </span>
-                                    )}
-                                    {transaction.status === 'success' && (
+                                    {currency.status === 'active' && (
                                       <span className="badge badge-sm badge-dim bg-outline-success d-none d-md-inline-flex">
-                                        Completed
+                                        Active
                                       </span>
                                     )}
-                                    {transaction.status === 'cancelled' && (
+                                    {currency.status === 'cancelled' && (
                                       <span className="badge badge-sm badge-dim bg-outline-warning d-none d-md-inline-flex">
                                         Cancelled
                                       </span>
                                     )}
-                                    {transaction.status === 'failed' && (
+                                    {currency.status === 'inactive' && (
                                       <span className="badge badge-sm badge-dim bg-outline-danger d-none d-md-inline-flex">
-                                        Failed
+                                        Inactive
                                       </span>
                                     )}
                                   </div>
@@ -396,57 +304,31 @@ const Transactions = () => {
                                     <div className="nk-tb-col nk-tb-col-tools">
                                       <ul className="nk-tb-actions gx-2">
                                         
-                                        <li className="">
+                                        {/* <li className="">
                                           <TransactionDetails transaction={transaction} id={transaction._id} formatDate={formatDate} formatTime={formatTime} formatCurrency={formatCurrency} setIsLoading={setIsLoading} />
-                                        </li>
-                                        <li className="">
-                                          {transaction.status === 'success' ? (
-
-                                             <PDFDownloadLink
-                                             document={<Invoice />}
-                                             fileName="invoice.pdf"
-                                           >
-                                             <div>
-                                               <span
-                                                 className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-placement="top"
-                                                 title="Download Receipt"
-                                                 style={{
-                                                   cursor:
-                                                     transaction.status ===
-                                                     "success"
-                                                       ? "pointer"
-                                                       : "not-allowed",
-                                                 }}
-                                               >
-                                                 <span className="icon material-symbols-outlined">
-                                                   download
-                                                 </span>
-                                               </span>
-                                             </div>
-                                           </PDFDownloadLink>
-                                          ) : (
-                                            <span
-                                                 className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-placement="top"
-                                                 title="Download Receipt"
-                                                 style={{
-                                                   cursor:
-                                                     transaction.status ===
-                                                     "success"
-                                                       ? "pointer"
-                                                       : "not-allowed",
-                                                 }}
-                                               >
-                                                 <span className="icon material-symbols-outlined">
-                                                   download
-                                                 </span>
-                                               </span>
-                                          )}
-                                       
-                                        </li>
+                                        </li> */}
+                                        {/* <li className="">
+                                          <span
+                                            onClick={() => {
+                                              if (transaction.status === 'success') {
+                                                // Handle the click action here
+                                                // For example, show an alert
+                                                alert("Download Receipt");
+                                              }
+                                            }}
+                                            className={`bg-white btn btn-sm btn-outline-light btn-icon success`}
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="Download Receipt"
+                                            style={{
+                                              cursor: transaction.status === 'success' ? 'pointer' : 'not-allowed' 
+                                            }}
+                                          >
+                                            <span className="icon material-symbols-outlined">
+                                              download
+                                            </span>
+                                          </span>
+                                        </li> */}
 
                                       </ul>
                                     </div>
@@ -516,7 +398,7 @@ const Transactions = () => {
 
             <UserFooter />
 
-            {/* <TransactionDetails /> */}
+            <TransactionDetails />
           </div>
         </div>
       </div>
@@ -524,4 +406,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Currencies;

@@ -13,6 +13,7 @@ const SendPanel = ({
   sendDataToParent,
   formatCurrency,
   setIsLoading }) => {
+  currencies = currencies.filter(currency => currency.availableForSend === true);
   const [formStage, setFormStage] = useState(1);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
@@ -25,19 +26,15 @@ const SendPanel = ({
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
-  const [transactionForm, setTransactionForm] = useState("");
+  // const [transactionForm, setTransactionForm] = useState("");
   const [submitButton, setSubmitButton] = useState(false);
   const [selectedProof, setSelectedProof] = useState('');
-  const transactionFee = 10;
+  const [transactionFee, setTransactionFee] = useState(0)
   const transactionType = "send";
 
 
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
-  };
-
-  const handleTransactionFormChange = (event) => {
-    setTransactionForm(event.target.value);
   };
 
 
@@ -105,7 +102,8 @@ const SendPanel = ({
       const ghsValue = parseFloat(ghsAmount);
       const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
       const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
-      const reserveAmount = selectedCurrency.reserveAmount || 10000.00;
+
+      
       if (ghsValue < minAmount) {
         alert(`The amount must be greater than the minimum amount of GHS ${formatCurrency(minAmount)}.`);
         return;
@@ -116,14 +114,16 @@ const SendPanel = ({
         return;
       }
 
-      if (ghsValue > reserveAmount) {
-        alert(`The amount must be less than the reserved amount`);
-        return;
+
+      if(selectedCurrency.sendFixedCharge > 0){
+        setTransactionFee(selectedCurrency.sendFixedCharge)
+      } else{
+      setTransactionFee((selectedCurrency.sendPercentCharge / 100) * ghsValue)
       }
 
     } else if (formStage === 2) {
       // Check if required fields in stage 2 have values
-      if (!walletAddress || !paymentMethod || !transactionForm) {
+      if (!walletAddress || !paymentMethod ) {
         alert("Please fill in all required fields.");
         return;
       }
@@ -200,6 +200,35 @@ const SendPanel = ({
       });  
 
   };
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    // const name = e.target.name;
+    // console.log(file)
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const fileURL = event.target.result;
+
+        setSelectedFile(() => {
+          return { file, fileURL };
+        });
+
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(() => {
+      return null;
+    });
+    document.getElementById('qrcode-upload').value = null;
+  };
+
   return (
     <>
       {formStage === 1 && (
@@ -335,13 +364,13 @@ const SendPanel = ({
                   
                   <div className="form-note-group">
                     <span className="buysell-min form-note-alt">
-                      Minimum: {selectedCurrency.minimumBuyAmount ? formatCurrency(selectedCurrency.minimumBuyAmount) : formatCurrency(100.00)} GHS
+                      Min: {selectedCurrency.minimumBuyAmount ? formatCurrency(selectedCurrency.minimumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-max form-note-alt">
-                      Maximum: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
+                      Max: {selectedCurrency.maximumBuyAmount ? formatCurrency(selectedCurrency.maximumBuyAmount) : formatCurrency(100.00)} GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {conversionRate} GHS
+                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
                     </span>
                   </div>
                 </div>
@@ -366,13 +395,13 @@ const SendPanel = ({
           id="stage2"
         >
           <div className="buysell-field form-group">
-            <div className="form-navigation">
+            <div className="form-navigReation">
               <label type="button" onClick={previousFormStage}>
                 <i className="icon la la-arrow-left" />
               </label>
             </div>
             <div className="form-label-group">
-              <label className="form-label">Receipient BTC Address <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
+              <label className="form-label">Receipient {selectedCurrency.currencyName} Address <Tooltip placement="right" title={"Enter Wallet Address or Upload QR Code"}><QuestionCircleOutlined /></Tooltip></label>
             </div>
             <div className="currency-box">
               <input
@@ -380,7 +409,7 @@ const SendPanel = ({
                 className="form-control form-control-lg form-control-number usdt-address-input"
                 id="usdt-address-input"
                 name="usdt-address-input"
-                placeholder="1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71"
+                placeholder={`Enter ${selectedCurrency.currencyName} Address`}
                 value={walletAddress}
                 onChange={handleWalletInputChange}
               />
@@ -395,108 +424,41 @@ const SendPanel = ({
                
               </div>
             </div>
-          </div>
-          <div className="buysell-field form-group">
+
             <div className="form-label-group">
-              <label className="form-label">Select Transaction Type <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
+              <label className="form-label">Upload Wallet QR Code <Tooltip placement="right" title={"Upload Wallet Address QR code if you have"}><QuestionCircleOutlined /></Tooltip></label>
             </div>
-            <div className="form-pm-group">
-              <ul className="buysell-tt-list">
-                <li className="buysell-tt-item">
-                  <input
-                    className="buysell-tt-control"
-                    type="radio"
-                    name="bs-type"
-                    id="tt-online"
-                    value="online"
-                    checked={transactionForm === "online"}
-                    onChange={handleTransactionFormChange}
-                  />
-                  <label className="buysell-tt-label" htmlFor="tt-online">
-                    <span className="tt-name">
-                      Online Transaction
-                      <span className="info-icon">
-                        <em className="icon la la-info-circle" />
-                        <div className="info-content">
-                          <h6>Online Transactions:</h6>
-                          <p>
-                            This involves buying goods and services over the
-                            internet, including subscriptions, purchases,
-                            payments, and transfers on various websites.
-                          </p>
-                        </div>
-                      </span>
-                    </span>
-                    <span className="tt-icon">
-                      <em className="icon la la-cart-plus" />
-                    </span>
-                  </label>
-                </li>
-                <li className="buysell-tt-item">
-                  <input
-                    className="buysell-tt-control"
-                    type="radio"
-                    name="bs-type"
-                    id="tt-b2b"
-                    value="b2b"
-                    checked={transactionForm === "b2b"}
-                    onChange={handleTransactionFormChange}
-                  />
-                  <label className="buysell-tt-label" htmlFor="tt-b2b">
-                    <span className="tt-name">
-                      B2B Transaction
-                      <span className="info-icon">
-                        <em className="icon la la-info-circle" />
-                        <div className="info-content">
-                          <h6>Business Transactions:</h6>
-                          <p>
-                            These transactions occur between businesses, such as
-                            purchasing inventory, paying suppliers, or payment
-                            to service providers such as freelancers.
-                          </p>
-                        </div>
-                      </span>
-                    </span>
-                    <span className="tt-icon">
-                      <em className="icon la la-suitcase" />
-                    </span>
-                  </label>
-                </li>
-                <li className="buysell-tt-item">
-                  <input
-                    className="buysell-tt-control"
-                    type="radio"
-                    name="bs-type"
-                    id="tt-p2p"
-                    value="p2p"
-                    checked={transactionForm === "p2p"}
-                    onChange={handleTransactionFormChange}
-                  />
-                  <label className="buysell-tt-label" htmlFor="tt-p2p">
-                    <span className="tt-name">
-                      P2P Transaction
-                      <span className="info-icon">
-                        <em className="icon la la-info-circle" />
-                        <div className="info-content">
-                          
-                          <h6>Peer-to-Peer Transactions:</h6>
-                          <p>
-                            Transactions such as sending money directly
-                            individuals, friends or family members.
-                          </p>
-                        </div>
-                      </span>
-                    </span>
-                    <span className="tt-icon">
-                      <em className="icon la la-user-friends" />
-                    </span>
-                  </label>
-                </li>
-              </ul>
+            <div className="currency-box mb-3">
+            <input
+              type="file"
+              accept="image/*, application/pdf"
+              onChange={handleFileSelect}
+              // style={{ display: 'none' }}
+              id={'qrcode-upload'}
+              name={'name'}
+            />
             </div>
+
+            {selectedFile && (
+        <div className="view-file mt-3 mb-3">
+          <span>View File: </span>
+          <a href={selectedFile.fileURL} target="_blank" rel="noopener noreferrer">Uploaded File</a>
+        
+          <span
+              onClick={handleRemoveFile}
+              className={`bg-white btn btn-sm btn-outline-light btn-icon success float-end`}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove File"
+            >
+              <span className="icon material-symbols-outlined">
+                delete
+              </span>
+            </span>
+        </div>
+      )}
           </div>
-
-
+         
           <div className="buysell-field form-group">
             <div className="form-label-group">
               <label className="form-label">I will pay with <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
@@ -621,9 +583,25 @@ const SendPanel = ({
                   <span className="pm-title">Wallet Address</span>
                   <span className="pm-currency">{walletAddress}</span>
                 </li>
+                {selectedFile && (
                 <li className="buysell-overview-item">
-                  <span className="pm-title">Transaction Type</span>
-                  <span className="pm-currency">{transactionForm === 'online' ? "Online Transaction" : transactionForm === 'b2b' ? "Business to Business Transaction" : "Peer to Peer Transaction"}</span>
+                  <span className="pm-title">Wallet QR Code</span>
+                  <span className="pm-currency">
+                  
+                    <div className="view-file">
+                      {/* <span>View File: </span> */}
+                      <a href={selectedFile.fileURL} target="_blank" rel="noopener noreferrer">Uploaded File</a>
+                    
+                    </div>
+                  
+                  </span>
+                </li>
+              )}
+                <li className="buysell-overview-item">
+                  <span className="pm-title">Sub Total</span>
+                  <span className="pm-currency">
+                    {formatCurrency(ghsAmount)} GHS
+                  </span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Transaction Fee</span>
@@ -645,7 +623,7 @@ const SendPanel = ({
               </div>
             </div>
             <OpenModal
-              title={"Proceed to Payment"}
+              title={"Confirm your Order"}
               content={
                 "Are you sure you want to proceed to payment? Please ensure all details provided are correct to prevent processing delay."
               }
@@ -656,8 +634,11 @@ const SendPanel = ({
               paymentMethod={paymentMethod}
               walletAddress={walletAddress}
               transactionType={transactionType}
-              transactionForm={transactionForm}
+              selectedFile={selectedFile}
+              formatCurrency={formatCurrency}
               nextFormStage={nextFormStage}
+              exchangeRate={conversionRate}
+              setIsLoading={setIsLoading}
             />
           </div>
         </div>

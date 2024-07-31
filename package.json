@@ -6,6 +6,7 @@
     "-": "^0.0.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@nio/icons": "^1.10.0",
+    "@react-pdf/renderer": "^3.4.4",
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

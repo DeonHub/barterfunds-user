@@ -31,7 +31,8 @@ const OrdersModal = ({
   isButton,
   walletId,
   claxx,
-  wallet
+  wallet,
+  color
 }) => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -59,21 +60,21 @@ const OrdersModal = ({
     }
   }, [ghsAmount, conversionRate, ghsInputChangedByUser]);
 
-  const handleUsdInputChange = (event) => {
-    const value = event.target.value;
+  // const handleUsdInputChange = (event) => {
+  //   const value = event.target.value;
 
-    if (value < 0) {
-      return;
-    }
+  //   if (value < 0) {
+  //     return;
+  //   }
 
-    setUsdAmount(value);
-    setUsdInputChangedByUser(true);
-    setGhsInputChangedByUser(false);
+  //   setUsdAmount(value);
+  //   setUsdInputChangedByUser(true);
+  //   setGhsInputChangedByUser(false);
 
-    if (value === "") {
-      setGhsAmount("");
-    }
-  };
+  //   if (value === "") {
+  //     setGhsAmount("");
+  //   }
+  // };
 
   const handleGhsInputChange = (event) => {
     const value = event.target.value;
@@ -477,9 +478,9 @@ const OrdersModal = ({
           
         </span>
       ) : (
-        <span onClick={showModal} style={{ color: "#fff", cursor: "pointer"}}>
-          <span style={{ color: "#fff"}} class="icon material-symbols-outlined">{icon}</span>
-          <span style={{ color: "#fff"}}>{text}</span>
+        <span onClick={showModal} style={{ color: '#fff', cursor: "pointer"}}>
+          <span style={{ color: color}} class="icon material-symbols-outlined">{icon}</span>
+          <span style={{ color: color}}>{text}</span>
         </span>
       )}
 
@@ -529,7 +530,7 @@ const OrdersModal = ({
                   </div>
                 </div>
               </div>
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="form-group">
                   <div className="input-group ">
                     <span className="input-group-text mobile-code">
@@ -546,7 +547,7 @@ const OrdersModal = ({
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="col-md-12">
                 <div className="form-group">
@@ -623,7 +624,7 @@ const OrdersModal = ({
             Cancel
           </Button>,
           <Button type="primary" onClick={handleDeposit}>
-            OK
+            I Have Transferred
           </Button>,
         ]}
         // style={modalStyle}
@@ -633,7 +634,7 @@ const OrdersModal = ({
               <div className="buysell-field form-group">
               
                 <div className="form-label-group">
-                  <label className="form-label text center">Copy the number below and make the transfer. You are to transfer a total of {formatCurrency(Number(ghsAmount) + Number(1))} GHS. Click OK once you're done with the transfer.</label>
+                <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(1))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><span style={{ fontWeight: 'bold'}}>(ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO)</span></label>
                 </div>
                 <div className="currency-box">
                   <input

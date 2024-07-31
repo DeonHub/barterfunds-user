@@ -12,12 +12,14 @@ import DeleteModal from "./components/DeleteModal";
 const Notifications = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
+  const [index, setIndex] = useState('');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   // const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
   const [unreadNotificationx, setUnreadNotificationx] = useState(0);
+
 
   useEffect(() => {
     document.title = "User Notifications | BarterFunds";
@@ -38,9 +40,12 @@ const Notifications = () => {
       })
       .then((response) => {
         if (response.data.success) {
+          // console.log(response.data)
           const sortedNotifications = response.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setNotifications(sortedNotifications);
           setUnreadNotificationx(sortedNotifications.filter((notification) => !notification.read).length);
+          setIndex(response.data.index)
+          setIsLoading(false);
         } else {
           setNotifications([]);
         }
@@ -109,6 +114,7 @@ const Notifications = () => {
             {isLoading ? (
               <Loader />
             ) : (
+              index && (
               <div className="nk-content nk-content-fluid">
                 <div className="container-xl wide-lg">
                   <div className="nk-content-body">
@@ -192,9 +198,10 @@ const Notifications = () => {
                                                 class={`nk-tnx-type-icon `}
                                               >
                                                 <img
-                                                className={`icon icon-circle bg-${isUnread ? 'primary' : 'success'}-dim`}
+                                                className={`icon icon-circle bg-${isUnread ? 'primary' : 'success'}-dim w-100 h-100`}
                                                 src={'/assets/images/logo-icon.png'}
                                                 alt="noti"
+                                                
                                               />
                                               </div>
 
@@ -302,11 +309,14 @@ const Notifications = () => {
                             </div>
                           </div>
                         </div>
+                     
                       </>
                     
                   </div>
                 </div>
               </div>
+              )            
+
             )}
 
             <UserFooter />

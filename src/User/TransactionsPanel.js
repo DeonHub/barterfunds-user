@@ -39,10 +39,11 @@ const TransactionsPanel = () => {
         };
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/currencies/x`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/currencies`, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setCurrencies(response.data.currencies);
+          const activeCurrencies = response.data.currencies.filter(currency => currency.status === 'active');
+          setCurrencies(activeCurrencies);
           setIsLoading(false);
         } else {
           setCurrencies([]);

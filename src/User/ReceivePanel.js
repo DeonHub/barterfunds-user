@@ -14,6 +14,7 @@ const ReceivePanel = ({
   formatCurrency,
   setIsLoading,
 }) => {
+  currencies = currencies.filter(currency => currency.availableForReceive === true);
   const [formStage, setFormStage] = useState(1);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
@@ -29,7 +30,7 @@ const ReceivePanel = ({
   const [selectedProof, setSelectedProof] = useState('');
   const [submitButton, setSubmitButton] = useState(false);
 
-  const transactionFee = 10;
+  const [transactionFee, setTransactionFee] = useState(0)
   const transactionType = "receive";
 
   const handleReceipientMethodChange = (event) => {
@@ -100,7 +101,7 @@ const ReceivePanel = ({
       const ghsValue = parseFloat(ghsAmount);
       const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
       const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
-      const reserveAmount = selectedCurrency.reserveAmount || 10000.00;
+      
 
 
       if (ghsValue < minAmount) {
@@ -113,9 +114,10 @@ const ReceivePanel = ({
         return;
       }
 
-      if (ghsValue > reserveAmount) {
-        alert(`The amount must be less than the reserved amount`);
-        return;
+      if(selectedCurrency.receiveFixedCharge > 0){
+        setTransactionFee(selectedCurrency.receiveFixedCharge)
+      } else{
+      setTransactionFee((selectedCurrency.receivePercentCharge / 100) * ghsValue)
       }
 
     } else if (formStage === 2) {
@@ -341,21 +343,21 @@ const ReceivePanel = ({
                   </div>
                   <div className="form-note-group">
                     <span className="buysell-min form-note-alt">
-                      Minimum:{" "}
+                      Max:{" "}
                       {selectedCurrency.minimumBuyAmount
                         ? formatCurrency(selectedCurrency.minimumBuyAmount)
                         : formatCurrency(100.0)}{" "}
                       GHS
                     </span>
                     <span className="buysell-max form-note-alt">
-                      Maximum:{" "}
+                      Min:{" "}
                       {selectedCurrency.maximumBuyAmount
                         ? formatCurrency(selectedCurrency.maximumBuyAmount)
                         : formatCurrency(100.0)}{" "}
                       GHS
                     </span>
                     <span className="buysell-rate form-note-alt">
-                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {conversionRate} GHS
+                      1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
                     </span>
                   </div>
                 </div>
@@ -520,7 +522,7 @@ const ReceivePanel = ({
                 <strong>
                   {" "}
                   <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of
-                  {selectedCurrency.currencyName} for{" "}
+                  {" "}{selectedCurrency.currencyName} for {"  "}
                   {formatCurrency(ghsAmount)}
                 </strong>{" "}
                 GHS
@@ -567,15 +569,15 @@ const ReceivePanel = ({
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Sub Total</span>
-                  <span className="pm-currency">
-                    {formatCurrency(ghsAmount)} GHS
-                  </span>
+                  <span className="pm-currency">{formatCurrency(ghsAmount)} GHS</span>
+                </li>
+                <li className="buysell-overview-item">
+                  <span className="pm-title">Transaction Fee</span>
+                  <span className="pm-currency">{formatCurrency(transactionFee)} GHS</span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Total Amount</span>
-                  <span className="pm-currency">
-                    {formatCurrency(ghsAmount)} GHS
-                  </span>
+                  <span className="pm-currency">{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS</span>
                 </li>
               </ul>
               <div className="sub-text-sm">
@@ -596,6 +598,8 @@ const ReceivePanel = ({
               transactionType={transactionType}
               setIsLoading={setIsLoading}
               nextFormStage={nextFormStage}
+              formatCurrency={formatCurrency}
+              exchangeRate={conversionRate}
             />
           </div>
           {/* .nk-block */}

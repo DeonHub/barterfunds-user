@@ -29,6 +29,8 @@ import Faqs from './User/Faqs';
 import { UserProvider } from './User/components/UserContext';
 import PasswordReset from './User/PasswordReset';
 import Notifications from './User/Notifications';
+import Currencies from './User/Currencies';
+
 
 const App = () => {
 
@@ -39,13 +41,14 @@ const App = () => {
 
 
   return (
+  
     <Router>
       <UserProvider>
       <Routes>
 
         {/* Main routes go here */}
         <Route path={`/`} element={<Main />} />
- 
+        
         {/* Auth routes go here */}
         <Route path={`/login`} element={<Login navigate={navigateTo} />}/>
         <Route path={`/signup`} element={<Signup navigate={navigateTo} />} />
@@ -69,8 +72,7 @@ const App = () => {
         <Route path={`/user/password-reset`} element={<PasswordReset />} />
         <Route path={`/user/notifications`} element={<Notifications />} />
         <Route path={`/user/kycs/application`} element={<KycForm />} />
-        
-        
+        <Route path={`/user/currencies`} element={<Currencies />} />
         
 
         <Route path={`/*`} element={<NotFound />} />
@@ -78,6 +80,7 @@ const App = () => {
       </Routes>
       </UserProvider>
     </Router>
+
   );
 };
 

@@ -3,7 +3,7 @@ import './components.css'
 
 const Loader = () => {
   return (
-    <div className="loader-container">
+    <div className="loader-container text-center">
       <img src="/assets/images/loader.gif" alt="Loader" />
     </div>
   );
