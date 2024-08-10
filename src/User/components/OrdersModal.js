@@ -43,6 +43,7 @@ const OrdersModal = ({
   const conversionRate = 15.1;
   const [method, setMethod] = useState("");
   const [number, setNumber] = useState('')
+  const digits = method === "momo" ? "0530467164" : "01015517602516"
 
   useEffect(() => {
     // Convert USD to GHS only if input changed by user
@@ -634,7 +635,9 @@ const OrdersModal = ({
               <div className="buysell-field form-group">
               
                 <div className="form-label-group">
-                <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(1))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><span style={{ fontWeight: 'bold'}}>(ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO)</span></label>
+                <label className="form-label text-center">
+                  Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(1))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><span style={{ fontWeight: 'bold'}}>(ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO)
+                    </span></label>
                 </div>
                 <div className="currency-box">
                   <input
@@ -642,7 +645,7 @@ const OrdersModal = ({
                     className="form-control form-control-lg form-control-number usdt-address-input"
                     id="usdt-number-input"
                     name="usdt-number-input"
-                    value="0530467164"
+                    value={digits}
                     disabled
                   />
                   <span className="currency-symbol" />

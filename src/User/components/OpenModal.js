@@ -49,6 +49,7 @@ const OpenModal = ({
 }) => {
 
   const [open, setOpen] = useState(false);
+  const number = paymentMethod === "momo" ? "0530467164" : "01015517602516"
 
   const copyText = () => {
 
@@ -297,7 +298,7 @@ const copyNumber = () => {
                     className="form-control form-control-lg form-control-number usdt-address-input"
                     id="usdt-number-input"
                     name="usdt-number-input"
-                    value="0530467164"
+                    value={number}
                     disabled
                   />
                   <span className="currency-symbol" />
@@ -320,7 +321,12 @@ const copyNumber = () => {
           <div className="buysell-field form-group">
           
             <div className="form-label-group">
-              <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
+              {transactionType === 'receive' ? (
+                <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(usdAmount) - Number(transactionFee))} USD of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
+                ) : (
+                <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(usdAmount) + Number(transactionFee))} USD of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
+                )}
+              
             </div>
             <div className="currency-box">
               <input

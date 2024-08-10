@@ -5,20 +5,21 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
 import FileUpload from "./components/FileUpload";
 import openNotification from "../components/OpenNotification";
-
+import WalletModal from "./components/WalletModal";
 
 const BuyPanel = ({
   currencies,
   sendDataToParent,
   formatCurrency,
   setIsLoading,
+  wallet
 }) => {
   currencies = currencies.filter(currency => currency.availableForBuy === true);
   const [formStage, setFormStage] = useState(1);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
   const [conversionRate, setConversionRate] = useState(
-    currencies[0].exchangeRate
+    currencies[0].buyAt
   );
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [usdInputChangedByUser, setUsdInputChangedByUser] = useState(true);
@@ -126,6 +127,11 @@ const BuyPanel = ({
         alert("Please fill in all required fields.");
         return;
       }
+
+      if(paymentMethod === 'wallet' && wallet?.balanceGhs < ghsAmount){
+        alert("Insufficient funds in wallet. Please fund your wallet and try again.");
+        return;
+      }
     }
 
     // Proceed to the next stage if all required fields have values
@@ -144,7 +150,7 @@ const BuyPanel = ({
 
   const selectCurrency = (currency) => {
     setSelectedCurrency(currency);
-    setConversionRate(currency.exchangeRate);
+    setConversionRate(currency.buyAt);
   };
 
 
@@ -226,6 +232,12 @@ const handleFileSelect = (e) => {
     });
     document.getElementById('qrcode-upload').value = null;
   };
+
+  const triggerFileInput = () => {
+    document.getElementById('qrcode-upload').click();
+  };
+
+
 
   return (
     <>
@@ -416,28 +428,30 @@ const handleFileSelect = (e) => {
               />
               <span className="currency-symbol" />
               <div className="buysell-field form-group">
+              <Tooltip placement="right" title={"Click to upload Wallet Address QR code if you have"}>
                 <img
                   src="/assets/images/qr-upload.png"
                   alt="qr code"
                   className="currency-image"
                   id="uploaded-image"
+                  onClick={triggerFileInput}
+                  style={{ cursor: 'pointer' }}
+                  // title="Click to upload QR Code"
                 />
+                </Tooltip>
               </div>
             </div>
 
-            <div className="form-label-group">
-              <label className="form-label">Upload Wallet QR Code <Tooltip placement="right" title={"Upload Wallet Address QR code if you have"}><QuestionCircleOutlined /></Tooltip></label>
-            </div>
-            <div className="currency-box mb-3">
+            
             <input
               type="file"
               accept="image/*, application/pdf"
               onChange={handleFileSelect}
               // style={{ display: 'none' }}
               id={'qrcode-upload'}
+              style={{ display: 'none' }}
               name={'name'}
             />
-            </div>
 
             {selectedFile && (
         <div className="view-file mt-3 mb-3">
@@ -489,8 +503,8 @@ const handleFileSelect = (e) => {
                   type="radio"
                   name="bs-method"
                   id="pm-bank"
-                  value="credit-card"
-                  checked={paymentMethod === "credit-card"}
+                  value="bank"
+                  checked={paymentMethod === "bank"}
                   onChange={handlePaymentMethodChange}
                 />
                 <label className="buysell-pm-label" htmlFor="pm-bank">
@@ -549,8 +563,8 @@ const handleFileSelect = (e) => {
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to buy
-                <strong> {formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for
-                <strong> {formatCurrency(ghsAmount)}</strong> GHS
+                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for {" "}
+                {formatCurrency(ghsAmount)} GHS</strong> 
               </div>
               <span className="sub-text-sm">
                 Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
@@ -568,9 +582,9 @@ const handleFileSelect = (e) => {
                         <em className="icon la la-money" />
                         <span>Mobile Money</span>
                       </>
-                    ) : paymentMethod === "credit-card" ? (
+                    ) : paymentMethod === "bank" ? (
                       <>
-                        <em className="icon la la-credit-card" />
+                        <em className="icon la la-bank" />
                         <span>Bank Transfer</span>
                       </>
                     ) : (
@@ -616,7 +630,7 @@ const handleFileSelect = (e) => {
                 <li className="buysell-overview-item">
                   <span className="pm-title">Total Amount</span>
                   <span className="pm-currency">
-                    {formatCurrency(Number(ghsAmount) + Number(transactionFee))}GHS
+                    {formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS
                     {/* {selectedCurrency.buyFixedCharge} */}
                   </span>
                 </li>
@@ -626,8 +640,28 @@ const handleFileSelect = (e) => {
                 <a href={"/user/dashboard"}> See transaction fee</a>
               </div>
             </div>
-
-            <OpenModal
+              {paymentMethod === 'wallet' ? (
+                
+              <WalletModal 
+              title={"Confirm your Order"}
+              content={
+                "Are you sure you want to confirm this order? Please ensure all details provided are correct to prevent processing delay."
+              }
+              usdAmount={usdAmount}
+              ghsAmount={ghsAmount}
+              transactionFee={transactionFee}
+              selectedCurrency={selectedCurrency}
+              paymentMethod={paymentMethod}
+              walletAddress={walletAddress}
+              transactionType={transactionType}
+              setIsLoading={setIsLoading}
+              nextFormStage={nextFormStage}
+              formatCurrency={formatCurrency}
+              selectedFile={selectedFile}
+              exchangeRate={conversionRate}
+              />
+              ) : (
+                <OpenModal
               title={"Confirm your Order"}
               content={
                 "Are you sure you want to proceed to payment? Please ensure all details provided are correct to prevent processing delay."
@@ -645,6 +679,8 @@ const handleFileSelect = (e) => {
               selectedFile={selectedFile}
               exchangeRate={conversionRate}
             />
+              )}
+            
           </div>
         </div>
       )}
@@ -656,11 +692,11 @@ const handleFileSelect = (e) => {
         >
           <div className="nk-modal text-center">
             <em className="nk-modal-icon icon icon-circle icon-circle-xxl la la-check bg-success" />
-            <h4 className="nk-modal-title">Order Successfully Made!</h4>
+            <h4 className="nk-modal-title"><strong>Order Successfully Made!</strong></h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
-                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.
+                You will receive <strong>{formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
+                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.</strong>
                 
               </p>
               <p className="sub-text-sm">

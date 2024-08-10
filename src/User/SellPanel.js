@@ -19,7 +19,7 @@ const SellPanel = ({
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
   const [conversionRate, setConversionRate] = useState(
-    currencies[0].exchangeRate
+    currencies[0].sellAt
   );
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [usdInputChangedByUser, setUsdInputChangedByUser] = useState(true);
@@ -100,6 +100,7 @@ const SellPanel = ({
       }
 
       const ghsValue = parseFloat(ghsAmount);
+      const usdValue = parseFloat(usdAmount);
       const minAmount = selectedCurrency.minimumBuyAmount || 100.00;
       const maxAmount = selectedCurrency.maximumBuyAmount || 100.00;
       
@@ -118,11 +119,11 @@ const SellPanel = ({
       if(selectedCurrency.sellFixedCharge > 0){
         setTransactionFee(selectedCurrency.sellFixedCharge)
       } else{
-      setTransactionFee((selectedCurrency.sellPercentCharge / 100) * ghsValue)
+      setTransactionFee((selectedCurrency.sellPercentCharge / 100) * usdValue)
       }
     }  else if (formStage === 2) {
       // Check if required fields in stage 2 have values
-      if (!receipientMethod || !receipientNumber) {
+      if ((receipientMethod !== 'wallet') && (!receipientMethod || !receipientNumber)) {
         alert("Please fill in all required fields.");
         return;
       }
@@ -146,7 +147,7 @@ const SellPanel = ({
 
   const selectCurrency = (currency) => {
     setSelectedCurrency(currency);
-    setConversionRate(currency.exchangeRate);
+    setConversionRate(currency.sellAt);
   };
 
   const handleOk = () => {
@@ -436,9 +437,10 @@ const SellPanel = ({
               </li>
             </div>
           </div>
-
+        {receipientMethod !== 'wallet' && (
+          <>
           <div className="form-label-group">
-              <label className="form-label">Enter {receipientMethod === 'momo' ? 'Mobile Money Number' : receipientMethod === 'bank' ? 'Bank Account Number' : receipientMethod === 'wallet' ? 'Barter Wallet Address' : 'Receipient Number'} <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
+              <label className="form-label">Enter {receipientMethod === 'momo' ? 'Mobile Money Number' : receipientMethod === 'bank' ? 'Bank Account Number' : 'Receipient Number'} <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
             </div>
             <div className="currency-box">
               <input
@@ -460,6 +462,9 @@ const SellPanel = ({
                 />
               </div>
             </div>
+            </>
+        )}
+          
 
 
           </div>
@@ -491,11 +496,11 @@ const SellPanel = ({
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to sell
-                <strong> <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}
-                {" "}of {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)}</strong> GHS 
+                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}
+                {" "}of {selectedCurrency.currencyName} to BarterFunds</strong> 
               </div>
               <span className="sub-text-sm">
-                Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(selectedCurrency.exchangeRate)} GHS
+                Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
               </span>
             </div>
           </div>
@@ -525,19 +530,19 @@ const SellPanel = ({
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">{receipientMethod === 'momo' ? "Mobile Number" : receipientMethod === 'bank' ? "Account Number" : "Wallet Address"}</span>
-                  <span className="pm-currency">{receipientNumber}</span>
+                  <span className="pm-currency">{receipientNumber ? receipientNumber : 'Barter Wallet Address'}</span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Sub Total</span>
-                  <span className="pm-currency">{formatCurrency(ghsAmount)} GHS</span>
+                  <span className="pm-currency">{formatCurrency(usdAmount)} USD</span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Transaction Fee</span>
-                  <span className="pm-currency">{formatCurrency(transactionFee)} GHS</span>
+                  <span className="pm-currency">{formatCurrency(transactionFee)} USD</span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Total Amount</span>
-                  <span className="pm-currency">{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS</span>
+                  <span className="pm-currency">{formatCurrency(Number(usdAmount) + Number(transactionFee))} USD</span>
                 </li>
               </ul>
               <div className="sub-text-sm">
@@ -584,9 +589,9 @@ const SellPanel = ({
             <h4 className="nk-modal-title">Order Successfully Made!</h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive {formatCurrency(ghsAmount)} GHS for
+                You will receive <strong>{formatCurrency(ghsAmount)} GHS for {" "}
                 {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}{" "} of {" "}
-                {selectedCurrency.currencyName}.
+                {selectedCurrency.currencyName}.</strong>
               </p>
               <p className="sub-text-sm">
                 Once we confirm payment into our account.
