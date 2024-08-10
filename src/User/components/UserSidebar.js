@@ -116,6 +116,7 @@ const UserSidebar = ({ active }) => {
                     active === "wallet" ? "active" : ""
                   }`}
                 >
+        
                   <a
                     href={`/user/wallet`}
                     className="nk-menu-link"
@@ -126,7 +127,7 @@ const UserSidebar = ({ active }) => {
                       </span>
                     </span>
                     <span className="nk-menu-text">Barter Wallet</span>
-                    <span className="nk-menu-badge">COMING SOON</span>
+                    {/* <span className="nk-menu-badge">COMING SOON</span> */}
                   </a>
                 </li>
                 {/* .nk-menu-item */}
