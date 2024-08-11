@@ -134,6 +134,8 @@ const Transactions = () => {
     switch (status) {
       case 'pending':
         return 'info'; 
+      case 'processing':
+        return 'info';   
       case 'success':
         return 'success'; 
       case 'cancelled':
@@ -290,10 +292,8 @@ const Transactions = () => {
                                 <div className="nk-tb-col">
                                   <span>Details</span>
                                 </div>
-                                <div className="nk-tb-col tb-col-xxl">
-                                  <span>Source</span>
-                                </div>
-                                <div className="nk-tb-col tb-col-lg">
+                                
+                                <div className="nk-tb-col tb-col-sm">
                                   <span>Currency</span>
                                 </div>
                                 <div className="nk-tb-col text-end">
@@ -336,13 +336,22 @@ const Transactions = () => {
                                       </div>
                                     </div>
 
-                                    <div className="nk-tb-col tb-col-lg">
+                                    <div className="nk-tb-col tb-col-sm">
                                       <span className="tb-amount">
                                       {transaction.currencyId ? transaction.currencyId.currencyName : "Bitcoin (BTC)"}
                                       </span>
                                       <span className="text">
-                                        1.00 {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {transaction ? formatCurrency(transaction.exchangeRate) : "12.32"} GHS
-                                      </span>
+                                        
+                                        1.00 {transaction?.currencyId?.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {transaction ? formatCurrency(
+                                          transaction?.transactionType === 'buy' ? (transaction?.currencyId?.buyAt || 12.23) : 
+                                          transaction?.transactionType === 'sell' ? (transaction?.currencyId?.sellAt || 12.23) :
+                                          transaction?.transactionType === 'send' ? (transaction?.currencyId?.sendAt || 12.23) :
+                                          transaction?.transactionType === 'receive' ? (transaction?.currencyId?.receiveAt || 12.23) :
+                                          0
+                                        )
+                                          : "12.32"} GHS
+                                      </span><br/>
+                                      
                                     </div>
                                     <div className="nk-tb-col text-end">
                                       <span className="tb-amount">

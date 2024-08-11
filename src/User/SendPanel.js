@@ -6,19 +6,22 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
 import FileUpload from "./components/FileUpload";
 import openNotification from "../components/OpenNotification";
+import WalletModal from "./components/WalletModal";
 
 
 const SendPanel = ({   
   currencies,
   sendDataToParent,
   formatCurrency,
-  setIsLoading }) => {
+  setIsLoading,
+  wallet 
+}) => {
   currencies = currencies.filter(currency => currency.availableForSend === true);
   const [formStage, setFormStage] = useState(1);
   const [usdAmount, setUsdAmount] = useState("");
   const [ghsAmount, setGhsAmount] = useState("");
   const [conversionRate, setConversionRate] = useState(
-    currencies[0].exchangeRate
+    currencies[0].sendAt
   );
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [usdInputChangedByUser, setUsdInputChangedByUser] = useState(true);
@@ -123,8 +126,13 @@ const SendPanel = ({
 
     } else if (formStage === 2) {
       // Check if required fields in stage 2 have values
-      if (!walletAddress || !paymentMethod ) {
+      if ((!walletAddress && !selectedFile) || !paymentMethod) {
         alert("Please fill in all required fields.");
+        return;
+      }
+
+      if(paymentMethod === 'wallet' && wallet?.balanceGhs < ghsAmount){
+        alert("Insufficient funds in wallet. Please fund your wallet and try again.");
         return;
       }
     }
@@ -147,7 +155,7 @@ const SendPanel = ({
 
   const selectCurrency = (currency) => {
     setSelectedCurrency(currency);
-    setConversionRate(currency.exchangeRate);
+    setConversionRate(currency.sendAt);
   };
 
   const handleOk = () => {
@@ -228,6 +236,12 @@ const handleFileSelect = (e) => {
     });
     document.getElementById('qrcode-upload').value = null;
   };
+
+
+  const triggerFileInput = () => {
+    document.getElementById('qrcode-upload').click();
+  };
+
 
   return (
     <>
@@ -415,29 +429,31 @@ const handleFileSelect = (e) => {
               />
               <span className="currency-symbol" />
               <div className="buysell-field form-group">
+              <Tooltip placement="right" title={"Click to upload Wallet Address QR code if you have"}>
                 <img
                   src="/assets/images/qr-upload.png"
                   alt="qr code"
                   className="currency-image"
                   id="uploaded-image"
+                  onClick={triggerFileInput}
+                  style={{ cursor: 'pointer' }}
+                  // title="Click to upload QR Code"
                 />
+                </Tooltip>
                
               </div>
             </div>
 
-            <div className="form-label-group">
-              <label className="form-label">Upload Wallet QR Code <Tooltip placement="right" title={"Upload Wallet Address QR code if you have"}><QuestionCircleOutlined /></Tooltip></label>
-            </div>
-            <div className="currency-box mb-3">
+            
             <input
               type="file"
               accept="image/*, application/pdf"
               onChange={handleFileSelect}
-              // style={{ display: 'none' }}
+              style={{ display: 'none' }}
               id={'qrcode-upload'}
               name={'name'}
             />
-            </div>
+            
 
             {selectedFile && (
         <div className="view-file mt-3 mb-3">
@@ -488,14 +504,14 @@ const handleFileSelect = (e) => {
                   type="radio"
                   name="bs-method"
                   id="pm-bank"
-                  value="credit-card"
-                  checked={paymentMethod === "credit-card"}
+                  value="bank"
+                  checked={paymentMethod === "bank"}
                   onChange={handlePaymentMethodChange}
                 />
                 <label className="buysell-pm-label" htmlFor="pm-bank">
-                  <span className="pm-name">Credit Card</span>
+                  <span className="pm-name">Bank Transfer</span>
                   <span className="pm-icon">
-                    <em className="icon la la-credit-card" />
+                    <em className="icon la la-bank" />
                   </span>
                 </label>
               </li>
@@ -548,7 +564,7 @@ const handleFileSelect = (e) => {
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to send
-                <strong> {formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for <strong>{formatCurrency(ghsAmount)}</strong> GHS
+                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName}</strong> for <strong>{formatCurrency(ghsAmount)} GHS</strong> 
               </div>
               <span className="sub-text-sm">
                 Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
@@ -566,10 +582,10 @@ const handleFileSelect = (e) => {
                         <em className="icon la la-money" />
                         <span>Mobile Money</span>
                       </>
-                    ) : paymentMethod === "credit-card" ? (
+                    ) : paymentMethod === "bank" ? (
                       <>
-                        <em className="icon la la-credit-card" />
-                        <span>Credit Card</span>
+                        <em className="icon la la-bank" />
+                        <span>Bank Transfer</span>
                       </>
                     ) : (
                       <>
@@ -581,7 +597,7 @@ const handleFileSelect = (e) => {
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Wallet Address</span>
-                  <span className="pm-currency">{walletAddress}</span>
+                  <span className="pm-currency">{walletAddress ? walletAddress : 'No Wallet Address'}</span>
                 </li>
                 {selectedFile && (
                 <li className="buysell-overview-item">
@@ -622,24 +638,46 @@ const handleFileSelect = (e) => {
                 <a href={"/user/dashboard"}> See transaction fee</a>
               </div>
             </div>
-            <OpenModal
-              title={"Confirm your Order"}
-              content={
-                "Are you sure you want to proceed to payment? Please ensure all details provided are correct to prevent processing delay."
-              }
-              usdAmount={usdAmount}
-              ghsAmount={ghsAmount}
-              transactionFee={transactionFee}
-              selectedCurrency={selectedCurrency}
-              paymentMethod={paymentMethod}
-              walletAddress={walletAddress}
-              transactionType={transactionType}
-              selectedFile={selectedFile}
-              formatCurrency={formatCurrency}
-              nextFormStage={nextFormStage}
-              exchangeRate={conversionRate}
-              setIsLoading={setIsLoading}
-            />
+            {paymentMethod === 'wallet' ? (
+                
+                <WalletModal 
+                title={"Confirm your Order"}
+                content={
+                  "Are you sure you want to confirm this order? Please ensure all details provided are correct to prevent processing delay."
+                }
+                usdAmount={usdAmount}
+                ghsAmount={ghsAmount}
+                transactionFee={transactionFee}
+                selectedCurrency={selectedCurrency}
+                paymentMethod={paymentMethod}
+                walletAddress={walletAddress}
+                transactionType={transactionType}
+                setIsLoading={setIsLoading}
+                nextFormStage={nextFormStage}
+                formatCurrency={formatCurrency}
+                selectedFile={selectedFile}
+                exchangeRate={conversionRate}
+                />
+                ) : (
+                  <OpenModal
+                title={"Confirm your Order"}
+                content={
+                  "Are you sure you want to proceed to payment? Please ensure all details provided are correct to prevent processing delay."
+                }
+                usdAmount={usdAmount}
+                ghsAmount={ghsAmount}
+                transactionFee={transactionFee}
+                selectedCurrency={selectedCurrency}
+                paymentMethod={paymentMethod}
+                walletAddress={walletAddress}
+                transactionType={transactionType}
+                setIsLoading={setIsLoading}
+                nextFormStage={nextFormStage}
+                formatCurrency={formatCurrency}
+                selectedFile={selectedFile}
+                exchangeRate={conversionRate}
+              />
+                )}
           </div>
         </div>
       )}
@@ -651,11 +689,11 @@ const handleFileSelect = (e) => {
         >
           <div className="nk-modal text-center">
             <em className="nk-modal-icon icon icon-circle icon-circle-xxl la la-check bg-success" />
-            <h4 className="nk-modal-title">Order Successfully Made!</h4>
+            <h4 className="nk-modal-title"><strong>Order Successfully Made!</strong></h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
-                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.
+                You will receive <strong>{formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
+                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.</strong>
                 
               </p>
               <p className="sub-text-sm">

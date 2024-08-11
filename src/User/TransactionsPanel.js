@@ -24,9 +24,36 @@ const TransactionsPanel = () => {
   const [formStage, setFormStage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [currencies, setCurrencies] = useState([]);
+  const [wallet, setWallet] = useState({});
+
 
   useEffect(() => {
     document.title = "Transactions Panel | BarterFunds";
+    const token = window.sessionStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/wallets/x/user`, {
+        headers: headers,
+      })
+
+      .then((response) => {
+        if (response.data.success) {
+          // console.log(response.data.wallet);
+          setWallet(response.data.wallet);
+        } else {
+          setWallet({});
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+  }, []);
+
+  useEffect(() => {
     const token = window.sessionStorage.getItem("token");
 
     if (!token || user === null) {
@@ -58,6 +85,9 @@ const TransactionsPanel = () => {
     }, 2500)
     
   },[navigate, user])
+
+
+  
 
   const receiveDataFromChild = (data) => {
     setFormStage(data);
@@ -132,6 +162,7 @@ const TransactionsPanel = () => {
                           sendDataToParent={receiveDataFromChild}
                           formatCurrency={formatCurrency}
                           setIsLoading={setIsLoading}
+                          wallet={wallet}
                         />
                       )}
                       {action === "sell" && (
@@ -140,6 +171,7 @@ const TransactionsPanel = () => {
                           sendDataToParent={receiveDataFromChild}
                           formatCurrency={formatCurrency}
                           setIsLoading={setIsLoading}
+                          wallet={wallet}
                         />
                       )}
                       {action === "send" && (
@@ -148,6 +180,7 @@ const TransactionsPanel = () => {
                         sendDataToParent={receiveDataFromChild}
                         formatCurrency={formatCurrency}
                         setIsLoading={setIsLoading}
+                        wallet={wallet}
                         />
                       )}
                       {action === "receive" && (
@@ -156,6 +189,7 @@ const TransactionsPanel = () => {
                         sendDataToParent={receiveDataFromChild}
                         formatCurrency={formatCurrency}
                         setIsLoading={setIsLoading}
+                        wallet={wallet}
                         />
                       )}
                     </div>

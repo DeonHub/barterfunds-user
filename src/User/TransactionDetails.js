@@ -174,11 +174,21 @@ const TransactionDetails = ({
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Transaction Fee</span>
-                        <span className="caption-text">{transaction ? formatCurrency(transaction.transactionFee) : ''} GHS</span>
+                        {transaction?.transactionType === 'receive' || transaction?.transactionType === 'sell' ? (
+                          <span className="caption-text">{transaction ? formatCurrency(transaction.transactionFee) : ''} USD</span>
+                        ) :(
+                          <span className="caption-text">{transaction ? formatCurrency(transaction.transactionFee) : ''} GHS</span>
+                        )}
+                        
                     </div>
                     <div className="col-lg-6">
                         <span className="sub-text">Amount Paid</span>
-                        <span className="caption-text">{transaction ? formatCurrency(transaction.amountGhs) : ''} GHS</span>
+                        {transaction?.transactionType === 'receive' || transaction?.transactionType === 'sell' ? (
+                          <span className="caption-text">{transaction ? formatCurrency(transaction.amountUsd) : ''} USD</span>
+                        ) :(
+                          <span className="caption-text">{transaction ? formatCurrency(transaction.amountGhs) : ''} GHS</span>
+                        )}
+                        
                     </div>
                 </div>
                 <div className="nk-modal-head mt-sm-5 mt-4 mb-4">

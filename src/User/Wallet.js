@@ -513,9 +513,12 @@ const UserWallet = () => {
                                               </div>
                                               <div class="nk-tnx-type-text">
                                                 <span class="tb-lead">
-                                                  {order.action === "deposit"
+                                                  {order.quote ? order.quote : order.action === "deposit"
                                                     ? "Deposited Funds"
                                                     : "Withdrawal Funds"}
+                                                  {/* {order.action === "deposit"
+                                                    ? "Deposited Funds"
+                                                    : "Withdrawal Funds"} */}
                                                 </span>
                                                 <span class="tb-date">
                                                   {formatDate(order.createdAt)}{" "}
