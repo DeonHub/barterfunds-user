@@ -297,9 +297,16 @@ const copyNumber = () => {
               <div className="buysell-field form-group">
               
                 <div className="form-label-group">
-                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><br/><span style={{ fontWeight: 'bold'}}>ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO <br/>BANK NAME: UNITED BANK OF AFRICA(UBA)
-                </span></label>
+                  {paymentMethod === 'momo' ? (
+                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><br/><span style={{ fontWeight: 'bold'}}>ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO</span></label>
+                  ) : (
+                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><br/><span style={{ fontWeight: 'bold'}}>ACCOUNT NAME: BARTERFUNDS <br/>BANK NAME: UNITED BANK OF AFRICA(UBA)</span></label>
+                  )}
+                  {/* <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><br/><span style={{ fontWeight: 'bold'}}>ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO <br/>BANK NAME: UNITED BANK OF AFRICA(UBA) */}
+                {/* </span></label> */}
+               
                 </div>
+                
                 <div className="currency-box">
                   <input
                     type="text"

@@ -415,7 +415,7 @@ const handleFileSelect = (e) => {
           id="stage2"
         >
           <div className="buysell-field form-group">
-            <div className="form-navigReation">
+          <div className="form-navigation">
               <label type="button" onClick={previousFormStage}>
                 <i className="icon la la-arrow-left" />
               </label>
