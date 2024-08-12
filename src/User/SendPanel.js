@@ -242,6 +242,12 @@ const handleFileSelect = (e) => {
     document.getElementById('qrcode-upload').click();
   };
 
+  const truncateWord = (word) => {
+    if (word.length > 10) {
+        return word.slice(0, 10) + '...';
+    }
+    return word;
+}
 
   return (
     <>
@@ -597,7 +603,7 @@ const handleFileSelect = (e) => {
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Wallet Address</span>
-                  <span className="pm-currency">{walletAddress ? walletAddress : 'No Wallet Address'}</span>
+                  <span className="pm-currency">{walletAddress ? truncateWord(walletAddress) : 'No Wallet Address'}</span>
                 </li>
                 {selectedFile && (
                 <li className="buysell-overview-item">
@@ -633,7 +639,7 @@ const handleFileSelect = (e) => {
                   </span>
                 </li>
               </ul>
-              <div className="sub-text-sm">
+              <div className="sub-text-sm text-center">
                 * Our transaction fee are included.
                 <a href={"/user/dashboard"}> See transaction fee</a>
               </div>

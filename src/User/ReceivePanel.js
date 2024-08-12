@@ -199,6 +199,12 @@ const ReceivePanel = ({
 
   };
 
+  const truncateWord = (word) => {
+    if (word.length > 10) {
+        return word.slice(0, 10) + '...';
+    }
+    return word;
+  }
 
   return (
     <>
@@ -456,7 +462,7 @@ const ReceivePanel = ({
               </div>
             </div>
 
-            {receipientMethod !== 'wallet' && (
+            {/* {receipientMethod !== 'wallet' && ( */}
           <>
           <div className="form-label-group">
               <label className="form-label">Enter {receipientMethod === 'momo' ? 'Mobile Money Number' : receipientMethod === 'bank' ? 'Bank Account Number' : 'Receipient Number'} <Tooltip placement="right" title={"This is a required field"}><QuestionCircleOutlined /></Tooltip></label>
@@ -470,6 +476,7 @@ const ReceivePanel = ({
                 placeholder="Enter value here ..."
                 value={receipientNumber}
                 onChange={handleReceipientInputChange}
+                disabled={receipientMethod === 'wallet'}
               />
               <span className="currency-symbol" />
               <div className="buysell-field form-group">
@@ -478,11 +485,12 @@ const ReceivePanel = ({
                   alt="qr code"
                   className="currency-image"
                   id="uploaded-image"
+                  
                 />
               </div>
             </div>
             </>
-        )}
+        {/* // )} */}
           </div>
           <div className="form-navigation">
             <button
@@ -557,7 +565,7 @@ const ReceivePanel = ({
                       ? "Account Number"
                       : "Wallet Address"}
                   </span>
-                  <span className="pm-currency">{receipientNumber ? receipientNumber : 'Barter Wallet Address'}</span>
+                  <span className="pm-currency">{receipientNumber ? truncateWord(receipientNumber) : 'Barter Wallet'}</span>
                 </li>
                 <li className="buysell-overview-item">
                   <span className="pm-title">Sub Total</span>
@@ -572,7 +580,7 @@ const ReceivePanel = ({
                   <span className="pm-currency">{formatCurrency(Number(usdAmount) - Number(transactionFee))} USD</span>
                 </li>
               </ul>
-              <div className="sub-text-sm">
+              <div className="sub-text-sm text-center">
                 * Our transaction fee are included.
                 <a href={"/"}> See transaction fee</a>
               </div>

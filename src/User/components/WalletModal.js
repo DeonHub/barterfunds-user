@@ -151,9 +151,13 @@ const WalletModal = ({ title,
           <Button onClick={handleCancel} style={{ float: "left"}}>
             Cancel
           </Button>,
-          <Button onClick={handleOk}>
-            OK
-          </Button>,
+          <button
+          type="button"
+          className="btn btn-sm btn-primary"
+          onClick={handleOk}
+        >
+          OK
+        </button>
         ]}
         // style={modalStyle}
       >

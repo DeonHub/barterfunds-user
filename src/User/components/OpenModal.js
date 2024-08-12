@@ -278,9 +278,16 @@ const copyNumber = () => {
           <Button onClick={handleCancel} style={{ float: "left" }}>
             Cancel
           </Button>,
-          <Button type="primary" onClick={handleOk}>
-            I Have Transferred
-          </Button>,
+          <button
+          type="button"
+          className="btn btn-sm btn-primary"
+          onClick={handleOk}
+        >
+          I Have Transferred
+        </button>
+          // <Button onClick={handleOk} className="btn-primary">
+          //   I Have Transferred
+          // </Button>,
         ]}
         // style={modalStyle}
       >
@@ -290,7 +297,8 @@ const copyNumber = () => {
               <div className="buysell-field form-group">
               
                 <div className="form-label-group">
-                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><span style={{ fontWeight: 'bold'}}>(ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO)</span></label>
+                  <label className="form-label text-center">Copy the number below and make the transfer. You are to transfer a total of <span style={{ fontWeight: 'bold'}}>{formatCurrency(Number(ghsAmount) + Number(transactionFee))} GHS.</span> Click <span style={{ fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.<br/><br/><span style={{ fontWeight: 'bold'}}>ACCOUNT NAME: BARTERFUNDS / MICHAEL ADZATO <br/>BANK NAME: UNITED BANK OF AFRICA(UBA)
+                </span></label>
                 </div>
                 <div className="currency-box">
                   <input
