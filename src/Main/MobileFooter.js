@@ -140,7 +140,7 @@ class MobileFooter extends React.Component {
         <div className="container py-4">
           <div className="text-center">
             <div className="credits">
-              © 2019 - 2024 Barter Funds. All Rights Reserved. Powered by{" "}
+              © 2019 - {this.state.currentYear} Barter Funds. All Rights Reserved. Powered by
               <a href="/">Currency Technologies</a>
             </div>
           </div>

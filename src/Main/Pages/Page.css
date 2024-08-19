@@ -1,0 +1,410 @@
+/* styles.css */
+
+.block-head {
+  margin-bottom: 20px;
+  clear: both;
+  padding: 20px 0;
+  background-color: #f6f7f7;
+}
+
+@media only screen and (max-width: 768px) {
+  .block-head {
+    margin-top: 65px;
+  }
+}
+
+
+.block-head-lg {
+  font-size: 24px;
+}
+
+.block-head-wide-xs {
+  max-width: 100%;
+}
+
+
+.block-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 5px;
+  color: #404040;
+  font-weight: 700;
+}
+
+.block-des {
+  margin-bottom: 20px;
+}
+
+.block {
+  margin-bottom: 40px;
+}
+
+.preview-card {
+  font-family: "Poppins", sans-serif;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.card-inner-xl {
+  padding: 40px;
+}
+
+/* styles.css */
+.breadcrumb {
+  font-family: "Poppins", sans-serif;
+  background-color: transparent;
+  padding: 0;
+  list-style-type: none;
+  display: flex; /* Make the breadcrumb a flex page-container */
+  justify-content: center; /* Center the items within the page-container */
+}
+
+/* Rest of your breadcrumb styles */
+/* Base styles for breadcrumb */
+.breadcrumb {
+  font-family: "Poppins", sans-serif; /* Adjust font family as needed */
+  background-color: transparent;
+  padding: 8px 16px; 
+  list-style-type: none;
+  margin-bottom: 0; 
+}
+
+/* Breadcrumb items */
+.breadcrumb-item {
+  display: inline-block;
+}
+
+/* Separator between items */
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "/";
+  padding: 5 5px;
+  color: #ccc; /* Adjust separator color */
+}
+
+/* Link styles within breadcrumb */
+.breadcrumb-item a {
+  color: #800020; /* Adjust link color */
+  text-decoration: none;
+}
+
+/* Hover effect for links */
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+/* Active breadcrumb item */
+.breadcrumb-item.active {
+  color: #800020; /* Adjust active item color */
+  text-decoration: none; /* Remove underline for active item */
+}
+
+.page-container p {
+  color: #333;
+}
+.page-container .bullet-list {
+  color: #404040;
+}
+.page-container .bullet-point {
+  color: #404040;
+}
+.sub-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #404040;
+}
+
+.bullet-list {
+  list-style-type: none; /* Remove default bullets */
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 20px; /* Space for custom bullet */
+}
+.bullet-point {
+  list-style-type: none; /* Remove default bullets */
+}
+
+.bullet-point li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+
+.bullet-point li li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+.bullet-point li li::before {
+  content: '•'; /* Custom bullet character */
+  position: absolute;
+  left: 0;
+  color: #800020; /* Custom color */
+}
+.bullet-list li::before {
+  content: '•'; /* Custom bullet character */
+  position: absolute;
+  left: 0;
+  color: #800020; /* Custom color */
+}
+
+.detail {
+  font-style: italic;
+  text-align: center;
+  color: #800020;
+}
+
+
+
+.list li {
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.5rem;
+}
+.list li:not(:last-child) {
+  padding-bottom: 0.5rem;
+}
+.list li:before {
+  position: absolute;
+  left: 0;
+  font-size: 14px;
+  line-height: 1.5rem;
+  font-family: 'Material Symbols Outlined';
+  src: url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200') format('woff2');
+  content: "spinner";
+}
+.list li span {
+  color: #8094ae;
+}
+.list li ul {
+  margin-top: 0.5rem;
+}
+.list-checked li:before {
+  color: #810020;
+  content: "\e86c";
+  font-size: 30px;
+}
+.list-checked-circle li:before {
+  color: #810020;
+  content: "\e9b7";
+}
+.list-cross li:before {
+  color: rgba(232, 83, 71, 0.8);
+  content: "\ea02";
+}
+.list-status {
+  list-style: none;
+  line-height: 1.3;
+}
+.list-status li {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 1rem;
+  vertical-align: middle;
+}
+.list-status .icon {
+  margin-right: 0.375rem;
+  line-height: 1.3;
+}
+.list-lg li {
+  padding-left: 2rem;
+}
+.list-lg li:not(:last-child) {
+  padding-bottom: 0.75rem;
+}
+.list-lg li:before {
+  font-size: 1.35rem;
+}
+.list-sm li {
+  padding-left: 1.2rem;
+}
+.list-sm li:not(:last-child) {
+  padding-bottom: 0.35rem;
+}
+.list-sm li:before {
+  font-size: 12px;
+}
+.list-step li {
+  color: #000;
+  font-weight: 500;
+}
+
+/* .list-step li a{
+  color: #000;
+} */
+
+.list-step li:before {
+  content: "\e86c";
+  font-size: 20px;
+}
+.list-step li.list-step-current {
+  color: #810020;
+}
+.list-step li.list-step-current:before {
+  content: "\e000";
+  color: #810020;
+}
+.list-step li.list-step-done {
+  color: #000;
+}
+.list-step li.list-step-done:before {
+  content: "\e86c";
+  color: #1ee0ac;
+}
+
+
+.list-step li.list-step-pending {
+  content: "\ef64";
+  color: #8094ae;
+}
+
+.list-step li.list-step-pending:before {
+  content: "\ef64";
+  color: #8094ae;
+}
+
+.list-plain a {
+  color: #526484;
+  display: block;
+  line-height: 1.3;
+  padding: 0.5rem 0;
+}
+.list-plain a:hover {
+  color: #810020;
+}
+.list-category a {
+  font-weight: 500;
+}
+.list-download li > a {
+  display: inline-block;
+  padding: 0.25rem;
+}
+.list-download li > a > .icon {
+  margin: 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.list-primary li:before {
+  color: #810020;
+}
+
+.list-secondary li:before {
+  color: #364a63;
+}
+
+.list-success li:before {
+  color: #1ee0ac;
+}
+
+.list-info li:before {
+  color: #9E0033;
+}
+
+.list-warning li:before {
+  color: #f4bd0e;
+}
+
+.list-danger li:before {
+  color: #e85347;
+}
+
+.list-light li:before {
+  color: #e5e9f2;
+}
+
+.list-dark li:before {
+  color: #1f2b3a;
+}
+
+.list-gray li:before {
+  color: #8091a7;
+}
+
+.list-lighter li:before {
+  color: #f5f6fa;
+}
+.accordion-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  font-size: 1rem;
+  color: #364a63;
+  transform: translateY(-50%);
+  transition: rotate 0.4s;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+.accordion-icon:before {
+  content: "\e313";
+  font-family: 'Material Symbols Outlined';
+  src: url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200') format('woff2');
+  transition: 0.4s;
+}
+.accordion-head.collapsed .accordion-icon:before {
+  content: "\e313";
+}
+
+
+.page-container,
+.page-container-fluid,
+.page-container-xxl,
+.page-container-xl,
+.page-container-lg,
+.page-container-md,
+.page-container-sm {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 14px);
+  padding-left: var(--bs-gutter-x, 14px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .page-container-sm, .page-container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .page-container-md, .page-container-sm, .page-container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .page-container-lg, .page-container-md, .page-container-sm, .page-container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-container-xl, .page-container-lg, .page-container-md, .page-container-sm, .page-container {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1540px) {
+  .page-container-xxl, .page-container-xl, .page-container-lg, .page-container-md, .page-container-sm, .page-container {
+    max-width: 1440px;
+  }
+}
+
+
+.page {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+    
+ 
+  }
+  .div {
+    margin-bottom: '20px';
+  }
+  .header {
+    font-family: 'Poppins, sans-serif';
+    color: '#404040';
+   
+  }
+  
+  
+

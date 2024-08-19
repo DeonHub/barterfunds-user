@@ -87,7 +87,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#buy`}
                                   data-link-name="Buy Assets"
                                 >
                                   <span>
@@ -101,7 +101,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#sell`}
                                   data-link-name="Sell Assets"
                                 >
                                   <span>
@@ -115,7 +115,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#send`}
                                   data-link-name="Send Assets"
                                 >
                                   <span>
@@ -129,7 +129,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Receive Assets"
                                 >
                                   <span>
@@ -155,7 +155,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/transfer`}
                                   data-link-name="International Transfer"
                                 >
                                   <span>
@@ -169,7 +169,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/pay-for-me`}
                                   data-link-name="Online Payment"
                                 >
                                   <span>
@@ -183,7 +183,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/invoice`}
                                   data-link-name="Bill/Invoice Payment"
                                 >
                                   <span>
@@ -197,7 +197,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/escrow`}
                                   data-link-name="Escrow Services"
                                 >
                                   <span>
@@ -255,7 +255,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Get paid by clients"
                                 >
                                   <span>
@@ -269,7 +269,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/marketplace`}
                                   data-link-name="Get paid by marketplaces"
                                 >
                                   <span>
@@ -283,7 +283,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/multicurrency`}
                                   data-link-name="Multicurrency account"
                                 >
                                   <span>
@@ -297,7 +297,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Receive Assets"
                                 >
                                   <span>
@@ -323,7 +323,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/pay-for-me`}
                                   data-link-name="Pay your suppliers"
                                 >
                                   <span>
@@ -337,7 +337,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/pay-for-me`}
                                   data-link-name="Pay for Goods & Services"
                                 >
                                   <span>
@@ -351,7 +351,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/invoice`}
                                   data-link-name="Bill/Invoice Payments"
                                 >
                                   <span>
@@ -365,7 +365,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/escrow`}
                                   data-link-name="Escrow Services"
                                 >
                                   <span>
@@ -423,7 +423,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Get paid by clients"
                                 >
                                   <span>
@@ -437,7 +437,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/marketplace`}
                                   data-link-name="Get paid by marketplaces"
                                 >
                                   <span>
@@ -451,7 +451,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/multicurrency`}
                                   data-link-name="Multicurrency Account"
                                 >
                                   <span>
@@ -465,7 +465,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Receive Assets"
                                 >
                                   <span>
@@ -491,7 +491,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/transfer`}
                                   data-link-name="International Payments"
                                 >
                                   <span>
@@ -505,7 +505,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/digital-assets/#receive`}
                                   data-link-name="Receive Assets"
                                 >
                                   <span>
@@ -519,7 +519,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/invoice`}
                                   data-link-name="Bill/Invoice Payments"
                                 >
                                   <span>
@@ -533,7 +533,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/escrow`}
                                   data-link-name="Escrow Services"
                                 >
                                   <span>
@@ -590,7 +590,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Paypal Fees Checker"
                                 >
                                   <span>
@@ -604,7 +604,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Paypal Rate Checker"
                                 >
                                   <span>
@@ -618,7 +618,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Paypal Currency Converter"
                                 >
                                   <span>
@@ -632,7 +632,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Paypal Exchange"
                                 >
                                   <span>
@@ -658,7 +658,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Invoice Generator"
                                 >
                                   <span>
@@ -672,7 +672,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Fees Checker"
                                 >
                                   <span>
@@ -686,7 +686,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Currency Converter"
                                 >
                                   <span>
@@ -700,7 +700,7 @@ class MainMenu extends React.Component {
                               </li>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href="/"
+                                  href={`/coming-soon`}
                                   data-link-name="Exchange Rate Checker"
                                 >
                                   <span>
@@ -724,12 +724,19 @@ class MainMenu extends React.Component {
           </nav>
         </div>
         <div className="text-end d-flex align-items-center">
-          <div className="flex-fill d-flex align-items-center ms-auto">
-          <div className="d-none d-lg-inline-block">
-										<span href="/" class="btn-help" data-link-name="Help">Help</span>
-									</div>
-          </div>
-        </div>
+  <div className="flex-fill d-flex align-items-center ms-auto">
+    <div className="d-none d-lg-inline-block">
+      <a 
+        href={`/support-center`} 
+        className="btn-help" 
+        data-link-name="Help"
+      >
+        Help
+      </a>
+    </div>
+  </div>
+</div>
+
         <div className="text-end d-flex align-items-center">
           <a
               href="/login"

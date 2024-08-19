@@ -248,8 +248,8 @@ const Signup = () => {
                       <div className="form-note-s2 text-center my-4">
                         <p>
                           By creating an account, you agree to Barter Funds
-                          <a href={"/"}> Privacy Policy</a> &amp;{" "}
-                          <a href={"/"}> Terms of Use.</a>
+                          <a href={"/privacy-policy"}> Privacy Policy</a> &amp;{" "}
+                          <a href={"/terms-of-use"}> Terms of Use.</a>
                         </p>
                       </div>
 
