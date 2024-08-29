@@ -590,7 +590,7 @@ class MainMenu extends React.Component {
                             <ul className="sub-menu" data-level={3}>
                               <li className="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a
-                                  href={`/coming-soon`}
+                                  href={`/paypal-fees-checker`}
                                   data-link-name="Paypal Fees Checker"
                                 >
                                   <span>

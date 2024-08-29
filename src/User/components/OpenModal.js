@@ -337,7 +337,7 @@ const copyNumber = () => {
           
             <div className="form-label-group">
               {transactionType === 'receive' ? (
-                <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(usdAmount) - Number(transactionFee))} USD of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
+                <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(usdAmount)} USD of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
                 ) : (
                 <span className="text-center">Copy the wallet address below and make the transfer. You are to transfer a total of <span style={{fontWeight: 'bold'}}>{formatCurrency(Number(usdAmount) + Number(transactionFee))} USD of {selectedCurrency.currencyName}.</span> Click <span style={{fontWeight: 'bold'}}>"I Have Transferred"</span> once you're done with the transfer.</span>
                 )}

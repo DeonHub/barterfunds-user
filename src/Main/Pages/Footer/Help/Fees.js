@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -20,6 +21,22 @@ const Fees = ({ ...props }) => {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Fees | Barter Funds</title>
+        <meta name="description" content="Understand the transparent and straightforward fee structure at Barter Funds. Learn about our competitive rates for transactions, exchanges, and other services." />
+        <meta name="keywords" content="Barter Funds fees, transaction fees, exchange rates, transparent fees, low fees, fee structure" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Barter Funds" />
+        <meta property="og:title" content="Fees | Barter Funds" />
+        <meta property="og:description" content="Get detailed information on the fees associated with transactions and services at Barter Funds. We prioritize transparency to ensure you know exactly what you're paying for." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/fees" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/fees-thumbnail.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Fees | Barter Funds" />
+        <meta name="twitter:description" content="Explore the clear and competitive fee structure at Barter Funds. Our fees are designed to be fair and transparent, ensuring no hidden charges." />
+        <meta name="twitter:image" content="https://www.barter-funds.com/images/fees-thumbnail.jpg" />
+      </Helmet>
       <Header />
       <Head title="Fees | Barter Funds" />
       <Content>

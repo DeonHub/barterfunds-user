@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -18,8 +19,32 @@ const Freelance = ({ ...props }) => {
     { label: 'Freelance', href: '#', active: true }
   ];
 
+  const h1Style = {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '2rem',
+    color: '#333',
+  };
+
+  const h2Style = {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '1.5rem',
+    color: '#333',
+  };
+
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Freelance Financial Solutions | BarterFunds</title>
+        <meta name="description" content="BarterFunds empowers freelancers in Africa with secure payment solutions, local currency conversion, and tools to expand their global reach." />
+        <meta name="keywords" content="freelancers, Africa, payment solutions, currency conversion, global clients, freelance business" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="BarterFunds" />
+        <meta property="og:title" content="Freelance Financial Solutions | BarterFunds" />
+        <meta property="og:description" content="Discover how BarterFunds supports freelancers in Africa with financial tools to succeed in the global marketplace." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/freelance" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/freelance-solutions.jpg" />
+      </Helmet>
       <Header />
       <Head title="Freelance | Barter Funds" />
       <Content>
@@ -34,29 +59,59 @@ const Freelance = ({ ...props }) => {
         <Block>
           <PageContainer bodyClass="page-container">
             <article className="entry">
-            <p>
-        Freelancers face unique financial challenges, and Barter Funds is here to help. Whether you're managing multiple clients, invoicing for your work, or looking for secure ways to receive payments, our platform offers the tools you need to stay organized and get paid faster.
-      </p>
-
-      <h1 className='sub-title'>Client Management</h1>
+            <div className="freelance-page">
+      <h1 style={h1Style}>Freelance Solutions for the African Region</h1>
       <p>
-        Keep track of your clients and projects with our client management tools. Organize your work, track your hours, and ensure that you’re on top of deadlines and deliverables.
+        Freelancing has become a vital source of income and professional growth for many in the African region. 
+        At BarterFunds, we recognize the challenges freelancers face, from managing payments across borders to accessing global clients. 
+        Our platform is designed to provide freelancers with the tools they need to succeed in the global marketplace.
       </p>
-
-      <h1 className='sub-title'>Invoicing & Payments</h1>
+      
+      <h2 style={h2Style}>Secure and Efficient Payment Solutions</h2>
       <p>
-        Create and send invoices directly from our platform, and receive payments quickly and securely. With Barter Funds, you can focus on your work, knowing that your finances are in good hands.
+        One of the biggest challenges for freelancers in Africa is receiving payments from international clients. 
+        BarterFunds offers a secure platform that allows freelancers to easily receive payments from various global platforms 
+        such as PayPal, Payoneer, Alipay, WeChat, and cryptocurrencies. 
+        Our system ensures that transactions are fast, secure, and free from the typical barriers that can delay or complicate payments.
       </p>
-
-      <h1 className='sub-title'>Expense Tracking</h1>
+      
+      <h2 style={h2Style}>Local Currency Conversion</h2>
       <p>
-        Keep your business expenses in check with our expense tracking tools. Categorize your spending, monitor your cash flow, and ensure that you’re maximizing your tax deductions.
+        Freelancers often need to convert foreign earnings into their local currency. 
+        BarterFunds simplifies this process by offering seamless currency conversion services. 
+        Whether you’re paid in dollars, euros, or any other currency, 
+        you can easily convert your earnings into your local currency at competitive rates. 
+        This eliminates the need for costly and time-consuming traditional banking processes.
       </p>
-
-      <h1 className='sub-title'>Freelance Contracts</h1>
+      
+      <h2 style={h2Style}>Expanding Global Reach</h2>
       <p>
-        Protect your work with customizable freelance contracts. Our platform allows you to create, send, and manage contracts with ease, ensuring that your rights and interests are always safeguarded.
+        Our platform is designed to help freelancers expand their reach to global clients. 
+        With BarterFunds, you can easily manage your finances, regardless of where your clients are located. 
+        This allows you to focus on delivering high-quality work while we handle the complexities of international payments and currency conversion.
       </p>
+      
+      <h2 style={h2Style}>Financial Empowerment for Freelancers</h2>
+      <p>
+        We are committed to empowering freelancers across Africa by providing access to the financial tools they need to succeed. 
+        Our platform is user-friendly, making it accessible to freelancers at all levels of experience. 
+        By removing the financial barriers that often limit opportunities, 
+        BarterFunds helps you maximize your earnings and grow your freelance business.
+      </p>
+      
+      <h2 style={h2Style}>Supporting the Freelance Economy</h2>
+      <p>
+        BarterFunds is more than just a financial platform; we are a partner in the growth of the freelance economy in Africa. 
+        By offering tailored solutions for freelancers, we support the development of a vibrant and sustainable freelance community. 
+        Our services are designed to help freelancers thrive in a competitive global market, contributing to economic growth and job creation across the continent.
+      </p>
+      
+      <p>
+        At BarterFunds, we believe in the power of freelancing to transform lives and economies. 
+        Our platform is here to support you every step of the way, 
+        providing the resources and solutions you need to succeed as a freelancer in the African region.
+      </p>
+    </div>
             
             </article>
           </PageContainer>

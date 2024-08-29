@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -21,6 +22,24 @@ const About = ({ ...props }) => {
 
   return (
     <React.Fragment>
+      
+      <Helmet>
+        <title>About Us | Barter Funds</title>
+        <meta name="description" content="Learn about Barter Funds, our mission, values, and the team dedicated to providing the best e-currency exchange and digital financial services. Discover what drives us and how we're making a difference in the financial world." />
+        <meta name="keywords" content="About Barter Funds, e-currency exchange, digital financial services, mission, values, team, financial solutions" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Barter Funds" />
+        <meta property="og:title" content="About Us | Barter Funds" />
+        <meta property="og:description" content="Get to know Barter Funds. We're committed to revolutionizing digital finance with transparent, reliable, and innovative solutions. Meet the team and learn more about our journey." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/about-us" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/about-us-thumbnail.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us | Barter Funds" />
+        <meta name="twitter:description" content="Discover the story behind Barter Funds, our mission to transform the digital financial landscape, and the people making it happen. Learn more about our values and vision." />
+        <meta name="twitter:image" content="https://www.barter-funds.com/images/about-us-thumbnail.jpg" />
+      </Helmet>
+
       <Header />
       <Head title="About | Barter Funds" />
       <Content>

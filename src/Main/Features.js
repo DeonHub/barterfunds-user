@@ -19,13 +19,13 @@ const features = [
     },
     {
         icon: 'las la-sort',
-        title: 'Realtime',
-        description: 'Competitive rates'
+        title: 'Competitive',
+        description: 'Exchange Rate'
     },
     {
         icon: 'las la-hand-holding-usd',
-        title: 'Over 50+',
-        description: 'Foreign Currencies'
+        title: 'Over 20+',
+        description: 'Digital Assets'
     }
 ];
 

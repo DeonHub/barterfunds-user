@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -20,6 +21,23 @@ const Terms = ({ ...props }) => {
 
   return (
     <React.Fragment>
+            <Helmet>
+                <title>Terms | Barter Funds</title>
+                <meta name="description" content="Review the Affiliate Policy of Barter Funds. Understand the terms, conditions, and guidelines for participating in our affiliate program." />
+                <meta name="keywords" content="Barter Funds, Affiliate Program, Affiliate Policy, Digital Assets, Referral Program, Earn Money" />
+                <meta name="author" content="Barter Funds" />
+                <meta property="og:title" content="Affiliate Policy | Barter Funds" />
+                <meta property="og:description" content="Detailed information about Barter Funds' Affiliate Policy, including how to join and the benefits of being an affiliate." />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://barter-funds.com/affiliate-policy" />
+                <meta property="og:image" content="https://barter-funds.com/assets/affiliate-policy-thumbnail.jpg" />
+                <meta property="og:site_name" content="Barter Funds" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Affiliate Policy | Barter Funds" />
+                <meta name="twitter:description" content="Learn more about the terms and conditions of Barter Funds' affiliate program." />
+                <meta name="twitter:image" content="https://barter-funds.com/assets/affiliate-policy-thumbnail.jpg" />
+                <meta name="twitter:site" content="@BarterFunds" />
+            </Helmet>
       <Header />
       <Head title="Terms & Conditions | Barter Funds" />
       <Content>

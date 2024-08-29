@@ -70,6 +70,7 @@ import HowItWorks from './Main/Pages/Footer/Resources/HowItWorks';
 import Newsletter from './Main/Pages/Footer/Resources/Newsletter';
 import Security from './Main/Pages/Footer/Resources/Security';
 import ComingSoon from './Main/Pages/ComingSoon';
+import PaypalFees from './Main/Pages/Tools/PaypalFees';
 
 const App = () => {
 
@@ -154,7 +155,8 @@ const App = () => {
         <Route path={`/support-center`} element={<Support />} />
         
         <Route path={`/coming-soon`} element={<ComingSoon/>} />
-
+        <Route path={`/paypal-fees-checker`} element={<PaypalFees />} />
+        
         <Route path={`/*`} element={<NotFound />} />
 
       </Routes>

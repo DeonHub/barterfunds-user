@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
+
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -20,8 +22,24 @@ const FAQ = ({ ...props }) => {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Frequently Asked Questions (FAQ) | Barter Funds</title>
+        <meta name="description" content="Find answers to the most common questions about Barter Funds. From account setup to transaction details, our FAQ section covers it all." />
+        <meta name="keywords" content="Barter Funds FAQ, common questions, help, support, account setup, transactions" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Barter Funds" />
+        <meta property="og:title" content="Frequently Asked Questions (FAQ) | Barter Funds" />
+        <meta property="og:description" content="Get answers to frequently asked questions about Barter Funds. Whether you're new or experienced, our FAQ section has the information you need." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/faq" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/faq-thumbnail.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Frequently Asked Questions (FAQ) | Barter Funds" />
+        <meta name="twitter:description" content="Explore our FAQ section for quick answers to common questions about Barter Funds' services, transactions, and more." />
+        <meta name="twitter:image" content="https://www.barter-funds.com/images/faq-thumbnail.jpg" />
+      </Helmet>
       <Header />
-      <Head title="FAQ | Barter Funds" />
+      <Head title="Frequently Asked Questions | Barter Funds" />
       <Content>
         <BlockHead size="lg" wide="xs" className="mx-auto">
           <BlockHeadContent className="text-center">

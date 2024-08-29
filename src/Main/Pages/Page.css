@@ -143,6 +143,7 @@
   position: absolute;
   left: 0;
   color: #800020; /* Custom color */
+  padding-left: 10px;
 }
 .bullet-list li::before {
   content: '•'; /* Custom bullet character */

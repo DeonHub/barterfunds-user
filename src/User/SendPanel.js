@@ -570,7 +570,7 @@ const handleFileSelect = (e) => {
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to send
-                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName}</strong> for <strong>{formatCurrency(ghsAmount)} GHS</strong> 
+                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName}</strong> 
               </div>
               <span className="sub-text-sm">
                 Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
@@ -698,8 +698,8 @@ const handleFileSelect = (e) => {
             <h4 className="nk-modal-title"><strong>Order Successfully Made!</strong></h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive <strong>{formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
-                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.</strong>
+                Your recipient will receive <strong>{formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
+                {selectedCurrency.currencyName}</strong>
                 
               </p>
               <p className="sub-text-sm">

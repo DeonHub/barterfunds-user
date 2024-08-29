@@ -568,8 +568,7 @@ const handleFileSelect = (e) => {
             <div className="nk-block-text">
               <div className="caption-text">
                 You are about to buy
-                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} for {" "}
-                {formatCurrency(ghsAmount)} GHS</strong> 
+                <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of {selectedCurrency.currencyName} </strong> 
               </div>
               <span className="sub-text-sm">
                 Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
@@ -701,7 +700,7 @@ const handleFileSelect = (e) => {
             <div className="nk-modal-text">
               <p className="caption-text">
                 You will receive <strong>{formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
-                {selectedCurrency.currencyName} for {formatCurrency(ghsAmount)} GHS.</strong>
+                {selectedCurrency.currencyName}</strong>
                 
               </p>
               <p className="sub-text-sm">

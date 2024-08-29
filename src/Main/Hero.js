@@ -17,7 +17,8 @@ function Hero() {
       <div className="row justify-content-center">
         <div className="col-xl-7 col-lg-9 text-center">
           <h1>Buy. Sell. Send. Receive.</h1>
-          <h2>Pioneering fast and secure cross-border, peer-to-peer, business-to-business and marketplace transactions.</h2>
+          <h2>We make digital currency simple and accessible for Africans, connecting you to the global financial world through innovative solutions.</h2>
+          
           
           <div className="get-started">
         <a

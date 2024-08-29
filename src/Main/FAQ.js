@@ -57,7 +57,7 @@ const faqData = [
   },
   {
     question: 'What is the processing time for currency exchange?',
-    answer: 'The processing time for currency exchange varies depending on the method you choose. Immediately you complete your exchange order, the transaction can typically be completed within a few minutes. Some transactions may take longer due to security and verification procedures. We know that time is money, and that\'s why we offer instant payment options. Once your exchange is complete, your payment will be processed and sent to your account instantly. No more waiting around for days to receive your payment!'
+    answer: 'The processing time for currency exchange varies depending on the method you choose. Immediately you complete your exchange order, the transaction can typically be completed within a few minutes but the time period is 2 - 60 minutes. Some transactions may take longer due to security and verification procedures. We know that time is money, and that\'s why we offer instant payment options. Once your exchange is complete, your payment will be processed and sent to your account instantly. No more waiting around for days to receive your payment!'
   },
   {
     question: 'What documents do I need for verification?',
