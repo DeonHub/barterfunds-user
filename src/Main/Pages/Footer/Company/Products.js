@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -20,6 +21,23 @@ const Products = ({ ...props }) => {
 
   return (
     <React.Fragment>
+       <Helmet>
+        <title>Products | Barter Funds</title>
+        <meta name="description" content="Explore Barter Funds' innovative products designed to enhance your digital financial experience. From PayPal tools to e-currency converters, discover the solutions we offer to simplify your financial transactions." />
+        <meta name="keywords" content="Barter Funds products, digital financial tools, PayPal fees checker, PayPal currency converter, e-currency exchange tools, interbank rates, invoice generator" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Barter Funds" />
+        <meta property="og:title" content="Products | Barter Funds" />
+        <meta property="og:description" content="Discover the range of digital financial tools offered by Barter Funds, including PayPal fees checker, currency converters, and more, all designed to streamline your online transactions." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/products" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/products-thumbnail.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Products | Barter Funds" />
+        <meta name="twitter:description" content="Explore Barter Funds' innovative suite of products, including tools for managing PayPal fees, currency conversion, and more, designed to enhance your digital financial experience." />
+        <meta name="twitter:image" content="https://www.barter-funds.com/images/products-thumbnail.jpg" />
+      </Helmet>
+      
       <Header />
       <Head title="Products | Barter Funds" />
       <Content>

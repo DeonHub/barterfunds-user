@@ -519,11 +519,11 @@ const ReceivePanel = ({
             <h5 className="nk-block-title">Confirm Order</h5>
             <div className="nk-block-text">
               <div className="caption-text">
-                You are about to receive
+                BarterFunds will receive
                 <strong>
                   {" "}
                   <strong>{formatCurrency(usdAmount)}</strong> {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of
-                  {" "}{selectedCurrency.currencyName} from BarterFunds
+                  {" "}{selectedCurrency.currencyName}
                 </strong>{" "}
                 
               </div>
@@ -616,9 +616,7 @@ const ReceivePanel = ({
             <h4 className="nk-modal-title">Order Successfully Made!</h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive <strong>{formatCurrency(ghsAmount)} GHS for{" "}
-                {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} of{" "}
-                {selectedCurrency.currencyName}.</strong>
+                You will receive <strong>{formatCurrency(ghsAmount)} GHS</strong>
               </p>
               <p className="sub-text-sm">
                 Once we receive the payment from your sender.

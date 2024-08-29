@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /User
+Disallow: /Auth
+Disallow: /components
+Disallow: /index.js
+Disallow: /App.js
+
+Allow: /
+
+Sitemap: https://barterfunds.com/sitemap.xml

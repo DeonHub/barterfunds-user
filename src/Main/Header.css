@@ -999,8 +999,9 @@ body {
   .mfooter-links {
     display: flex;
       flex-direction: row;
-      align-items: center; /* Center items horizontally */
-      margin: 140px 50px 10px 50px;
+      align-items: center; 
+      justify-content: space-between;
+      
   }
   
   .mfooter-link {

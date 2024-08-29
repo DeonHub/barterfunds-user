@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -18,8 +19,32 @@ const Organization = ({ ...props }) => {
     { label: 'Organization', href: '#', active: true }
   ];
 
+  const h1Style = {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '2rem',
+    color: '#333',
+  };
+
+  const h2Style = {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '1.5rem',
+    color: '#333',
+  };
+
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Organizational Financial Solutions | BarterFunds</title>
+        <meta name="description" content="BarterFunds provides organizations in Africa with secure, scalable, and multi-currency financial solutions to enhance operational efficiency and support growth." />
+        <meta name="keywords" content="organizations, Africa, financial management, multi-currency support, secure transactions, nonprofits, corporations" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="BarterFunds" />
+        <meta property="og:title" content="Organizational Financial Solutions | BarterFunds" />
+        <meta property="og:description" content="Tailored financial solutions for African organizations, enabling secure and efficient operations with BarterFunds." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/organization" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/organization-solutions.jpg" />
+      </Helmet>
       <Header />
       <Head title="Organization | Barter Funds" />
       <Content>
@@ -34,61 +59,68 @@ const Organization = ({ ...props }) => {
         <Block>
           <PageContainer bodyClass="page-container">
             <article className="entry">
-
-
-            <p>
-        At Barter Funds, we understand the evolving needs of organizations in a digital-first world. Whether you're a non-profit, educational institution, or large enterprise, our platform is designed to help you manage your finances, facilitate cross-border transactions, and leverage digital assets to drive growth and efficiency.
+            <div className="organization-page">
+      <h1 style={h1Style}>Organizational Solutions for the African Region</h1>
+      <p>
+        BarterFunds is committed to supporting organizations in Africa by providing tailored financial solutions that meet their unique needs. 
+        Whether you are a nonprofit, a corporation, or a governmental body, our platform is designed to help you manage digital transactions efficiently and securely.
       </p>
-
       
-        <h2 className='sub-title'>Digital Asset Management</h2>
-        <p>
-          Harness the power of digital assets to enhance your organization's financial capabilities. Barter Funds provides secure and compliant management of a wide range of digital assets, including cryptocurrencies like Bitcoin, Ethereum, and stablecoins. Whether you're accepting donations, managing grants, or diversifying your investment portfolio, our platform ensures that your digital assets are safe and easily accessible.
-        </p>
+      <h2 style={h2Style}>Comprehensive Financial Management</h2>
+      <p>
+        Organizations often face complex financial challenges, especially when operating across borders. 
+        BarterFunds offers a comprehensive platform that allows organizations to manage their financial operations seamlessly. 
+        Our services include the ability to handle large-scale transactions, manage multiple accounts, and process payments with ease.
+      </p>
       
-
+      <h2 style={h2Style}>Secure and Scalable Solutions</h2>
+      <p>
+        Security is a top priority for any organization. BarterFunds ensures that all transactions are conducted in a secure environment, 
+        protecting your organization’s financial data from potential threats. 
+        Our platform is also scalable, allowing you to grow and expand without worrying about outgrowing your financial management tools.
+      </p>
       
-        <h2 className='sub-title'>Multi-Currency & Digital Asset Accounts</h2>
-        <p>
-          Operate seamlessly across borders with our multi-currency and digital asset accounts. Our platform allows you to hold, transfer, and convert both traditional currencies and digital assets. This flexibility ensures that your organization can operate efficiently, whether you're managing international projects or dealing with multiple currencies and digital assets.
-        </p>
+      <h2 style={h2Style}>Multi-Currency Support</h2>
+      <p>
+        Operating in multiple regions often requires managing transactions in various currencies. 
+        BarterFunds supports a wide range of currencies, allowing organizations to convert funds between local and international currencies effortlessly. 
+        This flexibility is crucial for organizations that need to operate efficiently in different markets.
+      </p>
       
-
+      <h2 style={h2Style}>Enhancing Operational Efficiency</h2>
+      <p>
+        Time and resources are valuable for any organization. 
+        BarterFunds streamlines financial processes, reducing the time spent on administrative tasks and allowing your team to focus on core activities. 
+        Our platform is designed to integrate smoothly with your existing systems, ensuring a hassle-free experience.
+      </p>
       
-        <h2 className='sub-title'>Donation Management in Digital Assets</h2>
-        <p>
-          Expand your donor base by accepting donations in digital assets. Barter Funds enables your organization to receive donations in various cryptocurrencies, providing your supporters with more ways to contribute. Our system ensures transparency and security, with detailed reporting to help you maintain accountability with your donors.
-        </p>
+      <h2 style={h2Style}>Supporting Organizational Growth</h2>
+      <p>
+        As your organization grows, so do your financial needs. 
+        BarterFunds is equipped to support your expansion by providing tools that adapt to your changing requirements. 
+        Whether you’re entering new markets or scaling up operations, our platform ensures that your financial processes remain smooth and efficient.
+      </p>
       
-
+      <h2 style={h2Style}>Empowering Impact and Innovation</h2>
+      <p>
+        For nonprofit organizations and social enterprises, impact and innovation are at the heart of what you do. 
+        BarterFunds supports these goals by providing financial solutions that enable you to allocate resources effectively, manage donor funds transparently, 
+        and execute your mission with greater efficiency.
+      </p>
       
-        <h2 className='sub-title'>Expense Management</h2>
-        <p>
-          Streamline your expense management processes with our advanced tools, which now include support for digital asset transactions. Track and approve expenses in real-time, manage budgets across multiple currencies and digital assets, and ensure that your organization’s funds are used effectively. Our platform integrates with your existing systems for seamless financial management.
-        </p>
+      <h2 style={h2Style}>Partnering for Success</h2>
+      <p>
+        At BarterFunds, we see ourselves as more than just a service provider; we are a partner in your organization’s success. 
+        By offering customized financial solutions tailored to the needs of African organizations, 
+        we help you achieve your objectives and drive positive change in the communities you serve.
+      </p>
       
-
-      
-        <h2 className='sub-title'>Payroll Services with Digital Assets</h2>
-        <p>
-          Pay your team accurately and on time, regardless of their location or preferred currency. Barter Funds offers payroll services that support both traditional currencies and digital assets, allowing you to manage salaries, benefits, and tax obligations with ease, whether your employees prefer to be paid in fiat or crypto.
-        </p>
-      
-
-      
-        <h2 className='sub-title'>Financial Reporting & Compliance</h2>
-        <p>
-          Maintain compliance with local and international regulations through our comprehensive financial reporting tools. Generate detailed reports that include digital asset transactions, analyze financial trends, and ensure that your organization is operating within legal requirements. Barter Funds provides the support you need to navigate the complexities of managing both fiat and digital assets.
-        </p>
-      
-
-      
-        <h2 className='sub-title'>Custom Solutions for Digital Assets</h2>
-        <p>
-          Every organization has unique needs, especially when it comes to digital assets. Barter Funds offers custom solutions tailored to your specific requirements, whether you need a specialized payment gateway, custom financial reporting, or tailored expense management tools for digital assets. We work with you to develop solutions that align with your goals.
-        </p>
-      
-  
+      <p>
+        We are dedicated to building a future where organizations in Africa can operate at their full potential, 
+        empowered by the right financial tools and resources. 
+        BarterFunds is here to support your journey, providing the expertise and technology needed to navigate the complexities of today’s global economy.
+      </p>
+    </div>
             
             </article>
           </PageContainer>

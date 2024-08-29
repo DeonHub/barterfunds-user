@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
+
 import '../../Page.css'
 import Header from '../../../Header'
 import Footer from '../../../Footer'
@@ -20,8 +22,26 @@ const Contact = ({ ...props }) => {
 
   return (
     <React.Fragment>
+
+      <Helmet>
+        <title>Contact Us | Barter Funds</title>
+        <meta name="description" content="Get in touch with Barter Funds for any questions, support, or business inquiries. Our team is here to help you with your digital financial needs. Reach out via live chat, email, or through our social media channels." />
+        <meta name="keywords" content="Contact Barter Funds, customer support, business inquiries, help, digital financial services, e-currency exchange" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Barter Funds" />
+        <meta property="og:title" content="Contact Us | Barter Funds" />
+        <meta property="og:description" content="Need assistance? Contact Barter Funds' support team for help with your account, transactions, or any other inquiries. We're here to assist you with your digital financial needs." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.barter-funds.com/contact-us" />
+        <meta property="og:image" content="https://www.barter-funds.com/images/contact-us-thumbnail.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Us | Barter Funds" />
+        <meta name="twitter:description" content="Reach out to Barter Funds for any questions or support you need. Our team is available via live chat, email, or social media to assist you." />
+        <meta name="twitter:image" content="https://www.barter-funds.com/images/contact-us-thumbnail.jpg" />
+      </Helmet>
+
       <Header />
-      <Head title="Contact | Barter Funds" />
+      <Head title="Contact Us | Barter Funds" />
       <Content>
         <BlockHead size="lg" wide="xs" className="mx-auto">
           <BlockHeadContent className="text-center">

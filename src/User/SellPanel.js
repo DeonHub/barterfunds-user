@@ -504,7 +504,7 @@ const SellPanel = ({
               <div className="caption-text">
                 You are about to sell
                 <strong> {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}
-                {" "}of {selectedCurrency.currencyName} to BarterFunds</strong> 
+                {" "}of {selectedCurrency.currencyName}</strong> 
               </div>
               <span className="sub-text-sm">
                 Exchange rate: 1 {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"} = {formatCurrency(conversionRate)} GHS
@@ -596,9 +596,7 @@ const SellPanel = ({
             <h4 className="nk-modal-title">Order Successfully Made!</h4>
             <div className="nk-modal-text">
               <p className="caption-text">
-                You will receive <strong>{formatCurrency(ghsAmount)} GHS for {" "}
-                {formatCurrency(usdAmount)} {selectedCurrency.currencyCode.toLowerCase().includes('rmb') ? "RMB" : "USD"}{" "} of {" "}
-                {selectedCurrency.currencyName}.</strong>
+                You will receive <strong>{formatCurrency(ghsAmount)} GHS</strong>
               </p>
               <p className="sub-text-sm">
                 Once we confirm payment into our account.
