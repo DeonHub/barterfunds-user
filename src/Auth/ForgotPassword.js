@@ -142,7 +142,7 @@ const ForgotPassword = () => {
                         <p className="card-description nk-block-des mb-5 mt-2 text-center">
                           Need help signing in?
                           <a
-                            href="mailto:barterfunds@gmail.com"
+                            href="/support-center"
                             style={{
                               color: "#810020",
                               cursor: "pointer",

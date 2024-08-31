@@ -249,9 +249,11 @@ const Transactions = () => {
                                       className="dropdown-toggle btn btn-icon btn-primary"
                                       data-bs-toggle="dropdown"
                                     >
+                                      
                                       <span class="icon material-symbols-outlined">
                                         add
                                       </span>
+                                      
                                     </span>
                                   </div>
                                 </li>

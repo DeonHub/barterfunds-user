@@ -417,7 +417,7 @@ const Faqs = () => {
                   </div>
                 </div>
                 <div className="nk-block-content flex-shrink-0">
-                  <a href={"/user/dashboard"} className="btn btn-lg btn-outline-primary">
+                  <a href={"/support-center"} className="btn btn-lg btn-outline-primary">
                     Get Support Now
                   </a>
                 </div>

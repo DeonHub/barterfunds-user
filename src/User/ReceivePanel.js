@@ -582,7 +582,7 @@ const ReceivePanel = ({
               </ul>
               <div className="sub-text-sm text-center">
                 * Our transaction fee are included.
-                <a href={"/"}> See transaction fee</a>
+                <a href={"/fees"}> See transaction fee</a>
               </div>
             </div>
            
@@ -639,8 +639,8 @@ const ReceivePanel = ({
           <br />
           <div className="text-center w-100">
             <p>
-              Earn up to GHS 100 for each friend your refer!{" "}
-              <a href={"/"}>Invite friends</a>
+              Earn up to GHS 20 for each friend your refer!{" "}
+              <a href={"/user/dashboard"}>Invite friends</a>
             </p>
           </div>
         </div>

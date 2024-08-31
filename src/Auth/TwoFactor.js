@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Modal, Button } from "antd";
 import axios from "axios";
 import openNotification from "../components/OpenNotification";
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,25 @@ const TwoFactor = () => {
   const [userId, setUserId] = useState('');
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [open, setOpen] = useState(false);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const titleStyle = {
+    textAlign: 'center',
+    marginBottom: '20px',
+  };
+
+  const contentStyle = {
+    textAlign: 'center',
+  };
 
   useEffect(() => {
     document.title = "Two Factor Authentication | BarterFunds";
@@ -64,11 +84,13 @@ const TwoFactor = () => {
         //   ...prevState,
         //   user: response.data.user,
         // }));
+        setOpen(false);
         window.location.reload();
       })
       .catch((error) => {
         console.log("error :>> ", error);
       });
+
   };
 
   const handleInputChange = (index, value) => {
@@ -165,6 +187,30 @@ const TwoFactor = () => {
 
   return (
     <div className="nk-app-root">
+      <Modal
+        open={open}
+        // mask={open}
+        title={<div style={titleStyle}>Verify Two-Factor Authentication Setup<hr/></div>}
+        onOk={handleScan}
+        onCancel={handleCancel}
+        footer={[
+          <Button onClick={handleCancel} style={{ float: "left"}}>
+            Cancel
+          </Button>,
+          
+          <button
+          type="button"
+          className="btn btn-sm btn-primary"
+          onClick={handleScan}
+        >
+          I Have Set Up 2FA
+        </button>
+        ]}
+        // style={modalStyle}
+      >
+        <div style={contentStyle}>Before you proceed, please ensure that you have Downloaded an Authenticator App and Set Up Two-Factor Authentication (2FA) <br/><br/> If you haven’t completed these steps yet, please do so now.<hr/></div>
+      </Modal>
+
       <div className="nk-main">
         <div className="nk-wrap nk-wrap-nosidebar">
           {isLoading ? (<Loader />) : (
@@ -291,19 +337,19 @@ const TwoFactor = () => {
                                fontWeight: "bold",
                                cursor: "pointer",
                              }}
-                             onClick={handleScan}
+                             onClick={showModal}
                            >
-                             NEXT
+                             PROCEED
                            </span>{" "}
-                           below once you are done scanning or entering the code.
+                           after you have setup your authenticator account.
                          </p>
                        </div>
  
                        <button
-                         onClick={handleScan}
+                         onClick={showModal}
                          className="btn btn-lg btn-primary btn-block mt-3"
                        >
-                         Next
+                         PROCEED
                        </button>
                      </div>
                    )}
@@ -316,7 +362,7 @@ const TwoFactor = () => {
              <div>
                <p className="card-description nk-block-des mb-5 mt-2 text-center">
                  Need help signing in?
-                 <a href="mailto:barterfunds@gmail.com"
+                 <a href="/support-center"
                    style={{
                      color: "#810020",
                      cursor: "pointer",
