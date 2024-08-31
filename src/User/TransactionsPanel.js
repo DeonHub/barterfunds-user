@@ -199,14 +199,16 @@ const TransactionsPanel = () => {
                       title="Verify Your Identity (KYC)"
                       subTitle="Complete your KYC verification to make transactions. If you have already submitted, please check on the progress or contact our support for help"
                       extra={[
+                       
                         <Button
+                          className="btn btn-sm btn-primary"
                           href={`/user/kycs`}
-                          type="primary"
+                          
                         >
                           Verify Identity
                         </Button>,
                         <Button
-                          href="mailto:support@barterfunds.com"
+                          href="/support-center"
                           type="default"
                         >
                           Contact Support

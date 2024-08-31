@@ -26,7 +26,7 @@ const FailedLogin = () => {
                 Back Home
               </button>
             </a>{" "}
-            <a href="mailto:barterfunds@gmail.com">
+            <a href="/support-center">
               <button className="btn btn-primary btn-sm">
                 Contact support
               </button>

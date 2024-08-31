@@ -178,6 +178,7 @@ const UserWelcome = ({ user } ) => {
                   <div className="card-inner card-inner-lg h-100">
                     {index === 0 ? (
                       <Results
+                        isEmail={true}
                         index={index}
                         done={steps[index].done}
                         title={
@@ -237,7 +238,7 @@ const UserWelcome = ({ user } ) => {
                             : "Activate your BarterFunds Wallet to proceed with transactions. Activating allows you to make purchases and transactions securely."
                         }
 
-                        redirectTo={'barter-wallet'}
+                        redirectTo={'wallet'}
                       />
                     ) : (
                       <Results
@@ -444,7 +445,7 @@ const UserWelcome = ({ user } ) => {
                     </div>
                   </div>
                   <div className="nk-block-content flex-shrink-0">
-                    <a href="/support" className="btn btn-lg btn-outline-primary">
+                    <a href="/support-center" className="btn btn-lg btn-outline-primary">
                       Get Support Now
                     </a>
                   </div>
