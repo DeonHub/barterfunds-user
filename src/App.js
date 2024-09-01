@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Main from './Main/Main';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
@@ -73,9 +76,15 @@ import ComingSoon from './Main/Pages/ComingSoon';
 import PaypalFees from './Main/Pages/Tools/PaypalFees';
 
 const App = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+      ReactGA.pageview(location.pathname);
+  }, [location]);
 
   const navigateTo = (path) => {
-    window.location.href = path;
+      navigate(path);
   };
 
 
