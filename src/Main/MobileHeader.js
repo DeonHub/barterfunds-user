@@ -6,6 +6,7 @@ const MobileMenu = () => {
     const [activeMenu, setActiveMenu] = useState(null);
     const [activeSubMenu, setActiveSubMenu] = useState({});
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Assuming 768px as the breakpoint for mobile devices
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
         const handleResize = () => {
@@ -216,7 +217,7 @@ const MobileMenu = () => {
               <div className="d-flex align-items-center me-auto">
                 <div className="d-flex align-items-center flex-fill">
                   <div className="site-branding header-logo flex-fill">
-                    <a href="https://www.barter-funds.com" className="custom-logo-link dark" rel="home">
+                    <a href="/" className="custom-logo-link dark" rel="home">
                       <img src="/assets/images/barterfunds-logo.png" width={200} height={40} alt="BarterFunds" />
                     </a>
                   </div>
@@ -295,7 +296,7 @@ const MobileMenu = () => {
                     <a href="https://www.tiktok.com/barterfunds" className="msocial-icon"><i className="fa-brands fa-tiktok"></i></a>
                 </div>
                 <div className="mcopyright">
-                    &copy; 2019 - 2024 BarterFunds. All Rights Reserved.
+                    &copy; 2019 - {currentYear} BarterFunds. All Rights Reserved.
                 </div>
             </div>
                 </div>
