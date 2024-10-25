@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import React, { useEffect } from 'react';
-import ReactGA from 'react-ga';
-import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
+
 import Main from './Main/Main';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
@@ -27,8 +28,7 @@ import Transactions from './User/Transactions';
 import UserWallet from './User/Wallet';
 import UserSupport from './User/UserSupport';
 import Faqs from './User/Faqs';
-// import { useDispatch } from 'react-redux';
-// import { fetchCurrentUser } from './redux/userSlice';
+
 import { UserProvider } from './User/components/UserContext';
 import PasswordReset from './User/PasswordReset';
 import Notifications from './User/Notifications';
@@ -77,11 +77,6 @@ import PaypalFees from './Main/Pages/Tools/PaypalFees';
 
 const App = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-      ReactGA.pageview(location.pathname);
-  }, [location]);
 
   const navigateTo = (path) => {
       navigate(path);

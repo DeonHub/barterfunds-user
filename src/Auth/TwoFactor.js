@@ -123,6 +123,8 @@ const TwoFactor = () => {
         newInputValues[index + i] = char;
       });
       setInputValues(newInputValues);
+      setSubmitButton(newInputValues.every((value) => value !== ""))
+      focusNextInput(newInputValues.length - 1)
     }
   };
 
@@ -266,6 +268,7 @@ const TwoFactor = () => {
                                  type="text"
                                 //  maxLength="1"
                                  placeholder="x"
+                                 autoFocus={index === 0 ? true : false}
                                  value={value}
                                  onChange={(e) => handleInputChange(index, e.target.value)}
                                  onKeyDown={(e) => handleKeyDown(e, index)}
