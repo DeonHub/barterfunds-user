@@ -1,8 +1,5 @@
 import React from 'react';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-import { useNavigate } from 'react-router-dom';
 
 import Main from './Main/Main';
 import Login from './Auth/Login';
@@ -76,12 +73,6 @@ import ComingSoon from './Main/Pages/ComingSoon';
 import PaypalFees from './Main/Pages/Tools/PaypalFees';
 
 const App = () => {
-  const navigate = useNavigate();
-
-  const navigateTo = (path) => {
-      navigate(path);
-  };
-
 
 
   return (
@@ -94,10 +85,10 @@ const App = () => {
         <Route path={`/`} element={<Main />} />
         
         {/* Auth routes go here */}
-        <Route path={`/login`} element={<Login navigate={navigateTo} />}/>
-        <Route path={`/signup`} element={<Signup navigate={navigateTo} />} />
-        <Route path={`/forgot-password`} element={<ForgotPassword navigate={navigateTo} />} />
-        <Route path={`/login/mfa`} element={<TwoFactor navigate={navigateTo} />} />
+        <Route path={`/login`} element={<Login />}/>
+        <Route path={`/signup`} element={<Signup />} />
+        <Route path={`/forgot-password`} element={<ForgotPassword />} />
+        <Route path={`/login/mfa`} element={<TwoFactor />} />
         <Route path={`/account-activation/:activationToken`} element={<AccountActivation />} />
         <Route path={`/reset-password/:resetToken`} element={<ResetPassword />} />
 
